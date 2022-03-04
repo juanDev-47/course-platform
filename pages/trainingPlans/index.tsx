@@ -1,10 +1,8 @@
 export default function Home() {
-  console.log("loafjdfh");
+  console.log("loafjvcvxdfh");
   return (
     <h1 className="text-3xl text-blue-300 font-bold underline">
-      Hello world!
-
-      ;
+      desde training plans ;
     </h1>
-  )
+  );
 }
