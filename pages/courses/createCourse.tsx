@@ -1,6 +1,6 @@
+import React from 'react'
 import Link from "next/link";
 
-/* eslint-disable react/react-in-jsx-scope */
 export default function CreateCourse() {
   return (
     <div className="container px-8 py-12 h-screen bg-gray-100 m-z">
