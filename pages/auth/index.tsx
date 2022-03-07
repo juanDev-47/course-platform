@@ -1,3 +1,5 @@
+import React from 'react'
+
 export default function Home() {
   return (
     <h1 className='text-3xl text-blue-300 font-bold underline'>
@@ -5,3 +7,5 @@ export default function Home() {
     </h1>
   );
 }
+
+
