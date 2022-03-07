@@ -5,7 +5,7 @@ import TextArea from 'components/TextArea';
 
 const formTrainigPlan = () => (
   <div>
-    <Form title='Form'>
+    <Form title='Form' textSubmit='Create'>
       <div className='flex flex-col gap-4 w-[800px]'>
         <Input type='text' text='Name' placeholder='Name' name='name' />
         <TextArea
