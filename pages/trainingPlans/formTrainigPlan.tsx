@@ -2,6 +2,7 @@ import React from 'react';
 import Form from 'components/Form';
 import Input from 'components/Input';
 import TextArea from 'components/TextArea';
+import SelectAddAndRemove from 'components/SelectAddAndRemove';
 
 const formTrainigPlan = () => (
   <div>
@@ -13,6 +14,7 @@ const formTrainigPlan = () => (
           placeholder='description'
           name='description'
         />
+        <SelectAddAndRemove />
       </div>
     </Form>
   </div>

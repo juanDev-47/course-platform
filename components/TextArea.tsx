@@ -6,7 +6,7 @@ const TextArea = ({ text, name, placeholder }: any) => (
       {text}
     </label>
     <textarea
-      rows={10}
+      rows={5}
       placeholder={placeholder}
       className='w-full px-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500'
     />
