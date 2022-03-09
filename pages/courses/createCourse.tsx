@@ -1,7 +1,16 @@
 import React from 'react'
 import Link from "next/link";
 
+export async function getServerSideProps() {
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
+
+  
 export default function CreateCourse() {
+
+
   return (
     <div className="container px-8 py-12 h-screen bg-gray-100 m-z">
       <div className=" px-8 pt-6 pb-8 mb-4 max-w-md mx-auto sm:max-w-xl">
@@ -13,14 +22,14 @@ export default function CreateCourse() {
         <div className="m-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="course"
+            htmlFor="name"
           >
             Course name
           </label>
           <input
             className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
             type="text"
-            id="course"
+            id="name"
           />
         </div>
         <div className="m-4">
@@ -50,6 +59,23 @@ export default function CreateCourse() {
             id="link"
             type="text"
           />
+        </div>
+        <div className="m-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="platform"
+          >
+            Platform:
+          </label>
+          <select id="Platform" name="Platform" className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal">
+            <option value="Platzi">Platzi</option>
+            <option value="Udemy">Udemy</option>
+            <option value="Udacity">Udacity</option>
+            <option value="Edx">Edx</option>
+            <option value="Coursera">Coursera</option>
+            <option value="Acamica">Acamica</option>
+            <option value="Youtube">Youtube</option>
+          </select>
         </div>
         <div className="m-4 grid grid-rows-2">
           <button
