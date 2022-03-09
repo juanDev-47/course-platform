@@ -1,8 +1,6 @@
 import React from 'react';
 import safeJsonStringify from 'safe-json-stringify';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from 'config/prisma';
 
 export async function getServerSideProps() {
   const courses = await prisma.course.findMany();
