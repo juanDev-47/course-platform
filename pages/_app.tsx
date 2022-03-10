@@ -1,12 +1,20 @@
-import '/styles/globals.css';
+import React from 'react';
+import 'styles/globals.css';
 import type { AppProps } from 'next/app';
-import React from 'react'
+import { SessionProvider } from "next-auth/react"
+import PrivateLayout from 'layout/PrivateLayout';
+import Head from 'next/head';
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
   return (
-    <div className='bg-gray-900'>
-      <Component {...pageProps} />
-    </div>
+    <SessionProvider session={session}>
+      <Head>
+        <title>{pageProps.name} | Capacitations management </title>
+      </Head>
+      <PrivateLayout pageAuth={pageProps.auth}>
+        <Component {...pageProps} />        
+      </PrivateLayout>
+    </SessionProvider>
   );
 }
 
