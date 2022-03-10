@@ -6,8 +6,8 @@ import SelectAddAndRemove from 'components/SelectAddAndRemove';
 
 const formTrainigPlan = () => (
   <div>
-    <Form title='Form' textSubmit='Create'>
-      <div className='flex flex-col gap-4 w-[800px]'>
+    <Form title='Create trainig plan' textSubmit='Create'>
+      <div className='flex flex-col gap-4 w-[1000px]'>
         <Input type='text' text='Name' placeholder='Name' name='name' />
         <TextArea
           text='description'
