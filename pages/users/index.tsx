@@ -1,10 +1,16 @@
-import React from 'react'
+import React from 'react';
+import { matchRoles } from 'utils/matchRoles';
 
-export default function Home() {
-  return (
-    <h1 className='text-3xl text-blue-300 font-bold underline'>
-      desde users ;
-    </h1>
-  );
+export async function getServerSideProps(context: any) {
+  return {
+    props: { ...(await matchRoles(context)) },
+  };
 }
 
+const Index = () => (
+  <h1 className='text-3xl text-blue-300 font-bold underline'>
+    from users list
+  </h1>
+);
+
+export default Index;

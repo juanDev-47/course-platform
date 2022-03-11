@@ -1,4 +1,4 @@
-export interface TrainigPlan {
+export interface TrainingPlan {
   id: String;
   name: String;
   description: String;
