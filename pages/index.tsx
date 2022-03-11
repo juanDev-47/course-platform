@@ -1,5 +1,5 @@
-import React from 'react'
-import { matchRoles } from 'utils/matchRoles';
+import table from 'components/Table';
+import React from 'react';
 
 export async function getServerSideProps(context:any) {
   return {
@@ -9,9 +9,19 @@ export async function getServerSideProps(context:any) {
 
 const Home = () => {
   return (
-    <h1 className='text-3xl text-blue-300 font-bold underline'>
-      main page, (no needed (?) should show first page)
-    </h1>
+    <div>
+      <h1 className='text-3xl text-blue-300 font-bold underline'>
+        Hello world! ;
+      </h1>
+      <table
+        tittles={[
+          { title: 'hola', keyCol: 'hello', customClass: 'col-span-3' },
+          { title: 'mundo', keyCol: 'world' },
+        ]}
+        data={[]}
+        colsClass='grid-cols-5'
+      />
+    </div>
   );
 }
 
