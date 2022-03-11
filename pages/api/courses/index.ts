@@ -20,6 +20,7 @@ export default async function handler(  req: NextApiRequest,  res: NextApiRespon
                 link: data.link
             }
         })
+        res.status(200).json({dato: course});
     }
   
 }
