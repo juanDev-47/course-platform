@@ -126,9 +126,15 @@
     tslib "~2.3.0"
 
 "@graphql-tools/mock@^8.1.2":
+<<<<<<< HEAD
   version "8.5.2"
   resolved "https://registry.yarnpkg.com/@graphql-tools/mock/-/mock-8.5.2.tgz#c76d5fbe8dc87f6983f0e922d9a50f4410994dff"
   integrity sha512-5BosbTWkzo5tdxIqoqokGLDPmdTS1tE4QNm6a2ONlXz0MaynPRAQ8b2CcSy/c6r0lDmCdkLtbVrRtV6m/wE6Kw==
+=======
+  version "8.5.3"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/mock/-/mock-8.5.3.tgz#bf9fcf7b6085f08afcf67323653a462c4e3606e7"
+  integrity sha512-uvUZ2crfZVcoE5VG7FC5IEQHLoWgIIWg78PfjN5t07GC9AmbUqrqiUms2811Uge6mz+Am4k7wta1b/py4n7fzg==
+>>>>>>> b749e095f06477c21f4920157ba8b1bde08c427c
   dependencies:
     "@graphql-tools/schema" "^8.3.2"
     "@graphql-tools/utils" "^8.6.2"
@@ -595,10 +601,17 @@ apollo-server-caching@^3.3.0:
   dependencies:
     lru-cache "^6.0.0"
 
+<<<<<<< HEAD
 apollo-server-core@^3.6.3:
   version "3.6.3"
   resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-3.6.3.tgz#6b12ffa1af8bc8799930f72360090834915033d1"
   integrity sha512-TFJmAlI6vPp1MHOSXqYkE6leAyMekWv/D/3ma11uETkcd3EPjERGmxtTXPJElMVEkOK9BEElYKthCrH7bjYLuw==
+=======
+apollo-server-core@^3.6.4:
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-3.6.4.tgz#dcf3925173a8e9a501ed3975654cb2ed58af3710"
+  integrity sha512-zttpu/3IeDGhRgIGK84z9HwTgvETDl9zntXiQ0G1tBJgOhDvehSkMiOmy+FKR1HW9+94ao1Olz6ZIyhP0dvzSg==
+>>>>>>> b749e095f06477c21f4920157ba8b1bde08c427c
   dependencies:
     "@apollographql/apollo-tools" "^0.5.1"
     "@apollographql/graphql-playground-html" "1.6.29"
@@ -634,12 +647,21 @@ apollo-server-errors@^3.3.1:
   integrity sha512-xnZJ5QWs6FixHICXHxUfm+ZWqqxrNuPlQ+kj5m6RtEgIpekOPssH/SD9gf2B4HuWV0QozorrygwZnux8POvyPA==
 
 apollo-server-micro@^3.6.3:
+<<<<<<< HEAD
   version "3.6.3"
   resolved "https://registry.yarnpkg.com/apollo-server-micro/-/apollo-server-micro-3.6.3.tgz#302e02e0a71649a08a072b2edf1ddccf76555af2"
   integrity sha512-gY7c7kwSC/XcO3s4bdHZo/hUCTNCTBakOXjJEb1OQ6KMiMAusH/2qQOtSc+D0LHU3g8DLT035VBouqQm7x7DSA==
   dependencies:
     "@hapi/accept" "^5.0.2"
     apollo-server-core "^3.6.3"
+=======
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/apollo-server-micro/-/apollo-server-micro-3.6.4.tgz#ee85eecaedb1c0c550b0d0f499b4e3cce3201eab"
+  integrity sha512-wYMOIxtwevM6CxbOMpTDccc3ae/ChJp1XTb0TpBYJDKrEr4P+VFth0tbo4ZwBTjsYGdsxZ2nAyuMpUgMio/xHA==
+  dependencies:
+    "@hapi/accept" "^5.0.2"
+    apollo-server-core "^3.6.4"
+>>>>>>> b749e095f06477c21f4920157ba8b1bde08c427c
     apollo-server-types "^3.5.1"
     type-is "^1.6.18"
 
@@ -1916,6 +1938,7 @@ micromatch@^4.0.4:
     braces "^3.0.1"
     picomatch "^2.2.3"
 
+<<<<<<< HEAD
 mime-db@1.51.0:
   version "1.51.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.51.0.tgz#d9ff62451859b18342d960850dc3cfb77e63fb0c"
@@ -1927,6 +1950,19 @@ mime-types@~2.1.24:
   integrity sha512-6cP692WwGIs9XXdOO4++N+7qjqv0rqxxVvJ3VHPh/Sc9mVZcQP+ZGhkKiTvWMQRr2tbHkJP/Yn7Y0npb3ZBs4A==
   dependencies:
     mime-db "1.51.0"
+=======
+mime-db@1.52.0:
+  version "1.52.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.52.0.tgz#bbabcdc02859f4987301c856e3387ce5ec43bf70"
+  integrity sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==
+
+mime-types@~2.1.24:
+  version "2.1.35"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.35.tgz#381a871b62a734450660ae3deee44813f70d959a"
+  integrity sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==
+  dependencies:
+    mime-db "1.52.0"
+>>>>>>> b749e095f06477c21f4920157ba8b1bde08c427c
 
 minimatch@^3.0.4, minimatch@^3.1.2:
   version "3.1.2"

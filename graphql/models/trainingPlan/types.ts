@@ -5,22 +5,16 @@ const TrainingPlanTypes = gql`
     id: ID
     name: String
     description: String
+    Courses: [Course]
+    PlanComments: [PlanComment]
+    UserTrainingPlan: [UserTrainingPlan]
+    createdAt: Date
+    updatedAt: Date
   }
   type Query {
     getTrainingPlans: [TrainingPlan]
+    getTrainingPlan(id: ID!): TrainingPlan
   }
 `;
 
 export { TrainingPlanTypes };
-
-// Courses: [Course]
-// PlanComments: [PlanComment]
-// UserTrainingPlan: [UserTrainingPlan]
-// createdAt: Date
-// updatedAt: Date
-
-// type Mutation {
-//   createTrainingPlan(data: TrainingPlan!): TrainingPlan
-//   updateTrainingPlan(id: String!, data: TrainingPlan!): TrainingPlan
-//   deleteTrainingPlan(id: String!): TrainingPlan
-// }
