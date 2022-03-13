@@ -14,21 +14,23 @@ const TrainingPlanResolvers = {
           trainingPlanId: parent.id,
         },
       }),
-  },
-  Query: {
-    getTrainingPlans: async () =>
-      await prisma.trainingPlan.findMany({
-        include: {
-          Courses: true,
+    Courses: async (parent) =>
+      await prisma.course.findMany({
+        where: {
+          TrainingPlans: {
+            some: {
+              id: parent.id,
+            },
+          },
         },
       }),
+  },
+  Query: {
+    getTrainingPlans: async () => await prisma.trainingPlan.findMany({}),
     getTrainingPlan: async (parent, args) =>
       await prisma.trainingPlan.findUnique({
         where: {
           id: args.id,
-        },
-        include: {
-          Courses: true,
         },
       }),
   },
@@ -38,6 +40,9 @@ const TrainingPlanResolvers = {
       await prisma.trainingPlan.create({
         data: {
           ...args.data,
+          Courses: {
+            connect: [...args.data.Courses],
+          },
         },
       }),
     updateTrainingPlan: async (parent, args) =>

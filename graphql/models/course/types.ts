@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-micro';
 
-const CourceTypes = gql`
+const CourseTypes = gql`
   type Course {
     id: ID
     name: String
@@ -24,9 +24,9 @@ const CourceTypes = gql`
     Youtube
   }
   type Query {
-    getCources: [Course]
-    getCource(id: ID!): Course
+    getCourses: [Course]
+    getCourse(id: ID!): Course
   }
 `;
 
-export { CourceTypes };
+export { CourseTypes };

@@ -14,13 +14,17 @@ const TrainingPlanTypes = gql`
   input TrainingPlanCreateInput {
     name: String!
     description: String!
-    Courses: [Course]!
+    Courses: [CourseId]!
+  }
+
+  input CourseId {
+    id: ID!
   }
 
   input TrainingPlanUpdateInput {
-    name: String!
-    description: String!
-    Courses: [Course]!
+    name: StringEditField!
+    description: StringEditField!
+    Courses: [CourseId]
   }
 
   input TrainingPlanFilterId {
