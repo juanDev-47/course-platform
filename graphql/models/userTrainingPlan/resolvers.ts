@@ -3,7 +3,7 @@ import prisma from 'config/prisma';
 const UserTrainingPlanResolvers = {
   Query: {
     getUserTrainingPlans: async () => await prisma.userTrainingPlan.findMany(),
-    getUserTrainingPlan: async (args) =>
+    getUserTrainingPlan: async (parent, args) =>
       await prisma.userTrainingPlan.findUnique({
         where: {
           id: args.id,

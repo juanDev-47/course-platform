@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import prisma from 'config/prisma';
 
 const TrainingPlanResolvers = {
@@ -22,7 +23,7 @@ const TrainingPlanResolvers = {
           Courses: true,
         },
       }),
-    getTrainingPlan: async (args) =>
+    getTrainingPlan: async (parent, args) =>
       await prisma.trainingPlan.findUnique({
         where: {
           id: args.id,
