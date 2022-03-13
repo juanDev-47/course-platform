@@ -11,9 +11,34 @@ const TrainingPlanTypes = gql`
     createdAt: Date
     updatedAt: Date
   }
+  input TrainingPlanCreateInput {
+    name: String!
+    description: String!
+    Courses: [Course]!
+  }
+
+  input TrainingPlanUpdateInput {
+    name: String!
+    description: String!
+    Courses: [Course]!
+  }
+
+  input TrainingPlanFilterId {
+    id: ID!
+  }
+
   type Query {
     getTrainingPlans: [TrainingPlan]
     getTrainingPlan(id: ID!): TrainingPlan
+  }
+
+  type Mutation {
+    createTrainingPlan(data: TrainingPlanCreateInput!): TrainingPlan
+    updateTrainingPlan(
+      where: TrainingPlanFilterId!
+      data: TrainingPlanUpdateInput!
+    ): TrainingPlan
+    deleteTrainingPlan(where: TrainingPlanFilterId!): TrainingPlan
   }
 `;
 

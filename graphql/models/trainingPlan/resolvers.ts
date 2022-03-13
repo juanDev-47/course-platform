@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import prisma from 'config/prisma';
 
 const TrainingPlanResolvers = {
@@ -31,6 +30,26 @@ const TrainingPlanResolvers = {
         include: {
           Courses: true,
         },
+      }),
+  },
+
+  Mutation: {
+    createTrainingPlan: async (parent, args) =>
+      await prisma.trainingPlan.create({
+        data: {
+          ...args.data,
+        },
+      }),
+    updateTrainingPlan: async (parent, args) =>
+      await prisma.trainingPlan.update({
+        where: { ...args.where },
+        data: {
+          ...args.data,
+        },
+      }),
+    deleteTrainingPlan: async (parent, args) =>
+      await prisma.trainingPlan.delete({
+        where: { ...args.where },
       }),
   },
 };
