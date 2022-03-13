@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable spaced-comment */
 import 'reflect-metadata';
 import 'ts-tiny-invariant';
 import { ApolloServer } from 'apollo-server-micro';
 import Cors from 'micro-cors';
 import { types } from 'graphql/types';
 import { resolvers } from 'graphql/resolvers';
-//import { getSession } from 'next-auth/react';
 
 const cors = Cors({
   allowMethods: ['POST', 'OPTIONS', 'GET', 'HEAD'],
@@ -37,4 +34,6 @@ export default cors(async (req: any, res: any) => {
     res.end();
     return false;
   }
+
+  return functionHandler(req, res);
 });
