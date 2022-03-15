@@ -1,7 +1,7 @@
-import table from 'components/Table';
+import { matchRoles } from 'utils/matchRoles';
 import React from 'react';
 
-export async function getServerSideProps(context:any) {
+export async function getServerSideProps(context: any) {
   return {
     props: { ...(await matchRoles(context)) },
   };
@@ -15,6 +15,6 @@ const Home = () => {
       </h1>
     </div>
   );
-}
+};
 
-export default Home
+export default Home;
