@@ -12,6 +12,8 @@ import {
   HttpLink,
   ApolloProvider,
 } from '@apollo/client';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -30,7 +32,17 @@ const MyApp = ({
     <Head>
       <title>{pageProps.name} | Capacitations management </title>
     </Head>
-
+    <ToastContainer
+      position='top-center'
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
     <Component {...pageProps} />
   </ApolloProvider>
 );

@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
 import ListCource from 'components/ListCource';
-import { Course } from 'interfaces/TrainigPlan';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { Course } from 'interfaces/TrainingPlan';
 
-const SelectAddAndRemove = ({ availableCoursesParamet }) => {
-  const [selectCourses, setSelectCourses] = useState<Course[]>([]);
-  const [availableCourses, setAvailableCourses] = useState<Course[]>(
-    availableCoursesParamet
-  );
-
+const SelectAddAndRemove = ({
+  selectCourses,
+  setSelectCourses,
+  availableCoursesData,
+}: any) => {
+  const [availableCourses, setAvailableCourses] =
+    useState<Course[]>(availableCoursesData);
   const addCourse = (index: number) => {
     const cource: any = availableCourses[index];
     const updatedCources = [...availableCourses];
