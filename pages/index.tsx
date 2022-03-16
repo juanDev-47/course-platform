@@ -1,5 +1,5 @@
-import React from 'react';
 import { matchRoles } from 'utils/matchRoles';
+import React from 'react';
 
 export async function getServerSideProps(context: any) {
   return {
@@ -8,9 +8,11 @@ export async function getServerSideProps(context: any) {
 }
 
 const Home = () => (
-  <h1 className='text-3xl text-blue-300 font-bold underline'>
-    main page, (no needed (?) should show first page)
-  </h1>
+  <div>
+    <h1 className='text-3xl text-blue-300 font-bold underline'>
+      Hello world! ;
+    </h1>
+  </div>
 );
 
 export default Home;
