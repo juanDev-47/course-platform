@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server-micro';
 import { TrainingPlanTypes } from 'graphql/models/trainingPlan/types';
+import { CoursesTypes } from 'graphql/models/course/types';
 
 const genericTypes = gql`
   scalar Date
@@ -20,4 +21,4 @@ const genericTypes = gql`
   }
 `;
 
-export const types = [genericTypes, TrainingPlanTypes];
+export const types = [genericTypes, TrainingPlanTypes, CoursesTypes];
