@@ -5,8 +5,8 @@ export interface TrainingPlan {
   Courses: Course[];
 }
 
-export interface Course {
+export type Course = {
   id: String;
   name: String;
   platform: String;
-}
+};

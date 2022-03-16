@@ -1,36 +1,58 @@
-import ListCource from 'components/ListCource';
+import SelecAddAndRemList from '@components/SelecAddAndRemList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { Course } from 'interfaces/TrainingPlan';
+
+type Props = {
+  listSelect: any[];
+  setListSelect: React.Dispatch<React.SetStateAction<any[]>>;
+  listAvailable: any[];
+  setListAvailable: React.Dispatch<React.SetStateAction<any[]>>;
+};
 
 const SelectAddAndRemove = ({
-  selectCourses,
-  setSelectCourses,
-  availableCoursesData,
-}: any) => {
-  const [availableCourses, setAvailableCourses] =
-    useState<Course[]>(availableCoursesData);
-  const addCourse = (index: number) => {
-    const cource: any = availableCourses[index];
-    const updatedCources = [...availableCourses];
-    updatedCources.splice(index, 1);
-    setAvailableCourses(updatedCources);
-    setSelectCourses([...selectCourses, cource]);
+  listSelect,
+  setListSelect,
+  listAvailable,
+  setListAvailable,
+}: Props) => {
+  const changeItem = (
+    index: number,
+    listSource: any,
+    listChange: any,
+    setListSource: any,
+    setListChange: any
+  ) => {
+    const item: any = listSource[index];
+    const updatedListSource = [...listSource];
+    updatedListSource.splice(index, 1);
+    setListSource(updatedListSource);
+    setListChange([...listChange, item]);
   };
 
-  const removeCourse = (index: number) => {
-    const cource: any = selectCourses[index];
-    const updatedCources = [...selectCourses];
-    updatedCources.splice(index, 1);
-    setSelectCourses(updatedCources);
-    setAvailableCourses([...availableCourses, cource]);
+  const addItemSelect = (index: number) => {
+    changeItem(
+      index,
+      listAvailable,
+      listSelect,
+      setListAvailable,
+      setListSelect
+    );
+  };
+
+  const removeItemSelect = (index: number) => {
+    changeItem(
+      index,
+      listSelect,
+      listAvailable,
+      setListSelect,
+      setListAvailable
+    );
   };
   return (
     <div className='flex flex-row gap-5 w-full'>
       <div className='flex flex-col w-full gap-3 items-center'>
         <span className='font-semibold'>Selected courses</span>
-        <ListCource listCourse={selectCourses} onClick={removeCourse} />
+        <SelecAddAndRemList listItem={listSelect} onClick={removeItemSelect} />
       </div>
       <div className='flex flex-col place-content-center gap-3'>
         <span className='font-semibold'>Select</span>
@@ -38,7 +60,7 @@ const SelectAddAndRemove = ({
       </div>
       <div className='flex flex-col w-full gap-3 items-center'>
         <span className='font-semibold'>Available courses </span>
-        <ListCource listCourse={availableCourses} onClick={addCourse} />
+        <SelecAddAndRemList listItem={listAvailable} onClick={addItemSelect} />
       </div>
     </div>
   );

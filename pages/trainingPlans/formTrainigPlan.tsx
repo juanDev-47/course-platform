@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState } from 'react';
+/* eslint-disable no-console */
+import React, { useEffect, useState } from 'react';
 import Form from 'components/Form';
 import Input from 'components/Input';
 import TextArea from 'components/TextArea';
@@ -10,15 +11,30 @@ import { CREATE_TRAININGPLAN } from 'graphql/mutations/trainingPlan';
 import { Course } from 'interfaces/TrainingPlan';
 import Loading from '@components/Loading';
 import { toast } from 'react-toastify';
+import { matchRoles } from 'utils/matchRoles';
+
+export async function getServerSideProps(context: any) {
+  return {
+    props: { ...(await matchRoles(context)) },
+  };
+}
 
 const formTrainingPlan = () => {
   const { data, loading } = useQuery(GET_COURSES_FORMTRAINIGPLAN, {
     fetchPolicy: 'cache-and-network',
   });
   const [createTrainingPlan, res] = useMutation(CREATE_TRAININGPLAN);
+  const [availableCourses, setAvailableCourses] = useState<Course[]>([]);
   const [selectCourses, setSelectCourses] = useState<Course[]>([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
+
+  useEffect(() => {
+    if (!loading) {
+      setAvailableCourses(data.getCourses);
+    }
+  }, [loading]);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -68,9 +84,10 @@ const formTrainingPlan = () => {
             }}
           />
           <SelectAddAndRemove
-            selectCourses={selectCourses}
-            setSelectCourses={setSelectCourses}
-            availableCoursesData={data.getCourses}
+            listSelect={selectCourses}
+            setListSelect={setSelectCourses}
+            listAvailable={availableCourses}
+            setListAvailable={setAvailableCourses}
           />
         </div>
       </Form>

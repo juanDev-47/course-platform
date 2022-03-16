@@ -28,23 +28,31 @@ const MyApp = ({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) => (
-  <ApolloProvider client={client}>
-    <Head>
-      <title>{pageProps.name} | Capacitations management </title>
-    </Head>
-    <ToastContainer
-      position='top-center'
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-    />
-    <Component {...pageProps} />
-  </ApolloProvider>
+  <SessionProvider session={session}>
+    <ApolloProvider client={client}>
+      <Head>
+        <title>{pageProps.name} | Capacitations management </title>
+      </Head>
+      <ToastContainer
+        position='top-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      {
+        // <PrivateLayout pageAuth={pageProps.auth}>
+      }
+      <Component {...pageProps} />
+      {
+        // </PrivateLayout>
+      }
+    </ApolloProvider>
+  </SessionProvider>
 );
 
 export default MyApp;
