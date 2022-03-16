@@ -11,32 +11,30 @@ type Props = {
   data: any[]; // arreglo de datos
 };
 
-const Table = ({ tittles, colsClass, data }: Props) => {
-  return (
-    <div>
-      <div className='flex flex-col w-full gap-[2px] px-2 mb-5'>
-        <div
-          className={` grid ${
-            colsClass || 'grid-flow-col auto-cols-auto'
-          } items-center w-full px-3`}
-        >
-          {tittles.map((t) => (
-            <span className={`${t.customClass || ''}`} key={t.keyCol}>
-              {t.title}
-            </span>
-          ))}
-        </div>
+const Table = ({ tittles, colsClass, data }: Props) => (
+  <div>
+    <div className='flex flex-col w-full gap-[2px] px-2 mb-5'>
+      <div
+        className={` grid ${
+          colsClass || 'grid-flow-col auto-cols-auto'
+        } items-center w-full px-3`}
+      >
+        {tittles.map((t) => (
+          <span className={`${t.customClass || ''}`} key={t.keyCol}>
+            {t.title}
+          </span>
+        ))}
       </div>
-      {data.map((d) => (
-        <TableItem
-          key={d.id}
-          tittles={tittles}
-          colsClass={colsClass}
-          itemData={d}
-        />
-      ))}
     </div>
-  );
-};
+    {data.map((d) => (
+      <TableItem
+        key={d.id}
+        tittles={tittles}
+        colsClass={colsClass}
+        itemData={d}
+      />
+    ))}
+  </div>
+);
 
 export default Table;

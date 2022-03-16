@@ -29,12 +29,11 @@ const formTrainingPlan = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-
   useEffect(() => {
-    if (!loading) {
+    if (data) {
       setAvailableCourses(data.getCourses);
     }
-  }, [loading]);
+  }, [data]);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -79,11 +78,14 @@ const formTrainingPlan = () => {
             text='description'
             placeholder='description'
             value={description}
+            name='description'
             onChange={(e) => {
               setDescription(e.target.value);
             }}
           />
           <SelectAddAndRemove
+            titleSelect='Selected courses'
+            titleAvailable='Available courses'
             listSelect={selectCourses}
             setListSelect={setSelectCourses}
             listAvailable={availableCourses}

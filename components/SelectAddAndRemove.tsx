@@ -7,6 +7,8 @@ type Props = {
   setListSelect: React.Dispatch<React.SetStateAction<any[]>>;
   listAvailable: any[];
   setListAvailable: React.Dispatch<React.SetStateAction<any[]>>;
+  titleSelect: string;
+  titleAvailable: string;
 };
 
 const SelectAddAndRemove = ({
@@ -14,6 +16,8 @@ const SelectAddAndRemove = ({
   setListSelect,
   listAvailable,
   setListAvailable,
+  titleSelect,
+  titleAvailable,
 }: Props) => {
   const changeItem = (
     index: number,
@@ -51,7 +55,7 @@ const SelectAddAndRemove = ({
   return (
     <div className='flex flex-row gap-5 w-full'>
       <div className='flex flex-col w-full gap-3 items-center'>
-        <span className='font-semibold'>Selected courses</span>
+        <span className='font-semibold'>{titleSelect}</span>
         <SelecAddAndRemList listItem={listSelect} onClick={removeItemSelect} />
       </div>
       <div className='flex flex-col place-content-center gap-3'>
@@ -59,7 +63,7 @@ const SelectAddAndRemove = ({
         <FontAwesomeIcon icon={faArrowRightArrowLeft} />
       </div>
       <div className='flex flex-col w-full gap-3 items-center'>
-        <span className='font-semibold'>Available courses </span>
+        <span className='font-semibold'>{titleAvailable}</span>
         <SelecAddAndRemList listItem={listAvailable} onClick={addItemSelect} />
       </div>
     </div>
