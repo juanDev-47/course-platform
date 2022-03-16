@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import 'styles/globals.css';
 import type { AppProps } from 'next/app';
@@ -11,6 +12,8 @@ import {
   HttpLink,
   ApolloProvider,
 } from '@apollo/client';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -30,9 +33,24 @@ const MyApp = ({
       <Head>
         <title>{pageProps.name} | Capacitations management </title>
       </Head>
-      <PrivateLayout pageAuth={pageProps.auth}>
-        <Component {...pageProps} />
-      </PrivateLayout>
+      <ToastContainer
+        position='top-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      {
+        // <PrivateLayout pageAuth={pageProps.auth}>
+      }
+      <Component {...pageProps} />
+      {
+        // </PrivateLayout>
+      }
     </ApolloProvider>
   </SessionProvider>
 );
