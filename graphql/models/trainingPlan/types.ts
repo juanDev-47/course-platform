@@ -5,6 +5,7 @@ const TrainingPlanTypes = gql`
     id: ID
     name: String
     description: String
+    numberOfCourses: Int
     Courses: [Course]
     PlanComments: [PlanComment]
     UserTrainingPlan: [UserTrainingPlan]

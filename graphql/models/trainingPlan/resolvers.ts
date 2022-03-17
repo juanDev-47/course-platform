@@ -24,6 +24,16 @@ const TrainingPlanResolvers = {
           },
         },
       }),
+    numberOfCourses: async (parent) =>
+      await prisma.course.count({
+        where: {
+          TrainingPlans: {
+            some: {
+              id: parent.id,
+            },
+          },
+        },
+      }),
   },
   Query: {
     getTrainingPlans: async () => await prisma.trainingPlan.findMany({}),

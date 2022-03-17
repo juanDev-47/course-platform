@@ -12,7 +12,7 @@ type Props = {
   data: any[]; // arreglo de datos
   title: string;
   textButtonCreate: string;
-  onClickCreate?: () => {};
+  onClickCreate?: () => void;
 };
 
 const Table = ({
