@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import 'styles/globals.css';
 import type { AppProps } from 'next/app';
@@ -44,13 +43,9 @@ const MyApp = ({
         draggable
         pauseOnHover
       />
-      {
-        // <PrivateLayout pageAuth={pageProps.auth}>
-      }
-      <Component {...pageProps} />
-      {
-        // </PrivateLayout>
-      }
+      <PrivateLayout pageAuth={pageProps.auth}>
+        <Component {...pageProps} />
+      </PrivateLayout>
     </ApolloProvider>
   </SessionProvider>
 );
