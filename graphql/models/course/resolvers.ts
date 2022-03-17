@@ -1,11 +1,15 @@
 import prisma from 'config/prisma';
 
-const CoursesResolvers = {
+const CourseResolvers = {
   Query: {
-    getCourses: async () => (
-         await prisma.course.findMany()  
-    )
-    },
+    getCourses: async () => await prisma.course.findMany(),
+    getCourse: async (parent: any, args: { id: any; }) =>
+      await prisma.course.findUnique({
+        where: {
+          id: args.id,
+        },
+      }),
+  },
 };
 
-export { CoursesResolvers };
+export { CourseResolvers };
