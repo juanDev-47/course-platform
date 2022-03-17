@@ -10,6 +10,19 @@ const CourseResolvers = {
         },
       }),
   },
+  Mutation: {
+    createCourse: async (parent, args) => {
+      const newCourse = await prisma.course.create({
+        data:{
+          name: args.name,
+          hours: args.hours,
+          platform: args.platform,
+          link: args.link
+        }
+      });
+      return newCourse;
+    }
+  },
 };
 
 export { CourseResolvers };

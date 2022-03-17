@@ -27,6 +27,10 @@ const CourseTypes = gql`
     getCourses: [Course]
     getCourse(id: ID!): Course
   }
+
+  type Mutation {
+    createCourse(name: String!, hours: Int!, platform: String!, link: String!):Course
+  }
 `;
 
 export { CourseTypes };

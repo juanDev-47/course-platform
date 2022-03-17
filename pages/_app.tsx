@@ -11,7 +11,7 @@ import {
   HttpLink,
   ApolloProvider,
 } from '@apollo/client';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
 const client = new ApolloClient({
