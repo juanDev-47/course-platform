@@ -4,7 +4,7 @@ import Button from 'components/Button';
 type Props = {
   title: string;
   children: JSX.Element;
-  onCancel?: () => { void };
+  onCancel?: () => {};
   textSubmit: string;
   onSubmit: (e: any) => Promise<void>;
   ref?;

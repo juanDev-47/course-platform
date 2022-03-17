@@ -1,6 +1,6 @@
-import SelecAddAndRemList from '@components/SelecAddAndRemList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import SelecAddAndRemList from 'components/SelecAddAndRemList';
 
 type Props = {
   listSelect: any[];
@@ -9,6 +9,7 @@ type Props = {
   setListAvailable: React.Dispatch<React.SetStateAction<any[]>>;
   titleSelect: string;
   titleAvailable: string;
+  ItemComponent: ({ item, index, onClick }: any) => JSX.Element;
 };
 
 const SelectAddAndRemove = ({
@@ -18,6 +19,7 @@ const SelectAddAndRemove = ({
   setListAvailable,
   titleSelect,
   titleAvailable,
+  ItemComponent,
 }: Props) => {
   const changeItem = (
     index: number,
@@ -56,7 +58,11 @@ const SelectAddAndRemove = ({
     <div className='flex flex-row gap-5 w-full'>
       <div className='flex flex-col w-full gap-3 items-center'>
         <span className='font-semibold'>{titleSelect}</span>
-        <SelecAddAndRemList listItem={listSelect} onClick={removeItemSelect} />
+        <SelecAddAndRemList
+          listItem={listSelect}
+          onClick={removeItemSelect}
+          ItemComponent={ItemComponent}
+        />
       </div>
       <div className='flex flex-col place-content-center gap-3'>
         <span className='font-semibold'>Select</span>
@@ -64,7 +70,11 @@ const SelectAddAndRemove = ({
       </div>
       <div className='flex flex-col w-full gap-3 items-center'>
         <span className='font-semibold'>{titleAvailable}</span>
-        <SelecAddAndRemList listItem={listAvailable} onClick={addItemSelect} />
+        <SelecAddAndRemList
+          listItem={listAvailable}
+          onClick={addItemSelect}
+          ItemComponent={ItemComponent}
+        />
       </div>
     </div>
   );
