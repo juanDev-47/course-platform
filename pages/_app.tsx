@@ -43,6 +43,7 @@ const MyApp = ({
         draggable
         pauseOnHover
       />
+
       <PrivateLayout pageAuth={pageProps.auth}>
         <Component {...pageProps} />
       </PrivateLayout>
