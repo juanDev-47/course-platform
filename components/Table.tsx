@@ -1,5 +1,6 @@
 import React from 'react';
 import TableItem from 'components/TableItem';
+import Button from 'components/Button';
 
 type Props = {
   tittles: {
@@ -9,10 +10,30 @@ type Props = {
   }[];
   colsClass?: string; // enviar la clase de la cantidad de columnas aqui
   data: any[]; // arreglo de datos
+  title: string;
+  textButtonCreate?: string;
+  onClickCreate?: () => {};
 };
 
-const Table = ({ tittles, colsClass, data }: Props) => (
-  <div>
+const Table = ({
+  tittles,
+  colsClass,
+  data,
+  title,
+  textButtonCreate,
+  onClickCreate,
+}: Props) => (
+  <div className='px-5 py-3 bg-gray-100  rounded-3xl shadow-xl w-full'>
+    <div className='flex flex-row items-center justify-between pb-6 px-24'>
+      <h2 className='text-gray-600 font-semibold'>{title}</h2>
+      <div className='w-[200px]'>
+        <Button
+          isSubmit={false}
+          text={textButtonCreate}
+          onClick={onClickCreate}
+        />
+      </div>
+    </div>
     <div className='flex flex-col w-full gap-[2px] px-2 mb-5'>
       <div
         className={` grid ${

@@ -1,14 +1,13 @@
-import ListItem from 'components/ListItem';
-
 type Props = {
-  listItem: any[];
+  itemList: any[];
   onClick: (index: number) => void;
+  children: JSX.IntrinsicElements;
 };
 
-const SelecAddAndRemList = ({ listItem, onClick }: Props) => (
+const SelecAddAndRemList = ({ itemList, children, onClick }: Props) => (
   <div className='flex flex-col h-[400px] w-full gap-1 py-5 px-3 overflow-scroll  rounded-lg border-2 border-indigo-500'>
-    {listItem.map((item: any, index: number) => (
-      <ListItem key={item.id} item={item} index={index} onClick={onClick} />
+    {itemList.map((item: any, index: number) => (
+      <children key={item.id} item={item} index={index} onClick={onClick} />
     ))}
   </div>
 );
