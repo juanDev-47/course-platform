@@ -1,11 +1,12 @@
 import React from 'react'
 import Link from "next/link";
+import { matchRoles } from 'utils/matchRoles';
 
-export async function getServerSideProps() {
-    return {
-      props: {}, // will be passed to the page component as props
-    }
-  }
+export async function getServerSideProps(context: any) {
+  return {
+    props: { ...(await matchRoles(context)) },
+  };
+}
 
   
 export default function CreateCourse() {

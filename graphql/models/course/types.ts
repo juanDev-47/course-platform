@@ -7,7 +7,6 @@ const CoursesTypes = gql`
     link: String
     createdAt: Date
   }
-
   type Query {
     getCourses: [Course]
   }
