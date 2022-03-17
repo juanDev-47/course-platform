@@ -63,7 +63,7 @@ const formTrainingPlan = () => {
         textSubmit='Create'
         onSubmit={submitForm}
       >
-        <div className='flex flex-col gap-4 w-[1000px]'>
+        <div className='flex flex-col gap-4 w-[1200px]'>
           <Input
             type='text'
             text='Name'
