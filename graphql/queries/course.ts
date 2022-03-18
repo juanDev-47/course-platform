@@ -10,4 +10,6 @@ const GET_COURSES_FORMTRAINIGPLAN = gql`
   }
 `;
 
+
+
 export { GET_COURSES_FORMTRAINIGPLAN };
