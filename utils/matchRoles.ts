@@ -14,19 +14,19 @@ const matchRoles = async (context: any) => {
     },
   });
 
-  // const profile = await prisma.profile.findUnique({
-  //   where: {
-  //     userId: data?.user.id,
-  //   },
-  //   include: {
-  //     user: true,
-  //   },
-  // });
+  const user = await prisma.user.findUnique({
+    where: {
+      id: data?.user.id,
+    },
+    include: {
+      Profile: true,
+    },
+  });
 
   return {
     auth: page?.roles.map((rol) => rol.name).includes(userRole),
     name: page?.name,
-    user: profile,
+    user,
   };
 };
 export { matchRoles };
