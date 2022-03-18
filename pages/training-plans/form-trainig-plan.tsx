@@ -12,6 +12,8 @@ import Loading from 'components/Loading';
 import { toast } from 'react-toastify';
 import { matchRoles } from 'utils/matchRoles';
 import CourseItem from 'components/CourseItem';
+import { useRouter } from 'next/router';
+import { GET_TRAININGPLAN_BY_ID } from 'graphql/queries/trainingPlan';
 
 export async function getServerSideProps(context: any) {
   return {
@@ -19,15 +21,44 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const formTrainingPlan = () => {
+type Props = {
+  id: string;
+};
+
+const formTrainingPlan = ({ id = 'cl0wp06zn1595o8blso05ig04' }: Props) => {
   const { data, loading } = useQuery(GET_COURSES_FORMTRAINIGPLAN, {
     fetchPolicy: 'cache-and-network',
   });
+
   const [createTrainingPlan, res] = useMutation(CREATE_TRAININGPLAN);
   const [availableCourses, setAvailableCourses] = useState<Course[]>([]);
   const [selectCourses, setSelectCourses] = useState<Course[]>([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const router = useRouter();
+
+  let title: string;
+  let textSubmit: string;
+  let message: string;
+
+  if (id) {
+    title = 'Edit training plan';
+    textSubmit = 'Edit';
+    message = 'Training plan Edit successfully';
+    const resQuery = useQuery(GET_TRAININGPLAN_BY_ID, {
+      fetchPolicy: 'cache-and-network',
+      variables: {
+        getTrainingPlanId: id,
+      },
+    });
+
+    setName(resQuery.data.getTrainingPlan.name);
+    setDescription(resQuery.data.getTrainingPlan.description);
+  } else {
+    title = 'Create training plan';
+    textSubmit = 'Create';
+    message = 'Training plan created successfully';
+  }
 
   useEffect(() => {
     if (data) {
@@ -49,20 +80,16 @@ const formTrainingPlan = () => {
     if (res.error) {
       toast.error('Error');
     } else {
-      toast.success('Training plan created successfully');
+      router.push('/training-plans');
+      toast.success(message);
     }
   };
 
-  if (loading) return <Loading />;
-  if (res.loading) return <Loading />;
+  if (loading || res.loading) return <Loading />;
 
   return (
     <div>
-      <Form
-        title='Create trainig plan'
-        textSubmit='Create'
-        onSubmit={submitForm}
-      >
+      <Form title={title} textSubmit={textSubmit} onSubmit={submitForm}>
         <div className='flex flex-col gap-4 w-[1200px]'>
           <Input
             type='text'

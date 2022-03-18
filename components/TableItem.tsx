@@ -1,4 +1,5 @@
 import React from 'react';
+import TableActions from 'components/TableActions';
 
 type Props = {
   tittles: {
@@ -24,6 +25,7 @@ const tableItem = ({ itemData, tittles, colsClass, colsMobile }: Props) => (
         {itemData[t.keyCol]}
       </span>
     ))}
+    <TableActions id={itemData.id} />
   </div>
 );
 
