@@ -17,6 +17,7 @@ const matchRoles = async (context: any) => {
   return {
     auth: page?.roles.map((rol) => rol.name).includes(userRole),
     name: page?.name,
+    user: data?.user,
   };
 };
 export { matchRoles };

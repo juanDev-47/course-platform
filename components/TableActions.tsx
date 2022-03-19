@@ -3,7 +3,6 @@ import IconButton from 'components/IconButton';
 import { Dialog } from '@mui/material';
 import DeleteDialog from 'components/DeleteDialog';
 import { useActionsContext } from 'context/actionsContext';
-import { useRouter } from 'next/router';
 
 type Props = {
   id: string;
@@ -11,7 +10,6 @@ type Props = {
 
 const TableActions = ({ id }: Props) => {
   const actionsContext = useActionsContext();
-  const router = useRouter();
   const onDelete = async () => {
     actionsContext.onDelete(id);
   };

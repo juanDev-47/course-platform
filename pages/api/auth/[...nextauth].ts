@@ -14,6 +14,7 @@ export default NextAuth({
         include: {
           user: {
             include: {
+              Profile: true,
               role: true,
             },
           },

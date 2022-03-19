@@ -16,11 +16,12 @@ import CourseItem from 'components/CourseItem';
 import { useRouter } from 'next/router';
 import { GET_TRAININGPLAN_BY_ID } from 'graphql/queries/trainingPlan';
 
-// export async function getServerSideProps(context: any) {
-//   return {
-//     props: { ...(await matchRoles(context)) },
-//   };
-// }
+export async function getServerSideProps(context: any) {
+  const props = await matchRoles(context);
+  return {
+    props: JSON.parse(JSON.stringify(props)),
+  };
+}
 
 const formTrainingPlan = () => {
   const { data, loading } = useQuery(GET_COURSES_FORMTRAINIGPLAN, {

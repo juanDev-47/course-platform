@@ -2,8 +2,9 @@ import React from 'react';
 import { matchRoles } from 'utils/matchRoles';
 
 export async function getServerSideProps(context: any) {
+  const props = await matchRoles(context);
   return {
-    props: { ...(await matchRoles(context)) },
+    props: JSON.parse(JSON.stringify(props)),
   };
 }
 

@@ -29,7 +29,7 @@ const Form = ({
       {children}
 
       <div className='flex flex-row gap-3 mt-10'>
-        <Button isSubmit text={textSubmit} />
+        <Button isSubmit text={textSubmit || 'Save'} />
         <Button isSubmit={false} text='Cancel' onClick={onCancel} />
       </div>
     </div>
