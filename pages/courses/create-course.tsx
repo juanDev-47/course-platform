@@ -8,8 +8,9 @@ import { CREATE_COURSE } from 'graphql/mutations/courses';
 import { useMutation } from '@apollo/client';
 
 export async function getServerSideProps(context: any) {
+  const props = await matchRoles(context);
   return {
-    props: { ...(await matchRoles(context)) },
+    props: JSON.parse(JSON.stringify(props)),
   };
 }
 
