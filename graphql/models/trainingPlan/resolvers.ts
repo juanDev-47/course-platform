@@ -24,6 +24,16 @@ const TrainingPlanResolvers = {
           },
         },
       }),
+    AvailableCourses: async (parent) =>
+      await prisma.course.findMany({
+        where: {
+          TrainingPlans: {
+            none: {
+              id: parent.id,
+            },
+          },
+        },
+      }),
     numberOfCourses: async (parent) =>
       await prisma.course.count({
         where: {
@@ -60,6 +70,10 @@ const TrainingPlanResolvers = {
         where: { ...args.where },
         data: {
           ...args.data,
+          Courses: {
+            disconnect: {},
+            connect: [...args.data.Courses],
+          },
         },
       }),
     deleteTrainingPlan: async (parent, args) =>

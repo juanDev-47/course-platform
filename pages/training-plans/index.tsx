@@ -31,9 +31,9 @@ const index = () => {
     }
   };
 
-  const onEdit= (id: string) => {
+  const onEdit = (id: string) => {
     router.push(`/training-plans/form-trainig-plan/${id}`);
-  }
+  };
 
   const router = useRouter();
   const [dataR, setDataR] = useState([{}]);
@@ -50,7 +50,7 @@ const index = () => {
   }, [data]);
 
   const onClickCreate = () => {
-    router.push('/training-plans/form-trainig-plan');
+    router.push('/training-plans/form-trainig-plan/');
   };
 
   if (loading || resDelete.loading) return <Loading />;
@@ -63,7 +63,7 @@ const index = () => {
           textDelete: 'Delete',
           title: 'Delete training plan',
           onDelete,
-          onEdit
+          onEdit,
         }}
         title='Training Plans'
         textButtonCreate='New training Plan'

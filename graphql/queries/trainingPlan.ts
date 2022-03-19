@@ -10,9 +10,7 @@ const GET_TRAININGPLANS = gql`
   }
 `;
 
-export { GET_TRAININGPLANS };
-
-const GET_TRAININGPLAN_BY_ID = gql`
+const GET_TRAININGPLAN_EDIT = gql`
   query Query($getTrainingPlanId: ID!) {
     getTrainingPlan(id: $getTrainingPlanId) {
       name
@@ -22,8 +20,13 @@ const GET_TRAININGPLAN_BY_ID = gql`
         name
         platform
       }
+      AvailableCourses {
+        id
+        name
+        platform
+      }
     }
   }
 `;
 
-export { GET_TRAININGPLAN_BY_ID };
+export { GET_TRAININGPLAN_EDIT, GET_TRAININGPLANS };
