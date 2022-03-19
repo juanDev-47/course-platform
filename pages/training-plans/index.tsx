@@ -31,6 +31,10 @@ const index = () => {
     }
   };
 
+  const onEdit= (id: string) => {
+    router.push(`/training-plans/form-trainig-plan/${id}`);
+  }
+
   const router = useRouter();
   const [dataR, setDataR] = useState([{}]);
   useEffect(() => {
@@ -54,11 +58,12 @@ const index = () => {
   return (
     <div className='mt-52 mx-16'>
       <Table
-        dialogDeleteData={{
+        actionsContext={{
           question: 'Are you sure you want to delete this training plan? ',
           textDelete: 'Delete',
           title: 'Delete training plan',
           onDelete,
+          onEdit
         }}
         title='Training Plans'
         textButtonCreate='New training Plan'

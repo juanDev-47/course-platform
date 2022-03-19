@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import IconButton from 'components/IconButton';
 import { Dialog } from '@mui/material';
 import DeleteDialog from 'components/DeleteDialog';
-import { useDialogDelete } from 'context/dialogDelete';
+import { useActionsContext } from 'context/actionsContext';
 import { useRouter } from 'next/router';
 
 type Props = {
@@ -10,13 +10,13 @@ type Props = {
 };
 
 const TableActions = ({ id }: Props) => {
-  const dialogDeleteData = useDialogDelete();
+  const actionsContext = useActionsContext();
   const router = useRouter();
   const onDelete = async () => {
-    dialogDeleteData.onDelete(id);
+    actionsContext.onDelete(id);
   };
   const onEdit = () => {
-    router.push('/training-plans/form-trainig-plan');
+    actionsContext.onEdit(id);
   };
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const closeDialog = () => {

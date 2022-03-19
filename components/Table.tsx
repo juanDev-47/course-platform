@@ -1,8 +1,8 @@
 import React from 'react';
 import TableItem from 'components/TableItem';
 import Button from 'components/Button';
-import { DialogDeleteData } from 'interfaces/DialogDeleteData';
-import { DialogDeleteContext } from 'context/dialogDelete';
+import { ActionsContextType } from 'interfaces/ActionsContext';
+import { ActionsContext } from 'context/actionsContext';
 
 type Props = {
   tittles: {
@@ -15,7 +15,7 @@ type Props = {
   title: string;
   textButtonCreate: string;
   onClickCreate?: () => void;
-  dialogDeleteData: DialogDeleteData;
+  actionsContext: ActionsContextType;
 };
 
 const Table = ({
@@ -25,7 +25,7 @@ const Table = ({
   title,
   textButtonCreate,
   onClickCreate,
-  dialogDeleteData,
+  actionsContext,
 }: Props) => (
   <div className='px-5 pt-3 pb-12 bg-gray-100  rounded-3xl shadow-xl w-full'>
     <div className='flex flex-row items-center justify-between p-6 px-24'>
@@ -49,7 +49,7 @@ const Table = ({
         </span>
       ))}
     </div>
-    <DialogDeleteContext.Provider value={dialogDeleteData}>
+    <ActionsContext.Provider value={actionsContext}>
       {data.map((d) => (
         <TableItem
           key={d.id}
@@ -58,7 +58,7 @@ const Table = ({
           itemData={d}
         />
       ))}
-    </DialogDeleteContext.Provider>
+    </ActionsContext.Provider>
   </div>
 );
 

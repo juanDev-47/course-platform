@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from 'components/Button';
-import { useDialogDelete } from 'context/dialogDelete';
+import { useActionsContext } from 'context/actionsContext';
 
 type Props = {
   onDelete: () => void;
@@ -8,7 +8,7 @@ type Props = {
 };
 
 const DeleteDialog = ({ onDelete, closeDialog }: Props) => {
-  const dialogDeleteData = useDialogDelete();
+  const dialogDeleteData = useActionsContext();
   const cancel = () => {
     closeDialog();
   };

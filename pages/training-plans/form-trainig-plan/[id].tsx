@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from 'react';
 import Form from 'components/Form';
@@ -15,17 +16,13 @@ import CourseItem from 'components/CourseItem';
 import { useRouter } from 'next/router';
 import { GET_TRAININGPLAN_BY_ID } from 'graphql/queries/trainingPlan';
 
-export async function getServerSideProps(context: any) {
-  return {
-    props: { ...(await matchRoles(context)) },
-  };
-}
+// export async function getServerSideProps(context: any) {
+//   return {
+//     props: { ...(await matchRoles(context)) },
+//   };
+// }
 
-type Props = {
-  id: string;
-};
-
-const formTrainingPlan = ({ id = 'cl0wp06zn1595o8blso05ig04' }: Props) => {
+const formTrainingPlan = () => {
   const { data, loading } = useQuery(GET_COURSES_FORMTRAINIGPLAN, {
     fetchPolicy: 'cache-and-network',
   });
@@ -33,32 +30,42 @@ const formTrainingPlan = ({ id = 'cl0wp06zn1595o8blso05ig04' }: Props) => {
   const [createTrainingPlan, res] = useMutation(CREATE_TRAININGPLAN);
   const [availableCourses, setAvailableCourses] = useState<Course[]>([]);
   const [selectCourses, setSelectCourses] = useState<Course[]>([]);
+  const [dataForm, setDataForm] = useState<any>({});
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [id, setId] = useState('');
   const router = useRouter();
+  const idparam = router.query.id;
+  const resQuery = useQuery(GET_TRAININGPLAN_BY_ID, {
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      getTrainingPlanId: idparam,
+    },
+  });
+  useEffect(() => {
+    if (idparam) {
+      setId(idparam[0]);
+      console.log(id);
+      setDataForm({
+        title: 'Edit training plan',
+        textSubmit: 'Edit',
+        message: 'Training plan Edit successfully',
+      });
+    } else {
+      setDataForm({
+        title: 'Create training plan',
+        textSubmit: 'Create',
+        message: 'Training plan created successfully',
+      });
+    }
+  }, []);
 
-  let title: string;
-  let textSubmit: string;
-  let message: string;
-
-  if (id) {
-    title = 'Edit training plan';
-    textSubmit = 'Edit';
-    message = 'Training plan Edit successfully';
-    const resQuery = useQuery(GET_TRAININGPLAN_BY_ID, {
-      fetchPolicy: 'cache-and-network',
-      variables: {
-        getTrainingPlanId: id,
-      },
-    });
-
-    setName(resQuery.data.getTrainingPlan.name);
-    setDescription(resQuery.data.getTrainingPlan.description);
-  } else {
-    title = 'Create training plan';
-    textSubmit = 'Create';
-    message = 'Training plan created successfully';
-  }
+  useEffect(() => {
+    if (resQuery.data) {
+      setName(resQuery.data.getTrainingPlan.name);
+      setDescription(resQuery.data.getTrainingPlan.description);
+    }
+  }, [resQuery.data]);
 
   useEffect(() => {
     if (data) {
@@ -81,7 +88,7 @@ const formTrainingPlan = ({ id = 'cl0wp06zn1595o8blso05ig04' }: Props) => {
       toast.error('Error');
     } else {
       router.push('/training-plans');
-      toast.success(message);
+      toast.success(dataForm.message);
     }
   };
 
@@ -89,7 +96,11 @@ const formTrainingPlan = ({ id = 'cl0wp06zn1595o8blso05ig04' }: Props) => {
 
   return (
     <div>
-      <Form title={title} textSubmit={textSubmit} onSubmit={submitForm}>
+      <Form
+        title={dataForm.title}
+        textSubmit={dataForm.textSubmit}
+        onSubmit={submitForm}
+      >
         <div className='flex flex-col gap-4 w-[1200px]'>
           <Input
             type='text'
