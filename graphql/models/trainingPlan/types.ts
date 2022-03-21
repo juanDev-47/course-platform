@@ -5,12 +5,15 @@ const TrainingPlanTypes = gql`
     id: ID
     name: String
     description: String
+    numberOfCourses: Int
     Courses: [Course]
+    AvailableCourses: [Course]
     PlanComments: [PlanComment]
     UserTrainingPlan: [UserTrainingPlan]
     createdAt: Date
     updatedAt: Date
   }
+
   input TrainingPlanCreateInput {
     name: String!
     description: String!
