@@ -3,6 +3,7 @@ import TableItem from 'components/TableItem';
 import Button from 'components/Button';
 import { ActionsContextType } from 'interfaces/ActionsContext';
 import { ActionsContext } from 'context/actionsContext';
+import PrivateComponent from './PrivateComponent';
 
 type Props = {
   tittles: {
@@ -48,6 +49,9 @@ const Table = ({
           {t.title}
         </span>
       ))}
+      <PrivateComponent roleList={['Admin']}>
+        <span className=''>Actions</span>
+      </PrivateComponent>
     </div>
     <ActionsContext.Provider value={actionsContext}>
       {data.map((d) => (

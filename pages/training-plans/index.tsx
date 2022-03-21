@@ -87,10 +87,6 @@ const index = () => {
             title: 'Number of courses',
             keyCol: 'col2',
           },
-          {
-            title: 'Actions',
-            keyCol: 'col3',
-          },
         ]}
         data={dataR}
       />
