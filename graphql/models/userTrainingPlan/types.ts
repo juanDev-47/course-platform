@@ -13,7 +13,7 @@ const UserTrainingPlanTypes = gql`
   type Query {
     getUserTrainingPlans: [UserTrainingPlan]
     getUserTrainingPlan(id: ID!): UserTrainingPlan
-    getUserTrainingPlanByUser(id: ID!): [UserTrainingPlan]
+    getUserTrainingPlansByUser(id: ID!): [UserTrainingPlan]
   }
 `;
 

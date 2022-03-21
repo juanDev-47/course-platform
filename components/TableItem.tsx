@@ -21,8 +21,8 @@ type Props = {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const tableItem = ({ itemData, tittles, colsClass, colsMobile }: Props) => {
   const actionsContext = useTableContext();
-  const onClickItem = (id: string) => {
-    if (actionsContext.onClickItem) actionsContext.onClickItem(id);
+  const onClickItem = () => {
+    if (actionsContext.onClickItem) actionsContext.onClickItem(itemData.id);
   };
   return (
     <div

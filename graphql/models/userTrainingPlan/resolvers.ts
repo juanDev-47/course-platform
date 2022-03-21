@@ -3,25 +3,40 @@ import prisma from 'config/prisma';
 const UserTrainingPlanResolvers = {
   UserTrainingPlan: {
     progress: async (parent, args) => {
-      const { UserCourse } = await prisma.userTrainingPlan.findUnique({
+      const length = await prisma.userCourse.count({
         where: {
-          id: parent.id,
-        },
-        include: {
-          UserCourse: true,
+          userTraining: {
+            some: {
+              id: parent.id,
+            },
+          },
         },
       });
 
-      let finalizados = 0;
-      UserCourse.map((item) => {
-        if (item.finish) {
-          finalizados += 1;
-        }
+      const finishLength = await prisma.userCourse.count({
+        where: {
+          userTraining: {
+            some: {
+              id: parent.id,
+            },
+          },
+          finish: true,
+        },
       });
-      return finalizados / UserCourse.length;
+
+      return finishLength / length;
     },
+    UserCourse: async (parent, args) =>
+      await prisma.userCourse.findMany({
+        where: {
+          userTraining: {
+            some: {
+              id: parent.id,
+            },
+          },
+        },
+      }),
   },
-
   Query: {
     getUserTrainingPlans: async () => await prisma.userTrainingPlan.findMany(),
     getUserTrainingPlan: async (parent, args) =>
@@ -29,8 +44,11 @@ const UserTrainingPlanResolvers = {
         where: {
           id: args.id,
         },
+        include: {
+          trainingPlan: true,
+        },
       }),
-    getUserTrainingPlanByUser: async (parent, args) =>
+    getUserTrainingPlansByUser: async (parent, args) =>
       await prisma.userTrainingPlan.findMany({
         where: {
           userId: args.id,

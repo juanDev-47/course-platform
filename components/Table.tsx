@@ -32,7 +32,7 @@ const Table = ({
     question: '',
     textDelete: '',
     title: '',
-    onClickItem: ()=>{},
+    onClickItem: () => {},
   },
 }: Props) => (
   <div className='px-5 pt-3 pb-12 bg-gray-100  rounded-3xl shadow-xl w-full'>

@@ -2,17 +2,25 @@
 import { useQuery } from '@apollo/client';
 import Loading from '@components/Loading';
 import Table from 'components/Table';
-import { GET_USER_TRAINING_PLAN_BY_USER } from 'graphql/queries/userTrainingPlan';
+import { GET_USER_TRAINING_PLANS_BY_USER } from 'graphql/queries/userTrainingPlan';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { matchRoles } from 'utils/matchRoles';
+
+export async function getServerSideProps(context: any) {
+  const props = await matchRoles(context);
+  return {
+    props: JSON.parse(JSON.stringify(props)),
+  };
+}
 
 const userTrainingPlan = () => {
   const { data: session }: any = useSession();
-  const { data, loading } = useQuery(GET_USER_TRAINING_PLAN_BY_USER, {
+  const { data, loading } = useQuery(GET_USER_TRAINING_PLANS_BY_USER, {
     fetchPolicy: 'cache-and-network',
     variables: {
-      getUserTrainingPlanByUserId: session.userId,
+      getUserTrainingPlansByUserId: session.userId,
     },
   });
 
@@ -21,8 +29,8 @@ const userTrainingPlan = () => {
   useEffect(() => {
     if (data) {
       setDataR(
-        data.getUserTrainingPlanByUser.map((item: any) => ({
-          id: item.trainingPlan.id,
+        data.getUserTrainingPlansByUser.map((item: any) => ({
+          id: item.id,
           col1: item.trainingPlan.name,
           col2: item.trainingPlan.numberOfCourses,
           col3: item.progress,
@@ -31,7 +39,9 @@ const userTrainingPlan = () => {
     }
   }, [data]);
 
-  const onClickItem = (id: string) => {};
+  const onClickItem = (id: string) => {
+    router.push(`/training-plans/training-plan-details/${id}`);
+  };
 
   if (loading) return <Loading />;
 
