@@ -3,7 +3,7 @@ import TableItem from 'components/TableItem';
 import Button from 'components/Button';
 import { ActionsContextType } from 'interfaces/ActionsContext';
 import { ActionsContext } from 'context/actionsContext';
-import PrivateComponent from './PrivateComponent';
+import PrivateComponent from 'components/PrivateComponent';
 
 type Props = {
   tittles: {
