@@ -3,6 +3,7 @@ import TableItem from 'components/TableItem';
 import Button from 'components/Button';
 import { ActionsContextType } from 'interfaces/ActionsContext';
 import { ActionsContext } from 'context/actionsContext';
+import PrivateComponent from 'components/PrivateComponent';
 
 type Props = {
   tittles: {
@@ -31,11 +32,13 @@ const Table = ({
     <div className='flex flex-row items-center justify-between p-6 px-24'>
       <h2 className='text-gray-600 font-semibold'>{title}</h2>
       <div className='w-[200px]'>
-        <Button
-          isSubmit={false}
-          text={textButtonCreate}
-          onClick={onClickCreate}
-        />
+        <PrivateComponent roleList={['Admin']}>
+          <Button
+            isSubmit={false}
+            text={textButtonCreate}
+            onClick={onClickCreate}
+          />
+        </PrivateComponent>
       </div>
     </div>
     <div
@@ -48,6 +51,9 @@ const Table = ({
           {t.title}
         </span>
       ))}
+      <PrivateComponent roleList={['Admin']}>
+        <span className=''>Actions</span>
+      </PrivateComponent>
     </div>
     <ActionsContext.Provider value={actionsContext}>
       {data.map((d) => (

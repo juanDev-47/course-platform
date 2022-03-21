@@ -1,5 +1,6 @@
 import React from 'react';
 import TableActions from 'components/TableActions';
+import PrivateComponent from 'components/PrivateComponent';
 
 type Props = {
   tittles: {
@@ -25,7 +26,9 @@ const tableItem = ({ itemData, tittles, colsClass, colsMobile }: Props) => (
         {itemData[t.keyCol]}
       </span>
     ))}
-    <TableActions id={itemData.id} />
+    <PrivateComponent roleList={['Admin']}>
+      <TableActions id={itemData.id} />
+    </PrivateComponent>
   </div>
 );
 
