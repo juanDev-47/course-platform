@@ -5,6 +5,7 @@ import Loading from '@components/Loading';
 import Table from 'components/Table';
 import { DELETE_TRAININGPLAN } from 'graphql/mutations/trainingPlan';
 import { GET_TRAININGPLANS } from 'graphql/queries/trainingPlan';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
@@ -18,6 +19,13 @@ export async function getServerSideProps(context: any) {
 }
 
 const index = () => {
+  const { data: session }: any = useSession();
+  let GET_QUERY
+
+  useEffect(() => {
+    console.log(session);
+  }, []);
+
   const { data, loading } = useQuery(GET_TRAININGPLANS, {
     fetchPolicy: 'cache-and-network',
   });
@@ -67,7 +75,7 @@ const index = () => {
   return (
     <div className='mt-52 mx-16'>
       <Table
-        actionsContext={{
+        tableContext={{
           question: 'Are you sure you want to delete this training plan? ',
           textDelete: 'Delete',
           title: 'Delete training plan',

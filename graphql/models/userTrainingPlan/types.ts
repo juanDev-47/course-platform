@@ -5,6 +5,7 @@ const UserTrainingPlanTypes = gql`
     id: ID
     user: User
     trainingPlan: TrainingPlan
+    progress: Decimal
     UserCourse: [UserCourse]
     createdAt: Date
     updatedAt: Date
@@ -12,6 +13,7 @@ const UserTrainingPlanTypes = gql`
   type Query {
     getUserTrainingPlans: [UserTrainingPlan]
     getUserTrainingPlan(id: ID!): UserTrainingPlan
+    getUserTrainingPlanByUser(id: ID!): [UserTrainingPlan]
   }
 `;
 
