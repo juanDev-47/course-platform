@@ -32,11 +32,13 @@ const Table = ({
     <div className='flex flex-row items-center justify-between p-6 px-24'>
       <h2 className='text-gray-600 font-semibold'>{title}</h2>
       <div className='w-[200px]'>
-        <Button
-          isSubmit={false}
-          text={textButtonCreate}
-          onClick={onClickCreate}
-        />
+        <PrivateComponent roleList={['Admin']}>
+          <Button
+            isSubmit={false}
+            text={textButtonCreate}
+            onClick={onClickCreate}
+          />
+        </PrivateComponent>
       </div>
     </div>
     <div
