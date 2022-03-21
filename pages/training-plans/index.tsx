@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useMutation, useQuery } from '@apollo/client';
 import Loading from '@components/Loading';
@@ -7,6 +8,14 @@ import { GET_TRAININGPLANS } from 'graphql/queries/trainingPlan';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { matchRoles } from 'utils/matchRoles';
+
+export async function getServerSideProps(context: any) {
+  const props = await matchRoles(context);
+  return {
+    props: JSON.parse(JSON.stringify(props)),
+  };
+}
 
 const index = () => {
   const { data, loading } = useQuery(GET_TRAININGPLANS, {

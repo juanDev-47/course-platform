@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
@@ -5,13 +6,26 @@ import { UPDATE_TRAININGPLAN } from 'graphql/mutations/trainingPlan';
 import Loading from 'components/Loading';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { GET_TRAININGPLAN_EDIT } from 'graphql/queries/trainingPlan';
+import {
+  GET_TRAININGPLANS,
+  GET_TRAININGPLAN_EDIT,
+} from 'graphql/queries/trainingPlan';
 import FormTrainingPlan from '@components/FormTrainingPlan';
+import { matchRoles } from 'utils/matchRoles';
+
+export async function getServerSideProps(context: any) {
+  const props = await matchRoles(context);
+  return {
+    props: JSON.parse(JSON.stringify(props)),
+  };
+}
 
 const formTrainingPlan = () => {
   const router = useRouter();
   const { id } = router.query || '';
-  const [updateTrainingPlan, resUpdate] = useMutation(UPDATE_TRAININGPLAN);
+  const [updateTrainingPlan, resUpdate] = useMutation(UPDATE_TRAININGPLAN, {
+    refetchQueries: [GET_TRAININGPLANS],
+  });
   const resQuery = useQuery(GET_TRAININGPLAN_EDIT, {
     fetchPolicy: 'cache-and-network',
     variables: {
@@ -40,7 +54,7 @@ const formTrainingPlan = () => {
       toast.error('Error');
     } else {
       router.push('/training-plans');
-      toast.success('dataForm.message');
+      toast.success('Training plan edited successfully');
     }
   };
 

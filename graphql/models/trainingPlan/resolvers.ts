@@ -71,7 +71,7 @@ const TrainingPlanResolvers = {
         data: {
           ...args.data,
           Courses: {
-            disconnect: {},
+            set: [],
             connect: [...args.data.Courses],
           },
         },
