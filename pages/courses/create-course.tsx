@@ -7,12 +7,13 @@ import { useState } from 'react';
 // import { useQuery } from '@apollo/client';
 import { CREATE_COURSE } from 'graphql/mutations/courses';
 import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 
-export async function getServerSideProps(context: any) {
-  return {
-    props: { ...(await matchRoles(context)) },
-  };
-}
+// export async function getServerSideProps(context: any) {
+//   return {
+//     props: { ...(await matchRoles(context)) },
+//   };
+// }
 
 export default function CreateCourse() {
 
@@ -50,10 +51,16 @@ export default function CreateCourse() {
     });
   }
 
+  // returning course page
+  const router = useRouter();
+  const returnPage = () => {
+    router.push('/courses');
+  }
+
 
   return (
     <div >
-      <Form title='create course' textSubmit='Create' onSubmit={submitFormCourse}
+      <Form onCancel={returnPage} title='create course' textSubmit='Create' onSubmit={submitFormCourse}
 
       >
         <div className='flex flex-col md:w-[800px] gap-3'>

@@ -11,5 +11,15 @@ const GET_COURSES_FORMTRAINIGPLAN = gql`
 `;
 
 
+const GET_COURSES = gql`
+  query GetCourses {
+    getCourses {
+      id
+      name
+      platform
+
+    }
+  }
+`;
 
 export { GET_COURSES_FORMTRAINIGPLAN };

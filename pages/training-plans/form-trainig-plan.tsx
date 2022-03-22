@@ -13,11 +13,11 @@ import { toast } from 'react-toastify';
 import { matchRoles } from 'utils/matchRoles';
 import CourseItem from 'components/CourseItem';
 
-export async function getServerSideProps(context: any) {
-  return {
-    props: { ...(await matchRoles(context)) },
-  };
-}
+// export async function getServerSideProps(context: any) {
+//   return {
+//     props: { ...(await matchRoles(context)) },
+//   };
+// }
 
 const formTrainingPlan = () => {
   const { data, loading } = useQuery(GET_COURSES_FORMTRAINIGPLAN, {
