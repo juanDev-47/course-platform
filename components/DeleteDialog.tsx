@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from 'components/Button';
-import { useActionsContext } from 'context/actionsContext';
+import { useTableContext } from 'context/TableContext';
 
 type Props = {
   onDelete: () => void;
@@ -8,7 +8,7 @@ type Props = {
 };
 
 const DeleteDialog = ({ onDelete, closeDialog }: Props) => {
-  const dialogDeleteData = useActionsContext();
+  const tableContext = useTableContext();
   const cancel = () => {
     closeDialog();
   };
@@ -20,15 +20,15 @@ const DeleteDialog = ({ onDelete, closeDialog }: Props) => {
   return (
     <div className='flex flex-col items-center gap-10 px-20 py-8'>
       <h2 className='text-2xl text-gray-900 font-semibold'>
-        {dialogDeleteData.title}
+        {tableContext.title}
       </h2>
       <span className='text-gray-600 font-semibold text-lg'>
-        {dialogDeleteData.question}
+        {tableContext.question}
       </span>
       <div className='flex flex-row gap-5 w-full'>
         <Button
           isSubmit={false}
-          text={dialogDeleteData.textDelete}
+          text={tableContext.textDelete || ''}
           onClick={deleteFunction}
         />
         <Button isSubmit={false} text='Cancel' onClick={cancel} />

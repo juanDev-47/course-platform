@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import IconButton from 'components/IconButton';
 import { Dialog } from '@mui/material';
 import DeleteDialog from 'components/DeleteDialog';
-import { useActionsContext } from 'context/actionsContext';
+import { useTableContext } from 'context/TableContext';
 
 type Props = {
   id: string;
 };
 
 const TableActions = ({ id }: Props) => {
-  const actionsContext = useActionsContext();
+  const tableContext = useTableContext();
   const onDelete = async () => {
-    actionsContext.onDelete(id);
+    if(tableContext.onDelete) tableContext.onDelete(id);
   };
   const onEdit = () => {
-    actionsContext.onEdit(id);
+    if(tableContext.onEdit) tableContext.onEdit(id);
   };
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const closeDialog = () => {
