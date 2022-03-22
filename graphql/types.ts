@@ -9,6 +9,7 @@ import { UserTypes } from 'graphql/models/user/types';
 
 const genericTypes = gql`
   scalar Date
+  scalar Decimal
 
   input StringEditField {
     set: String

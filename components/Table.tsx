@@ -1,8 +1,8 @@
 import React from 'react';
 import TableItem from 'components/TableItem';
 import Button from 'components/Button';
-import { ActionsContextType } from 'interfaces/ActionsContext';
-import { ActionsContext } from 'context/actionsContext';
+import { TableContextType } from 'interfaces/TableContext';
+import { TableContext } from 'context/TableContext';
 import PrivateComponent from 'components/PrivateComponent';
 
 type Props = {
@@ -14,9 +14,9 @@ type Props = {
   colsClass?: string; // enviar la clase de la cantidad de columnas aqui
   data: any[]; // arreglo de datos
   title: string;
-  textButtonCreate: string;
+  textButtonCreate?: string;
   onClickCreate?: () => void;
-  actionsContext: ActionsContextType;
+  tableContext?: TableContextType;
 };
 
 const Table = ({
@@ -24,9 +24,16 @@ const Table = ({
   colsClass,
   data,
   title,
-  textButtonCreate,
+  textButtonCreate = '',
   onClickCreate,
-  actionsContext,
+  tableContext = {
+    onDelete: () => {},
+    onEdit: () => {},
+    question: '',
+    textDelete: '',
+    title: '',
+    onClickItem: () => {},
+  },
 }: Props) => (
   <div className='px-5 pt-3 pb-12 bg-gray-100  rounded-3xl shadow-xl w-full'>
     <div className='flex flex-row items-center justify-between p-6 px-24'>
@@ -55,7 +62,7 @@ const Table = ({
         <span className=''>Actions</span>
       </PrivateComponent>
     </div>
-    <ActionsContext.Provider value={actionsContext}>
+    <TableContext.Provider value={tableContext}>
       {data.map((d) => (
         <TableItem
           key={d.id}
@@ -64,7 +71,7 @@ const Table = ({
           itemData={d}
         />
       ))}
-    </ActionsContext.Provider>
+    </TableContext.Provider>
   </div>
 );
 
