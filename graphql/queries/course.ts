@@ -6,18 +6,7 @@ const GET_COURSES_FORMTRAINIGPLAN = gql`
       id
       name
       platform
-    }
-  }
-`;
-
-
-const GET_COURSES = gql`
-  query GetCourses {
-    getCourses {
-      id
-      name
-      platform
-
+      hours
     }
   }
 `;

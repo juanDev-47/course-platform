@@ -15,12 +15,20 @@ import { useRouter } from 'next/router';
 //   };
 // }
 
-export default function CreateCourse() {
-
+const CreateCourse = (id: String) => {
+  
   const [name, setName] = useState('');
   const [hours, setHours] = useState<number>(1);
   const [link, setLink] = useState('');
   const [platform, setPlatform] = useState('');
+
+  if(id) {
+
+  } else {
+
+  }
+
+
 
   // options for select input
   const [optionsPrioridad] = useState([
@@ -83,3 +91,6 @@ export default function CreateCourse() {
     </div>
   );
 }
+
+
+export default CreateCourse;

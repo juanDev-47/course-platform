@@ -1,8 +1,9 @@
+import { useQuery } from '@apollo/client';
 import Table from '@components/Table';
+import { GET_COURSES_FORMTRAINIGPLAN } from 'graphql/queries/course';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { matchRoles } from 'utils/matchRoles';
-// import prisma from 'config/prisma';
 
 // export async function getServerSideProps(context: any) {
 //   return {
@@ -10,20 +11,32 @@ import { matchRoles } from 'utils/matchRoles';
 //   };
 // }
 
-const index =  ({courses}:any) => {
-  // const { data } = useQuery(CREATE_COURSE);
+const index =  () => {
+
+  // query for bring the courses
+  const { data, loading } = useQuery(GET_COURSES_FORMTRAINIGPLAN, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   const router = useRouter();
   const onCreate = () => {
     router.push('/courses/create-course');
   }
 
-  const data = [{id: "kdjhfksd",
-          col1: "course 1",
-          col2: 3,
-          col3: "Youtube",
-          }]
+  // const data = [{id: "kdjhfksd",
+  //         col1: "course 1",
+  //         col2: 3,
+  //         col3: "Youtube",
+  //         }]
   
+  const deleteCourse = (id: String) => {
+    
+  }
+
+  
+  const editCourse = (id: String) => {
+    router.push('/courses/create-course');
+  }
 
   console.log(courses);
   return (
