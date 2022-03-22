@@ -1,6 +1,9 @@
 import React from 'react';
 import TableItem from 'components/TableItem';
 import Button from 'components/Button';
+import { ActionsContextType } from 'interfaces/ActionsContext';
+import { ActionsContext } from 'context/actionsContext';
+import PrivateComponent from 'components/PrivateComponent';
 
 type Props = {
   tittles: {
@@ -12,7 +15,8 @@ type Props = {
   data: any[]; // arreglo de datos
   title: string;
   textButtonCreate: string;
-  onClickCreate: () => {};
+  onClickCreate?: () => void;
+  actionsContext: ActionsContextType;
 };
 
 const Table = ({
@@ -22,16 +26,19 @@ const Table = ({
   title,
   textButtonCreate,
   onClickCreate,
+  actionsContext,
 }: Props) => (
   <div className='px-5 pt-3 pb-12 bg-gray-100  rounded-3xl shadow-xl w-full'>
     <div className='flex flex-row items-center justify-between p-6 px-24'>
       <h2 className='text-gray-600 font-semibold'>{title}</h2>
       <div className='w-[200px]'>
-        <Button
-          isSubmit={false}
-          text={textButtonCreate}
-          onClick={onClickCreate}
-        />
+        <PrivateComponent roleList={['Admin']}>
+          <Button
+            isSubmit={false}
+            text={textButtonCreate}
+            onClick={onClickCreate}
+          />
+        </PrivateComponent>
       </div>
     </div>
     <div
@@ -44,16 +51,20 @@ const Table = ({
           {t.title}
         </span>
       ))}
+      <PrivateComponent roleList={['Admin']}>
+        <span className=''>Actions</span>
+      </PrivateComponent>
     </div>
-
-    {data.map((d) => (
-      <TableItem
-        key={d.id}
-        tittles={tittles}
-        colsClass={colsClass}
-        itemData={d}
-      />
-    ))}
+    <ActionsContext.Provider value={actionsContext}>
+      {data.map((d) => (
+        <TableItem
+          key={d.id}
+          tittles={tittles}
+          colsClass={colsClass}
+          itemData={d}
+        />
+      ))}
+    </ActionsContext.Provider>
   </div>
 );
 
