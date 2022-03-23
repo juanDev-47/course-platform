@@ -2,19 +2,18 @@ import { matchRoles } from 'utils/matchRoles';
 import React from 'react';
 
 export async function getServerSideProps(context: any) {
+  const props = await matchRoles(context);
   return {
-    props: { ...(await matchRoles(context)) },
+    props: JSON.parse(JSON.stringify(props)),
   };
 }
 
-const Home = () => {
-  return (
-    <div>
-      <h1 className='text-3xl text-blue-300 font-bold underline'>
-        Hello world! ;
-      </h1>
-    </div>
-  );
-};
+const Home = () => (
+  <div>
+    <h1 className='text-3xl text-blue-300 font-bold underline'>
+      Hello world! ;
+    </h1>
+  </div>
+);
 
 export default Home;

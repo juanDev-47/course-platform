@@ -1,14 +1,24 @@
 import React from 'react';
 
-const TextArea = ({ text, name, placeholder }: any) => (
+type Props = {
+  text: string;
+  name: string;
+  placeholder: string;
+  value: string;
+  onChange: (e: any) => void;
+};
+
+const TextArea = ({ text, placeholder, value, name, onChange }: Props) => (
   <div className='flex flex-col w-full px-3'>
     <label htmlFor={name} className='text-xs font-semibold px-1'>
-      {text}
+      <span>{text}</span>
     </label>
     <textarea
-      rows={10}
+      rows={5}
       placeholder={placeholder}
       className='w-full px-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500'
+      value={value}
+      onChange={onChange}
     />
   </div>
 );

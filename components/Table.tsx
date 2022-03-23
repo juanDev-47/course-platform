@@ -1,5 +1,9 @@
 import React from 'react';
 import TableItem from 'components/TableItem';
+import Button from 'components/Button';
+import { TableContextType } from 'interfaces/TableContext';
+import { TableContext } from 'context/TableContext';
+import PrivateComponent from 'components/PrivateComponent';
 
 type Props = {
   tittles: {
@@ -9,24 +13,56 @@ type Props = {
   }[];
   colsClass?: string; // enviar la clase de la cantidad de columnas aqui
   data: any[]; // arreglo de datos
+  title: string;
+  textButtonCreate?: string;
+  onClickCreate?: () => void;
+  tableContext?: TableContextType;
 };
 
-const Table = ({ tittles, colsClass, data }: Props) => {
-  return (
-    <div>
-      <div className='flex flex-col w-full gap-[2px] px-2 mb-5'>
-        <div
-          className={` grid ${
-            colsClass || 'grid-flow-col auto-cols-auto'
-          } items-center w-full px-3`}
-        >
-          {tittles.map((t) => (
-            <span className={`${t.customClass || ''}`} key={t.keyCol}>
-              {t.title}
-            </span>
-          ))}
-        </div>
+const Table = ({
+  tittles,
+  colsClass,
+  data,
+  title,
+  textButtonCreate = '',
+  onClickCreate,
+  tableContext = {
+    onDelete: () => {},
+    onEdit: () => {},
+    question: '',
+    textDelete: '',
+    title: '',
+    onClickItem: () => {},
+  },
+}: Props) => (
+  <div className='px-5 pt-3 pb-12 bg-gray-100  rounded-3xl shadow-xl w-full'>
+    <div className='flex flex-row items-center justify-between p-6 px-24'>
+      <h2 className='text-gray-600 font-semibold'>{title}</h2>
+      <div className='w-[200px]'>
+        <PrivateComponent roleList={['Admin']}>
+          <Button
+            isSubmit={false}
+            text={textButtonCreate}
+            onClick={onClickCreate}
+          />
+        </PrivateComponent>
       </div>
+    </div>
+    <div
+      className={` grid ${
+        colsClass || 'grid-flow-col auto-cols-auto'
+      } px-3 py-3 border-b-2 border-gray-400 bg-gray-300 text-xs font-semibold text-gray-700 uppercase tracking-wider`}
+    >
+      {tittles.map((t) => (
+        <span className={`${t.customClass || ''}`} key={t.keyCol}>
+          {t.title}
+        </span>
+      ))}
+      <PrivateComponent roleList={['Admin']}>
+        <span className=''>Actions</span>
+      </PrivateComponent>
+    </div>
+    <TableContext.Provider value={tableContext}>
       {data.map((d) => (
         <TableItem
           key={d.id}
@@ -35,8 +71,8 @@ const Table = ({ tittles, colsClass, data }: Props) => {
           itemData={d}
         />
       ))}
-    </div>
-  );
-};
+    </TableContext.Provider>
+  </div>
+);
 
 export default Table;
