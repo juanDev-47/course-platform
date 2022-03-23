@@ -23,13 +23,26 @@ const CourseTypes = gql`
     Acamica
     Youtube
   }
+
+  input CourseCreateInput {
+    name: String!
+    hours: Int!
+    platform: String!
+    link: String!
+  }
+
+  input CourseFilterId {
+    id: ID!
+  }
+
   type Query {
     getCourses: [Course]
     getCourse(id: ID!): Course
   }
 
   type Mutation {
-    createCourse(name: String!, hours: Int!, platform: String!, link: String!):Course
+    createCourse(data: CourseCreateInput):Course
+    deleteCourse(where: CourseFilterId!): Course
   }
 `;
 

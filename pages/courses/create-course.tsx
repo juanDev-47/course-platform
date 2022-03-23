@@ -7,6 +7,8 @@ import Select from 'components/Select';
 import { CREATE_COURSE } from 'graphql/mutations/courses';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import { GET_COURSES_FORMTRAINIGPLAN } from 'graphql/queries/course';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -16,16 +18,12 @@ export async function getServerSideProps(context: any) {
 }
 
 const CreateCourse = () => {
+  const router = useRouter();  
   const [name, setName] = useState('');
   const [hours, setHours] = useState<number>(1);
   const [link, setLink] = useState('');
   const [platform, setPlatform] = useState('');
 
-  // if(id) {
-
-  // } else {
-
-  // }
 
 
 
@@ -42,7 +40,9 @@ const CreateCourse = () => {
 
   // queries
   // const { data } = useQuery(CREATE_COURSE);
-  const [createCourse, res] = useMutation(CREATE_COURSE);
+  const [createCourse, res] = useMutation(CREATE_COURSE, {
+    refetchQueries: [GET_COURSES_FORMTRAINIGPLAN],
+  });
 
   const submitFormCourse = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -50,16 +50,23 @@ const CreateCourse = () => {
     // usando el createCourse para enviar la informacion
     await createCourse({
       variables: {
-        name,
-        hours,
-        platform,
-        link,
+        data: {
+          name,
+          hours,
+          platform,
+          link,
+        }
       },
     });
+    if (res.error) {
+      toast.error('Error creating Course');
+    } else {
+      router.push('/courses');
+      toast.success('Course created successfully');
+    }
   }
 
-  // returning course page
-  const router = useRouter();
+
   const returnPage = () => {
     router.push('/courses');
   }

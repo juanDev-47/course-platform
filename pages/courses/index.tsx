@@ -1,10 +1,12 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import Table from '@components/Table';
 import { GET_COURSES_FORMTRAINIGPLAN } from 'graphql/queries/course';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { matchRoles } from 'utils/matchRoles';
 import { Course } from 'interfaces/TrainingPlan';
+import { toast } from 'react-toastify';
+import { DELETE_COURSE } from 'graphql/mutations/courses';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -22,10 +24,6 @@ const index = () => {
     fetchPolicy: 'cache-and-network',
   });
 
-  // datos convertidos para mostrar en la tabla
-  let dateForm: [] = [];
-
-
   useEffect(() => {
     if (data) {
       setAvailableCourses(data.getCourses);
@@ -42,8 +40,6 @@ const index = () => {
     }
     return item
   });
-  
-  console.log(availableCourses)
 
   // instance of useRouter for send params throught paths
   const router = useRouter();
@@ -51,21 +47,39 @@ const index = () => {
     router.push('/courses/create-course');
   }
   
-  const deleteCourse = (id: String) => {
-    
-  }
+  // deleting a course
+  const [deleteCourse, resDelete] = useMutation(DELETE_COURSE, {
+    refetchQueries: [GET_COURSES_FORMTRAINIGPLAN],
+  });  
+
+  const onDelete = async (idCourse: string) => {
+    await deleteCourse({
+      variables: {
+        where: {
+          id: idCourse,
+        },
+      },
+    });
+    if (resDelete.error) {
+      toast.error('Error');
+    } else {
+      toast.success('Course deleted successfully');
+    }
+  };
 
   
-  const editCourse = (id: string) => {
-    router.push({
-      pathname: '/courses/create-course',
-      query: { keyWord: id}
-    });
+  const onEdit = (id: string) => {
+    router.push(`/courses/${id}`);
   }
 
-  // console.log(courses);  actionsContext={ActionsContext}
   return (
-    <Table  data={dataForm} title='Courses' tittles={[
+    <Table tableContext={{title:'Delete Course',
+                          question:'Are you sure you want to delete this course?',
+                          textDelete: 'Delete',
+                          onDelete,
+                          onEdit
+                                                  
+  }}  data={dataForm} title='Courses' tittles={[
       {
         title: 'Name',
         keyCol: 'col1',

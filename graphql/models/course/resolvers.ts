@@ -13,15 +13,18 @@ const CourseResolvers = {
   Mutation: {
     createCourse: async (parent, args) => {
       const newCourse = await prisma.course.create({
-        data: {
-          name: args.name,
-          hours: args.hours,
-          platform: args.platform,
-          link: args.link,
-        },
+        data:{
+          ...args.data
+        }
       });
       return newCourse;
     },
+
+    deleteCourse: async (parent, args) =>
+      await prisma.course.delete({
+        where: { ...args.where },
+      }),
+
   },
 };
 
