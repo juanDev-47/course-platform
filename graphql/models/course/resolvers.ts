@@ -20,6 +20,14 @@ const CourseResolvers = {
       return newCourse;
     },
 
+    updateCourse: async (parent, args) => 
+      await prisma.course.update({
+        where: { ...args.where },
+        data: {
+          ...args.data,
+        },
+      }), 
+
     deleteCourse: async (parent, args) =>
       await prisma.course.delete({
         where: { ...args.where },

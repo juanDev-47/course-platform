@@ -16,4 +16,13 @@ const DELETE_COURSE = gql`
   }
 `;
 
-export { CREATE_COURSE, DELETE_COURSE };
+const UPDATE_COURSE = gql`
+  mutation UpdateCourse($where: CourseFilterId!, $data: CourseUpdateInput!) {
+    updateCourse(where: $where, data: $data) {
+      id
+      name
+    }
+  }
+`
+
+export { CREATE_COURSE, DELETE_COURSE, UPDATE_COURSE };

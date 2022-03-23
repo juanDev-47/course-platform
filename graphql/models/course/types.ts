@@ -35,6 +35,13 @@ const CourseTypes = gql`
     id: ID!
   }
 
+  input CourseUpdateInput {
+    name: StringEditField!
+    hours: IntEditField
+    link: StringEditField
+    platform: StringEditField
+  }
+
   type Query {
     getCourses: [Course]
     getCourse(id: ID!): Course
@@ -43,6 +50,10 @@ const CourseTypes = gql`
   type Mutation {
     createCourse(data: CourseCreateInput):Course
     deleteCourse(where: CourseFilterId!): Course
+    updateCourse(
+      where: CourseFilterId!
+      data: CourseUpdateInput!
+    ): Course
   }
 `;
 
