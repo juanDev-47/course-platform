@@ -1,4 +1,3 @@
-/* eslint-disable spaced-comment */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useMutation, useQuery } from '@apollo/client';
 import FormTrainingPlan from '@components/FormTrainingPlan';

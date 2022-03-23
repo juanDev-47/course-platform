@@ -1,8 +1,6 @@
 import prisma from 'config/prisma';
 
 const UserTrainingPlanResolvers = {
-<<<<<<< Updated upstream
-=======
   UserTrainingPlan: {
     progress: async (parent, args) => {
       const length = await prisma.userCourse.count({
@@ -39,13 +37,24 @@ const UserTrainingPlanResolvers = {
         },
       }),
   },
->>>>>>> Stashed changes
   Query: {
     getUserTrainingPlans: async () => await prisma.userTrainingPlan.findMany(),
     getUserTrainingPlan: async (parent, args) =>
       await prisma.userTrainingPlan.findUnique({
         where: {
           id: args.id,
+        },
+        include: {
+          trainingPlan: true,
+        },
+      }),
+    getUserTrainingPlansByUser: async (parent, args) =>
+      await prisma.userTrainingPlan.findMany({
+        where: {
+          userId: args.id,
+        },
+        include: {
+          trainingPlan: true,
         },
       }),
   },

@@ -65,7 +65,7 @@ const Index = () => {
   return (
     <div className='mx-2 my-10 md:mx-16'>
       <Table
-        actionsContext={{
+        tableContext={{
           question: 'Are you sure you want to delete this training plan? ',
           textDelete: 'Delete',
           title: 'Delete training plan',

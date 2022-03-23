@@ -1,4 +1,3 @@
-/* eslint-disable spaced-comment */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
