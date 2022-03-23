@@ -1,5 +1,3 @@
-/* eslint-disable spaced-comment */
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useMutation, useQuery } from '@apollo/client';
 import Loading from '@components/Loading';
 import Table from 'components/Table';
@@ -17,7 +15,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const index = () => {
+const Index = () => {
   const { data, loading } = useQuery(GET_TRAININGPLANS, {
     fetchPolicy: 'cache-and-network',
   });
@@ -41,7 +39,7 @@ const index = () => {
   };
 
   const onEdit = (id: string) => {
-    router.push(`/training-plans/form-trainig-plan/${id}`);
+    router.push(`/training-plans/form-training-plan/${id}`);
   };
 
   const router = useRouter();
@@ -59,13 +57,13 @@ const index = () => {
   }, [data]);
 
   const onClickCreate = () => {
-    router.push('/training-plans/form-trainig-plan/');
+    router.push('/training-plans/form-training-plan/');
   };
 
   if (loading || resDelete.loading) return <Loading />;
 
   return (
-    <div className='mt-52 mx-16'>
+    <div className='mx-2 my-10 md:mx-16'>
       <Table
         actionsContext={{
           question: 'Are you sure you want to delete this training plan? ',
@@ -94,4 +92,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

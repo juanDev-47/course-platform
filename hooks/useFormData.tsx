@@ -4,6 +4,7 @@ const useFormData = (initial: any) => {
   const form = useRef(initial);
   const [formData, setFormData] = useState({} as any);
   const getFormData: any = () => {
+    console.log(form.current);
     const fd = new FormData(form.current);
     const obj = {};
     fd.forEach((value, key) => {

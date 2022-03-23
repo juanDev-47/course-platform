@@ -4,6 +4,7 @@ import Button from 'components/Button';
 import { ActionsContextType } from 'interfaces/ActionsContext';
 import { ActionsContext } from 'context/actionsContext';
 import PrivateComponent from 'components/PrivateComponent';
+import { nanoid } from 'nanoid';
 
 type Props = {
   tittles: {
@@ -28,8 +29,8 @@ const Table = ({
   onClickCreate,
   actionsContext,
 }: Props) => (
-  <div className='px-5 pt-3 pb-12 bg-gray-100  rounded-3xl shadow-xl w-full'>
-    <div className='flex flex-row items-center justify-between p-6 px-24'>
+  <div className='md:px-5 pt-3 pb-12 bg-gray-100  rounded-3xl shadow-xl w-full'>
+    <div className='flex flex-row items-center justify-between p-5 py-6 md:px-24'>
       <h2 className='text-gray-600 font-semibold'>{title}</h2>
       <div className='w-[200px]'>
         <PrivateComponent roleList={['Admin']}>
@@ -58,7 +59,7 @@ const Table = ({
     <ActionsContext.Provider value={actionsContext}>
       {data.map((d) => (
         <TableItem
-          key={d.id}
+          key={nanoid()}
           tittles={tittles}
           colsClass={colsClass}
           itemData={d}
