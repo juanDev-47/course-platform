@@ -59,7 +59,7 @@ const SelectAddAndRemove = ({
       <div className='flex flex-col w-full gap-3 items-center'>
         <span className='font-semibold'>{titleSelect}</span>
         <SelecAddAndRemList
-          listItem={listSelect}
+          itemList={listSelect}
           onClick={removeItemSelect}
           ItemComponent={ItemComponent}
         />
@@ -71,7 +71,7 @@ const SelectAddAndRemove = ({
       <div className='flex flex-col w-full gap-3 items-center'>
         <span className='font-semibold'>{titleAvailable}</span>
         <SelecAddAndRemList
-          listItem={listAvailable}
+          itemList={listAvailable}
           onClick={addItemSelect}
           ItemComponent={ItemComponent}
         />
