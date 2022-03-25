@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 import Button from 'components/Button';
 import PrivateComponent from 'components/PrivateComponent';
+import Image from 'next/image';
 
 type Props = {
   title: string;
@@ -32,11 +32,11 @@ const CommentDiv = ({
       <PrivateComponent roleList={['Employee']}>
         <div className='flex flex-col my-1 rounded-lg border-2 px-3 py-2 border-b border-gray-400 bg-slate-200 text-sm gap-2 items-center'>
           <div className='flex flex-row gap-8 w-full'>
-            <img
+            <Image
               src={imageUser}
               alt='profile'
-              width='60'
-              height='50'
+              width={60}
+              height={50}
               className='border-2 border-gray-400'
             />
             <input

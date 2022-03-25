@@ -66,13 +66,13 @@ const TrainingPlanDetails = () => {
     });
   };
 
-  if (loading) return <Loading />;
+  if (loading || resCreate) return <Loading />;
 
   return (
-    <div className='mt-8 mx-16 flex flex-col gap-5'>
+    <div className='mt-8 flex flex-col gap-5 mx-1 sm:mx-5 lg:mx-16 my-10 overflow-hidden'>
       <DetailDiv title={data.getUserTrainingPlan.trainingPlan.name}>
         <div className='flex flex-col gap-5 w-full'>
-          <div className='flex flex-row justify-around gap-5 w-full'>
+          <div className='flex flex-col sm:flex-row justify-around gap-5 w-full'>
             <DetailSpan
               title='Number of courses'
               data={data.getUserTrainingPlan.trainingPlan.numberOfCourses}
@@ -113,6 +113,7 @@ const TrainingPlanDetails = () => {
             keyCol: 'col5',
           },
         ]}
+        colsClass='grid-cols-4'
         data={dataR}
       />
 

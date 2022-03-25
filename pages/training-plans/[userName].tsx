@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useQuery } from '@apollo/client';
 import Loading from '@components/Loading';
 import Table from 'components/Table';
@@ -15,7 +14,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const userTrainingPlan = () => {
+const UserTrainingPlan = () => {
   const { data: session }: any = useSession();
   const { data, loading } = useQuery(GET_USER_TRAINING_PLANS_BY_USER, {
     fetchPolicy: 'cache-and-network',
@@ -33,7 +32,7 @@ const userTrainingPlan = () => {
           id: item.id,
           col1: item.trainingPlan.name,
           col2: item.trainingPlan.numberOfCourses,
-          col3: item.progress,
+          col3: `${item.progress}%`,
         }))
       );
     }
@@ -46,12 +45,13 @@ const userTrainingPlan = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className='mt-52 mx-16'>
+    <div className='mx-1 sm:mx-5 lg:mx-16 my-10'>
       <Table
         tableContext={{
           onClickItem,
         }}
         title='Training Plans'
+        colsClass='grid-cols-4'
         tittles={[
           {
             title: 'Name',
@@ -73,4 +73,4 @@ const userTrainingPlan = () => {
   );
 };
 
-export default userTrainingPlan;
+export default UserTrainingPlan;

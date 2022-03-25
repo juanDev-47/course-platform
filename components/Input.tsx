@@ -5,11 +5,20 @@ type Props = {
   name: string;
   placeholder: string;
   type: string;
-  value: string;
-  onChange: (e: any) => void;
+  value?: string;
+  isRequired?: boolean;
+  onChange?: (e: any) => void;
 };
 
-const input = ({ text, name, placeholder, type, value, onChange }: Props) => (
+const input = ({
+  text,
+  name,
+  placeholder,
+  type,
+  value,
+  isRequired,
+  onChange,
+}: Props) => (
   <div className='flex flex-col w-full px-3'>
     <label htmlFor={name} className='text-xs font-semibold px-1'>
       <span>{text}</span>
@@ -22,6 +31,7 @@ const input = ({ text, name, placeholder, type, value, onChange }: Props) => (
       onChange={onChange}
       name={name}
       id={name}
+      required={isRequired}
     />
   </div>
 );
