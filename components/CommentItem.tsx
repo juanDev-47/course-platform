@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 type Props = {
   itemData: any;
@@ -6,7 +7,7 @@ type Props = {
 
 const CommentItem = ({ itemData }: Props) => (
   <div className='flex flex-row my-1 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-sm gap-8 items-center'>
-    <img
+    <Image
       src={itemData.user.image}
       alt='profile'
       width='60'
