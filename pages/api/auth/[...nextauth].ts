@@ -14,8 +14,16 @@ export default NextAuth({
         include: {
           user: {
             include: {
-              Profile: true,
+              profile: true,
               role: true,
+              accounts: {
+                select: {
+                  providerAccountId: true,
+                },
+                where: {
+                  userId: session.user.id,
+                },
+              },
             },
           },
         },
