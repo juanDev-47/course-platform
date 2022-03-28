@@ -15,7 +15,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const index = () => {
+const Index = () => {
 
   const [availableCourses, setAvailableCourses] = useState<Course[]>([]);
   
@@ -96,4 +96,4 @@ const index = () => {
   );
 }
 
-export default index;
+export default Index;

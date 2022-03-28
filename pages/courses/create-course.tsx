@@ -39,7 +39,6 @@ const CreateCourse = () => {
   ]);
 
   // queries
-  // const { data } = useQuery(CREATE_COURSE);
   const [createCourse, res] = useMutation(CREATE_COURSE, {
     refetchQueries: [GET_COURSES_FORMTRAINIGPLAN],
   });

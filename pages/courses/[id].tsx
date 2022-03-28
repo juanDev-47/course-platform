@@ -33,7 +33,6 @@ const formUpdateCourse = () => {
         getCourseId: id,
     },
   });  
-  console.log(resQuery);
 
   // setting values in form
   const [name, setName] = useState('');
@@ -60,7 +59,7 @@ const formUpdateCourse = () => {
   const submitFormCourse = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    // usando el createCourse para enviar la informacion
+    // using createCourse for send info
     await updateCourse({
         variables: {
             where: {
@@ -142,7 +141,6 @@ const formUpdateCourse = () => {
               setLink(e.target.value);
             }}
           />
-          {/* crear componente select */}
           <Select
             title='platform'
             options={optionsPrioridad}
