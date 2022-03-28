@@ -1,6 +1,7 @@
 import React from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import NavBar from 'components/Navbar';
+import Loading from '@components/Loading';
 
 const PrivateLayout = ({ pageAuth, children }: any) => {
   const { data: session, status } = useSession();
@@ -25,7 +26,5 @@ const PrivateLayout = ({ pageAuth, children }: any) => {
     </div>
   );
 };
-
-const Loading = () => <div>Loading ...</div>;
 
 export default PrivateLayout;

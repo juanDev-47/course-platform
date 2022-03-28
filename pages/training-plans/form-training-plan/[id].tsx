@@ -3,13 +3,13 @@ import { useQuery, useMutation } from '@apollo/client';
 import { UPDATE_TRAININGPLAN } from 'graphql/mutations/trainingPlan';
 import Loading from 'components/Loading';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 import {
   GET_TRAININGPLANS,
   GET_TRAININGPLAN_EDIT,
 } from 'graphql/queries/trainingPlan';
 import FormTrainingPlan from '@components/FormTrainingPlan';
 import { matchRoles } from 'utils/matchRoles';
+import useRedirect from 'hooks/useRedirect';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -19,8 +19,8 @@ export async function getServerSideProps(context: any) {
 }
 
 const FormTrainingPlanEdit = () => {
-  const router = useRouter();
-  const { id } = router.query || '';
+  const { loading, router, push } = useRedirect();
+  const id = router.query ? router.query.id : '';
   const [updateTrainingPlan, resUpdate] = useMutation(UPDATE_TRAININGPLAN, {
     refetchQueries: [GET_TRAININGPLANS],
   });
@@ -51,12 +51,12 @@ const FormTrainingPlanEdit = () => {
     if (resUpdate.error) {
       toast.error('Error');
     } else {
-      router.push('/training-plans');
+      push('/training-plans');
       toast.success('Training plan edited successfully');
     }
   };
 
-  if (resUpdate.loading || resQuery.loading) return <Loading />;
+  if (resQuery.loading || loading || resUpdate.loading) return <Loading />;
 
   return (
     <FormTrainingPlan
