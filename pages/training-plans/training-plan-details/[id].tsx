@@ -7,8 +7,8 @@ import Loading from '@components/Loading';
 import Table from '@components/Table';
 import { CREATE_PLAN_COMMENT } from 'graphql/mutations/planComment';
 import { GET_USER_TRAINING_PLAN_ID } from 'graphql/queries/userTrainingPlan';
+import useRedirect from 'hooks/useRedirect';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { matchRoles } from 'utils/matchRoles';
 
@@ -20,13 +20,13 @@ export async function getServerSideProps(context: any) {
 }
 
 const TrainingPlanDetails = () => {
-  const router = useRouter();
-  const id = router.query ? router.query.id : '';
+  const { loading, router, push } = useRedirect();
+  const idTrainingPlan = router.query ? router.query.id : '';
 
-  const { data, loading } = useQuery(GET_USER_TRAINING_PLAN_ID, {
+  const resQuery = useQuery(GET_USER_TRAINING_PLAN_ID, {
     fetchPolicy: 'cache-and-network',
     variables: {
-      getUserTrainingPlanId: id,
+      getUserTrainingPlanId: idTrainingPlan,
     },
   });
 
@@ -36,9 +36,9 @@ const TrainingPlanDetails = () => {
   const { data: session }: any = useSession();
   const [dataR, setDataR] = useState([{}]);
   useEffect(() => {
-    if (data) {
+    if (resQuery.data) {
       setDataR(
-        data.getUserTrainingPlan.UserCourse.map((item: any) => ({
+        resQuery.data.getUserTrainingPlan.UserCourse.map((item: any) => ({
           id: item.id,
           col1: item.course.name,
           col2: item.course.hours,
@@ -48,7 +48,7 @@ const TrainingPlanDetails = () => {
         }))
       );
     }
-  }, [data]);
+  }, [resQuery.data]);
 
   const onSend = async (dataComment: string) => {
     await createPlanComment({
@@ -59,38 +59,47 @@ const TrainingPlanDetails = () => {
             id: session.user.id,
           },
           trainingPlanId: {
-            id: data.getUserTrainingPlan.trainingPlan.id,
+            id: resQuery.data.getUserTrainingPlan.trainingPlan.id,
           },
         },
       },
     });
   };
 
-  if (loading || resCreate.loading) return <Loading />;
+  const onClickItem = async (id: string) => {
+    push(`/courses/course-details/${id}`);
+  };
+
+  if (resQuery.loading || resCreate.loading || loading) return <Loading />;
 
   return (
     <div className='mt-8 flex flex-col gap-5 mx-1 sm:mx-5 lg:mx-16 my-10 overflow-hidden'>
-      <DetailDiv title={data.getUserTrainingPlan.trainingPlan.name}>
+      <DetailDiv title={resQuery.data.getUserTrainingPlan.trainingPlan.name}>
         <div className='flex flex-col gap-5 w-full'>
           <div className='flex flex-col sm:flex-row justify-around gap-5 w-full'>
             <DetailSpan
               title='Number of courses'
-              data={data.getUserTrainingPlan.trainingPlan.numberOfCourses}
+              data={
+                resQuery.data.getUserTrainingPlan.trainingPlan.numberOfCourses
+              }
             />
             <DetailSpan
               title='Progress'
-              data={data.getUserTrainingPlan.progress}
+              data={resQuery.data.getUserTrainingPlan.progress}
             />
           </div>
           <DetailSpan
             title='Description'
-            data={data.getUserTrainingPlan.trainingPlan.description}
+            data={resQuery.data.getUserTrainingPlan.trainingPlan.description}
           />
         </div>
       </DetailDiv>
 
       <Table
         title='Courses'
+        tableContext={{
+          onClickItem,
+        }}
         tittles={[
           {
             title: 'Name',
@@ -121,7 +130,7 @@ const TrainingPlanDetails = () => {
         onSend={onSend}
         imageUser={session.user.image}
         title='Comments'
-        comments={data.getUserTrainingPlan.trainingPlan.PlanComments}
+        comments={resQuery.data.getUserTrainingPlan.trainingPlan.PlanComments}
         ItemComponent={CommentItem}
       />
     </div>

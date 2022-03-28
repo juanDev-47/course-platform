@@ -1,6 +1,14 @@
 import prisma from 'config/prisma';
 
 const CourseResolvers = {
+  Course: {
+    CourseNotes: async (parent, args) =>
+      await prisma.courseNote.findMany({
+        where: {
+          courseId: parent.id,
+        },
+      }),
+  },
   Query: {
     getCourses: async () => await prisma.course.findMany(),
     getCourse: async (parent: any, args: { id: any }) =>

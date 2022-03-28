@@ -1,62 +1,72 @@
-import { useQuery } from '@apollo/client';
-import Table from '@components/Table';
+import { useMutation, useQuery } from '@apollo/client';
+import CommentDiv from '@components/CommentDiv';
+import Loading from '@components/Loading';
+import noteItem from '@components/noteItem';
+import { ADD_LIKE, CREATE_COURSE_NOTE } from 'graphql/mutations/courseNote';
+import { GET_USER_COURSE } from 'graphql/queries/userCourse';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const CourseDetails = () => {
   const router = useRouter();
-  const { id } = router.query || '';
-  const { data, loading } = useQuery(GET_USER_TRAINING_PLAN_ID, {
+  const idCourse = router.query ? router.query.id : '';
+  const { data, loading } = useQuery(GET_USER_COURSE, {
     fetchPolicy: 'cache-and-network',
     variables: {
-      getUserTrainingPlanId: id,
+      getUserCourseId: idCourse,
     },
   });
 
+  const [createCourseNote, resCreate] = useMutation(CREATE_COURSE_NOTE, {
+    refetchQueries: [GET_USER_COURSE],
+  });
+
+  const [addLike, resAddLike] = useMutation(ADD_LIKE, {
+    refetchQueries: [GET_USER_COURSE],
+  });
+
   const { data: session }: any = useSession();
-  const [dataR, setDataR] = useState([{}]);
-  useEffect(() => {
-    if (data) {
-      setDataR(
-        data.getUserTrainingPlan.UserCourse.map((item: any) => ({
-          id: item.id,
-          col1: item.course.name,
-          col2: item.course.hours,
-          col3: item.course.platform,
-          col4: item.course.link,
-          col5: item.finish ? 'Finished' : 'In processes',
-        }))
-      );
-    }
-  }, [data]);
+
+  const onSend = async (note: string) => {
+    await createCourseNote({
+      variables: {
+        data: {
+          note,
+          userId: {
+            id: session.user.id,
+          },
+          courseId: {
+            id: data.getUserCourse.course.id,
+          },
+        },
+      },
+    });
+  };
+
+  const onClickItem = async (id: string) => {
+    await addLike({
+      variables: {
+        data: {
+          id,
+          userId: {
+            id: session.user.id,
+          },
+        },
+      },
+    });
+  };
+  if (loading) {
+    return <Loading />;
+  }
   return (
-    <Table
-      title='Courses'
-      tittles={[
-        {
-          title: 'Name',
-          keyCol: 'col1',
-        },
-        {
-          title: 'Hours',
-          keyCol: 'col2',
-        },
-        {
-          title: 'Platform',
-          keyCol: 'col3',
-        },
-        {
-          title: 'Link',
-          keyCol: 'col4',
-        },
-        {
-          title: 'Status',
-          keyCol: 'col5',
-        },
-      ]}
-      colsClass='grid-cols-4'
-      data={dataR}
+    <CommentDiv
+      onSend={onSend}
+      imageUser={session.user.image}
+      title='Notes'
+      comments={data.getUserCourse.course.CourseNotes}
+      ItemComponent={noteItem}
+      onClickItem={onClickItem}
     />
   );
 };
