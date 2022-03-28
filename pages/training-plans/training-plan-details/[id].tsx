@@ -66,7 +66,7 @@ const TrainingPlanDetails = () => {
     });
   };
 
-  if (loading || resCreate) return <Loading />;
+  if (loading) return <Loading />;
 
   return (
     <div className='mt-8 flex flex-col gap-5 mx-1 sm:mx-5 lg:mx-16 my-10 overflow-hidden'>
@@ -117,13 +117,17 @@ const TrainingPlanDetails = () => {
         data={dataR}
       />
 
-      <CommentDiv
-        onSend={onSend}
-        imageUser={session.user.image}
-        title='Comments'
-        comments={data.getUserTrainingPlan.trainingPlan.PlanComments}
-        ItemComponent={CommentItem}
-      />
+      {resCreate ? (
+        <Loading />
+      ) : (
+        <CommentDiv
+          onSend={onSend}
+          imageUser={session.user.image}
+          title='Comments'
+          comments={data.getUserTrainingPlan.trainingPlan.PlanComments}
+          ItemComponent={CommentItem}
+        />
+      )}
     </div>
   );
 };
