@@ -15,10 +15,17 @@ const UserTypes = gql`
     createdAt: Date
     updatedAt: Date
   }
-
+  type Employee {
+    id: ID
+    name: String
+    email: String
+    emailVerified: Date
+    image: String
+  }
   type Query {
     getUsers: [User]
     getUser(id: ID!): User
+    getEmployees: [Employee]
   }
 `;
 
