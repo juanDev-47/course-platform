@@ -21,7 +21,7 @@ export async function getServerSideProps(context: any) {
 
 const TrainingPlanDetails = () => {
   const router = useRouter();
-  const { id } = router.query || '';
+  const id = router.query ? router.query.id : '';
 
   const { data, loading } = useQuery(GET_USER_TRAINING_PLAN_ID, {
     fetchPolicy: 'cache-and-network',
@@ -66,13 +66,13 @@ const TrainingPlanDetails = () => {
     });
   };
 
-  if (loading) return <Loading />;
+  if (loading || resCreate.loading) return <Loading />;
 
   return (
-    <div className='mt-8 mx-16 flex flex-col gap-5'>
+    <div className='mt-8 flex flex-col gap-5 mx-1 sm:mx-5 lg:mx-16 my-10 overflow-hidden'>
       <DetailDiv title={data.getUserTrainingPlan.trainingPlan.name}>
         <div className='flex flex-col gap-5 w-full'>
-          <div className='flex flex-row justify-around gap-5 w-full'>
+          <div className='flex flex-col sm:flex-row justify-around gap-5 w-full'>
             <DetailSpan
               title='Number of courses'
               data={data.getUserTrainingPlan.trainingPlan.numberOfCourses}
@@ -113,6 +113,7 @@ const TrainingPlanDetails = () => {
             keyCol: 'col5',
           },
         ]}
+        colsClass='grid-cols-5'
         data={dataR}
       />
 

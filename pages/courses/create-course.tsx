@@ -6,6 +6,9 @@ import Select from 'components/Select';
 // import { useQuery } from '@apollo/client';
 import { CREATE_COURSE } from 'graphql/mutations/courses';
 import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import { GET_COURSES_FORMTRAINIGPLAN } from 'graphql/queries/course';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -14,11 +17,15 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-export default function CreateCourse() {
+const CreateCourse = () => {
+  const router = useRouter();  
   const [name, setName] = useState('');
   const [hours, setHours] = useState<number>(1);
   const [link, setLink] = useState('');
   const [platform, setPlatform] = useState('');
+
+
+
 
   // options for select input
   const [optionsPrioridad] = useState([
@@ -32,8 +39,9 @@ export default function CreateCourse() {
   ]);
 
   // queries
-  // const { data } = useQuery(CREATE_COURSE);
-  const [createCourse, res] = useMutation(CREATE_COURSE);
+  const [createCourse, res] = useMutation(CREATE_COURSE, {
+    refetchQueries: [GET_COURSES_FORMTRAINIGPLAN],
+  });
 
   const submitFormCourse = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -41,13 +49,27 @@ export default function CreateCourse() {
     // usando el createCourse para enviar la informacion
     await createCourse({
       variables: {
-        name,
-        hours,
-        platform,
-        link,
+        data: {
+          name,
+          hours,
+          platform,
+          link,
+        }
       },
     });
-  };
+    if (res.error) {
+      toast.error('Error creating Course');
+    } else {
+      router.push('/courses');
+      toast.success('Course created successfully');
+    }
+  }
+
+
+  const returnPage = () => {
+    router.push('/courses');
+  }
+
 
   return (
     <div>
@@ -55,6 +77,7 @@ export default function CreateCourse() {
         title='create course'
         textSubmit='Create'
         onSubmit={submitFormCourse}
+        onCancel={returnPage}
       >
         <div className='flex flex-col md:w-[800px] gap-3'>
           <Input
@@ -100,3 +123,6 @@ export default function CreateCourse() {
     </div>
   );
 }
+
+
+export default CreateCourse;

@@ -26,9 +26,9 @@ const NavBar = () => {
               </div>
               <div className='hidden md:flex flex-1 justify-end'>
                 <div className='ml-10 flex items-baseline space-x-4'>
-                  <Link href='/' passHref>
+                  <Link href='/courses' passHref>
                     <span className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'>
-                      Test
+                      Courses
                     </span>
                   </Link>
 

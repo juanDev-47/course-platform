@@ -45,8 +45,8 @@ const MyApp = ({
       />
 
       <PrivateLayout pageAuth={pageProps.auth}>
-        <Component {...pageProps} />
       </PrivateLayout>
+        <Component {...pageProps} />
     </ApolloProvider>
   </SessionProvider>
 );

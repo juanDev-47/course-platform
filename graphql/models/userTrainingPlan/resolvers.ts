@@ -24,7 +24,7 @@ const UserTrainingPlanResolvers = {
         },
       });
 
-      return finishLength / length;
+      return Math.trunc((finishLength / length) * 100);
     },
     UserCourse: async (parent, args) =>
       await prisma.userCourse.findMany({
