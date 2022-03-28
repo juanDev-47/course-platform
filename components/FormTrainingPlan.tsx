@@ -5,7 +5,8 @@ import TextArea from 'components/TextArea';
 import SelectAddAndRemove from 'components/SelectAddAndRemove';
 import { Course } from 'interfaces/TrainingPlan';
 import CourseItem from 'components/CourseItem';
-import { useRouter } from 'next/router';
+import useRedirect from 'hooks/useRedirect';
+import Loading from 'components/Loading';
 
 type Props = {
   dataForm: {
@@ -28,7 +29,7 @@ const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
   );
   const [name, setName] = useState(dataForm.name || '');
   const [description, setDescription] = useState(dataForm.description || '');
-  const router = useRouter();
+  const { loading, push } = useRedirect();
   const [isValidation, setIsValidation] = useState(true);
 
   useEffect(() => {
@@ -46,13 +47,17 @@ const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
     onSubmit({ name, description, selectCourses });
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <Form
       title={dataForm.title}
       textSubmit={dataForm.textSubmit}
       onSubmit={submitForm}
       onCancel={() => {
-        router.push('/training-plans');
+        push('/training-plans');
       }}
     >
       <div className='flex flex-col w-full gap-4'>
