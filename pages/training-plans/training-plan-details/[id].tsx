@@ -21,10 +21,7 @@ export async function getServerSideProps(context: any) {
 
 const TrainingPlanDetails = () => {
   const router = useRouter();
-  let id;
-  if (router.query) {
-    id = router.query.id;
-  }
+  const id = router.query ? router.query.id : '';
 
   const { data, loading } = useQuery(GET_USER_TRAINING_PLAN_ID, {
     fetchPolicy: 'cache-and-network',

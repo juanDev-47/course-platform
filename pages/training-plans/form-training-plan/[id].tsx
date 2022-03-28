@@ -20,10 +20,7 @@ export async function getServerSideProps(context: any) {
 
 const FormTrainingPlanEdit = () => {
   const { loading, router, push } = useRedirect();
-  let id;
-  if (router.query) {
-    id = router.query.id;
-  }
+  const id = router.query ? router.query.id : '';
   const [updateTrainingPlan, resUpdate] = useMutation(UPDATE_TRAININGPLAN, {
     refetchQueries: [GET_TRAININGPLANS],
   });
