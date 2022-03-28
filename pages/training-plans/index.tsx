@@ -3,7 +3,7 @@ import Loading from '@components/Loading';
 import Table from 'components/Table';
 import { DELETE_TRAININGPLAN } from 'graphql/mutations/trainingPlan';
 import { GET_TRAININGPLANS } from 'graphql/queries/trainingPlan';
-import { useRouter } from 'next/router';
+import useRedirect from 'hooks/useRedirect';
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { matchRoles } from 'utils/matchRoles';
@@ -16,7 +16,8 @@ export async function getServerSideProps(context: any) {
 }
 
 const Index = () => {
-  const { data, loading } = useQuery(GET_TRAININGPLANS, {
+  const { loading, push } = useRedirect();
+  const resQuery = useQuery(GET_TRAININGPLANS, {
     fetchPolicy: 'cache-and-network',
   });
   const [deleteTrainingPlan, resDelete] = useMutation(DELETE_TRAININGPLAN, {
@@ -39,28 +40,27 @@ const Index = () => {
   };
 
   const onEdit = (id: string) => {
-    router.push(`/training-plans/form-training-plan/${id}`);
+    push(`/training-plans/form-training-plan/${id}`);
   };
 
-  const router = useRouter();
   const [dataR, setDataR] = useState([{}]);
   useEffect(() => {
-    if (data) {
+    if (resQuery.data) {
       setDataR(
-        data.getTrainingPlans.map((item: any) => ({
+        resQuery.data.getTrainingPlans.map((item: any) => ({
           id: item.id,
           col1: item.name,
           col2: item.numberOfCourses,
         }))
       );
     }
-  }, [data]);
+  }, [resQuery.data]);
 
   const onClickCreate = () => {
-    router.push('/training-plans/form-training-plan/');
+    push('/training-plans/form-training-plan/');
   };
 
-  if (loading || resDelete.loading) return <Loading />;
+  if (resQuery.loading || resDelete.loading || loading) return <Loading />;
 
   return (
     <div className='mx-2 my-10 md:mx-16'>
