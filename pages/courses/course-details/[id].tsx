@@ -1,9 +1,12 @@
 import { useQuery } from '@apollo/client';
 import Table from '@components/Table';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 const CourseDetails = () => {
+  const router = useRouter();
+  const { id } = router.query || '';
   const { data, loading } = useQuery(GET_USER_TRAINING_PLAN_ID, {
     fetchPolicy: 'cache-and-network',
     variables: {

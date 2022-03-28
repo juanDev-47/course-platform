@@ -9,7 +9,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-export default function Home({courses}:any) {
+export default function Home({ courses }: any) {
   return (
     <h1 className='text-3xl text-blue-300 font-bold underline'>
       desde course ;

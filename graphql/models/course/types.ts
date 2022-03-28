@@ -29,7 +29,12 @@ const CourseTypes = gql`
   }
 
   type Mutation {
-    createCourse(name: String!, hours: Int!, platform: String!, link: String!):Course
+    createCourse(
+      name: String!
+      hours: Int!
+      platform: String!
+      link: String!
+    ): Course
   }
 `;
 
