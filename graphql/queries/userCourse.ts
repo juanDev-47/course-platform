@@ -4,6 +4,7 @@ const GET_USER_COURSE = gql`
   query Query($getUserCourseId: ID!) {
     getUserCourse(id: $getUserCourseId) {
       course {
+        id
         name
         hours
         platform
@@ -14,6 +15,7 @@ const GET_USER_COURSE = gql`
             name
             image
           }
+          note
           numberOfLikes
         }
       }

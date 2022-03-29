@@ -56,7 +56,7 @@ const CourseDetails = () => {
       },
     });
   };
-  if (loading) {
+  if (loading || resCreate.loading) {
     return <Loading />;
   }
   return (

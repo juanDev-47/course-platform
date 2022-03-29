@@ -32,7 +32,7 @@ const CourseNoteResolvers = {
     CreateCourseNote: async (parent, args) =>
       await prisma.courseNote.create({
         data: {
-          // note: args.data.note,
+          note: args.data.note,
           user: {
             connect: args.data.userId,
           },

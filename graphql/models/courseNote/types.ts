@@ -7,6 +7,7 @@ const CourseNoteTypes = gql`
     userId: ID
     user: User
     course: Course
+    note: String
     likes: [User]
     numberOfLikes: Int
     createdAt: Date
@@ -14,7 +15,8 @@ const CourseNoteTypes = gql`
   }
 
   input CourseNoteCreateInput {
-    userId: UserId!
+    note: String!
+    userId: userId!
     courseId: courseId!
   }
 
