@@ -22,14 +22,24 @@ const CourseResolvers = {
     createCourse: async (parent, args) => {
       const newCourse = await prisma.course.create({
         data: {
-          name: args.name,
-          hours: args.hours,
-          platform: args.platform,
-          link: args.link,
+          ...args.data,
         },
       });
       return newCourse;
     },
+
+    updateCourse: async (parent, args) =>
+      await prisma.course.update({
+        where: { ...args.where },
+        data: {
+          ...args.data,
+        },
+      }),
+
+    deleteCourse: async (parent, args) =>
+      await prisma.course.delete({
+        where: { ...args.where },
+      }),
   },
 };
 

@@ -6,8 +6,21 @@ const GET_COURSES_FORMTRAINIGPLAN = gql`
       id
       name
       platform
+      hours
     }
   }
 `;
 
-export { GET_COURSES_FORMTRAINIGPLAN };
+const GET_COURSE_EDIT = gql`
+query GetCourse($getCourseId: ID!) {
+  getCourse(id: $getCourseId) {
+    id
+    name
+    hours
+    platform
+    link
+  }
+}
+`;
+
+export { GET_COURSES_FORMTRAINIGPLAN, GET_COURSE_EDIT };
