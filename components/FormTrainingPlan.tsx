@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'components/Form';
 import Input from 'components/Input';
 import TextArea from 'components/TextArea';
 import SelectAddAndRemove from 'components/SelectAddAndRemove';
 import { Course } from 'interfaces/TrainingPlan';
 import CourseItem from 'components/CourseItem';
-import { useRouter } from 'next/router';
+import useRedirect from 'hooks/useRedirect';
+import Loading from 'components/Loading';
 
 type Props = {
   dataForm: {
@@ -28,12 +29,27 @@ const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
   );
   const [name, setName] = useState(dataForm.name || '');
   const [description, setDescription] = useState(dataForm.description || '');
-  const router = useRouter();
+  const { loading, push } = useRedirect();
+  const [isValidation, setIsValidation] = useState(true);
+
+  useEffect(() => {
+    if (!isValidation) {
+      setIsValidation(true);
+    }
+  }, [selectCourses]);
 
   const submitForm = async (e: any) => {
     e.preventDefault();
+    if (selectCourses.length < 1) {
+      setIsValidation(false);
+      return;
+    }
     onSubmit({ name, description, selectCourses });
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Form
@@ -41,10 +57,10 @@ const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
       textSubmit={dataForm.textSubmit}
       onSubmit={submitForm}
       onCancel={() => {
-        router.push('/training-plans');
+        push('/training-plans');
       }}
     >
-      <div className='flex flex-col gap-4 w-[1200px]'>
+      <div className='flex flex-col w-full gap-4'>
         <Input
           type='text'
           text='Name'
@@ -54,6 +70,7 @@ const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
           onChange={(e) => {
             setName(e.target.value);
           }}
+          isRequired
         />
         <TextArea
           text='description'
@@ -64,6 +81,13 @@ const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
             setDescription(e.target.value);
           }}
         />
+        {isValidation ? (
+          <></>
+        ) : (
+          <span className='text-red-800 text-center w-full'>
+            Select at least one course{' '}
+          </span>
+        )}
         <SelectAddAndRemove
           titleSelect='Selected courses'
           titleAvailable='Available courses'

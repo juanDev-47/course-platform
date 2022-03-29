@@ -1,11 +1,10 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useMutation, useQuery } from '@apollo/client';
 import FormTrainingPlan from '@components/FormTrainingPlan';
 import Loading from '@components/Loading';
 import { CREATE_TRAININGPLAN } from 'graphql/mutations/trainingPlan';
 import { GET_COURSES_FORMTRAINIGPLAN } from 'graphql/queries/course';
 import { GET_TRAININGPLANS } from 'graphql/queries/trainingPlan';
-import { useRouter } from 'next/router';
+import useRedirect from 'hooks/useRedirect';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { matchRoles } from 'utils/matchRoles';
@@ -17,14 +16,14 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const index = () => {
+const Index = () => {
   const resQuery = useQuery(GET_COURSES_FORMTRAINIGPLAN, {
     fetchPolicy: 'cache-and-network',
   });
   const [createTrainingPlan, resCreate] = useMutation(CREATE_TRAININGPLAN, {
     refetchQueries: [GET_TRAININGPLANS],
   });
-  const router = useRouter();
+  const { loading, push } = useRedirect();
 
   const onSubmit = async (data: any) => {
     await createTrainingPlan({
@@ -39,11 +38,11 @@ const index = () => {
     if (resCreate.error) {
       toast.error('Error');
     } else {
-      router.push('/training-plans');
+      push('/training-plans');
       toast.success('Training plan created successfully');
     }
   };
-  if (resQuery.loading || resCreate.loading) return <Loading />;
+  if (resQuery.loading || resCreate.loading || loading) return <Loading />;
 
   return (
     <FormTrainingPlan
@@ -57,4 +56,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

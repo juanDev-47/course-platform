@@ -9,4 +9,5 @@ export type Course = {
   id: String;
   name: String;
   platform: String;
+  hours?: Number;
 };

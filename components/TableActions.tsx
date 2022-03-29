@@ -11,10 +11,10 @@ type Props = {
 const TableActions = ({ id }: Props) => {
   const tableContext = useTableContext();
   const onDelete = async () => {
-    if(tableContext.onDelete) tableContext.onDelete(id);
+    if (tableContext.onDelete) tableContext.onDelete(id);
   };
   const onEdit = () => {
-    if(tableContext.onEdit) tableContext.onEdit(id);
+    if (tableContext.onEdit) tableContext.onEdit(id);
   };
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const closeDialog = () => {
@@ -23,10 +23,10 @@ const TableActions = ({ id }: Props) => {
 
   return (
     <div className='flex flex-row gap-12'>
-      <IconButton h='20' onClick={onEdit} icon='faPen' color='yellow' />
+      <IconButton size='20' onClick={onEdit} icon='pen' color='yellow' />
       <IconButton
-        h='20'
-        icon='faTrash'
+        size='20'
+        icon='trash'
         color='red'
         onClick={() => {
           setOpenDeleteDialog(true);

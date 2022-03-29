@@ -1,10 +1,9 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useQuery } from '@apollo/client';
 import Loading from '@components/Loading';
 import Table from 'components/Table';
 import { GET_USER_TRAINING_PLANS_BY_USER } from 'graphql/queries/userTrainingPlan';
+import useRedirect from 'hooks/useRedirect';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { matchRoles } from 'utils/matchRoles';
 
@@ -15,43 +14,43 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const userTrainingPlan = () => {
+const UserTrainingPlan = () => {
+  const { loading, push } = useRedirect();
   const { data: session }: any = useSession();
-  const { data, loading } = useQuery(GET_USER_TRAINING_PLANS_BY_USER, {
+  const resQuery = useQuery(GET_USER_TRAINING_PLANS_BY_USER, {
     fetchPolicy: 'cache-and-network',
     variables: {
       getUserTrainingPlansByUserId: session.userId,
     },
   });
-
-  const router = useRouter();
   const [dataR, setDataR] = useState([{}]);
   useEffect(() => {
-    if (data) {
+    if (resQuery.data) {
       setDataR(
-        data.getUserTrainingPlansByUser.map((item: any) => ({
+        resQuery.data.getUserTrainingPlansByUser.map((item: any) => ({
           id: item.id,
           col1: item.trainingPlan.name,
           col2: item.trainingPlan.numberOfCourses,
-          col3: item.progress,
+          col3: `${item.progress}%`,
         }))
       );
     }
-  }, [data]);
+  }, [resQuery.data]);
 
   const onClickItem = (id: string) => {
-    router.push(`/training-plans/training-plan-details/${id}`);
+    push(`/training-plans/training-plan-details/${id}`);
   };
 
-  if (loading) return <Loading />;
+  if (resQuery.loading || loading) return <Loading />;
 
   return (
-    <div className='mt-52 mx-16'>
+    <div className='mx-1 sm:mx-5 lg:mx-16 my-10'>
       <Table
         tableContext={{
           onClickItem,
         }}
         title='Training Plans'
+        colsClass='grid-cols-4'
         tittles={[
           {
             title: 'Name',
@@ -73,4 +72,4 @@ const userTrainingPlan = () => {
   );
 };
 
-export default userTrainingPlan;
+export default UserTrainingPlan;
