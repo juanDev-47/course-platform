@@ -1,4 +1,3 @@
-import { Input } from 'components/Input';
 import { gql } from 'apollo-server-micro';
 
 const CourseNoteTypes = gql`
@@ -9,6 +8,7 @@ const CourseNoteTypes = gql`
     course: Course
     note: String
     likes: [User]
+    likesUserId: [ID]
     numberOfLikes: Int
     createdAt: Date
     updatedAt: Date
@@ -20,18 +20,17 @@ const CourseNoteTypes = gql`
     courseId: courseId!
   }
 
+  input likeInput {
+    id: ID!
+    userId: userId!
+  }
+
   input userId {
     id: ID!
   }
   input courseId {
     id: ID!
   }
-
-  input likeInput {
-    id: ID!
-    userId: userId!
-  }
-
   type Query {
     getCourseNotes: [CourseNote]
     getCourseNote(id: ID!): CourseNote
