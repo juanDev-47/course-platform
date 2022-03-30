@@ -79,7 +79,7 @@ const Index = () => {
                           onDelete,
                           onEdit
                                                   
-  }}  data={dataForm} title='Courses' tittles={[
+  }}  data={dataForm} title='Courses' colsClass='grid-cols-4' tittles={[
       {
         title: 'Name',
         keyCol: 'col1',
