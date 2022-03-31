@@ -1,5 +1,8 @@
 import { useMutation, useQuery } from '@apollo/client';
+import Button from '@components/Button';
 import CommentDiv from '@components/CommentDiv';
+import DetailDiv from '@components/DetailDiv';
+import DetailSpan from '@components/DetailSpan';
 import Loading from '@components/Loading';
 import noteItem from '@components/noteItem';
 import { ADD_LIKE, CREATE_COURSE_NOTE } from 'graphql/mutations/courseNote';
@@ -44,6 +47,19 @@ const CourseDetails = () => {
     });
   };
 
+  // finished course method
+  
+  const finishedCourse = () => {
+    console.log('Hola desde el boton finish ');
+    console.log(data.getUserCourse.finish);
+    
+  }
+
+  // metodo para cargar el certificado
+  const upload = () => {
+
+  }
+
   const onClickItem = async (id: string) => {
     await addLike({
       variables: {
@@ -60,6 +76,53 @@ const CourseDetails = () => {
     return <Loading />;
   }
   return (
+    <div className="">
+      <DetailDiv title={data.getUserCourse.course.name}>
+        <div className='flex flex-col gap-5 w-full'>
+          <div className='flex flex-col sm:flex-row justify-around gap-5 w-full'>
+            <DetailSpan
+              title='Name'
+              data={
+                data.getUserCourse.course.name
+              }
+            />
+            <DetailSpan
+              title='Hours'
+              data={data.getUserCourse.course.hours}
+            />
+          </div>
+          <div className='flex flex-col sm:flex-row justify-around gap-5 w-full'>
+            <DetailSpan
+              title='Link'
+              data={
+                data.getUserCourse.course.link
+              }
+            />
+            <DetailSpan
+              title='Platform'
+              data={data.getUserCourse.course.platform}
+            />
+          </div>
+          <div className="flex flex-col sm:flex-row justify-around gap-5 w-full">
+            <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
+              <Button text={ data.getUserCourse.finish ? 'unfinished': 'finish course' } onClick={finishedCourse} />
+            </div>
+            {data.getUserCourse.finish?
+              <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
+                <Button text='Upload certificate' onClick={upload} />
+              </div>: 
+              <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
+              <span>status</span>
+              <span>In progress...</span>
+            </div>
+            }
+            
+          </div>
+          
+        </div>
+      </DetailDiv>
+
+
     <CommentDiv
       onSend={onSend}
       imageUser={session.user.image}
@@ -68,6 +131,7 @@ const CourseDetails = () => {
       ItemComponent={noteItem}
       onClickItem={onClickItem}
     />
+    </div>
   );
 };
 
