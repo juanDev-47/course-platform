@@ -11,9 +11,7 @@ const GET_USER_COURSE = gql`
         link
         CourseNotes {
           id
-          likesUserId {
-            id
-          }
+          isLike
           user {
             name
             image

@@ -4,12 +4,12 @@ import IconButton from 'components/IconButton';
 
 type Props = {
   itemData: any;
-  onClickItem: (id: string) => void;
+  onLike: (id: string) => void;
 };
 
-const noteItem = ({ itemData, onClickItem }: Props) => {
+const noteItem = ({ itemData, onLike }: Props) => {
   const onClick = () => {
-    onClickItem(itemData.id);
+    onLike(itemData.id);
   };
 
   return (
@@ -31,7 +31,12 @@ const noteItem = ({ itemData, onClickItem }: Props) => {
         </span>
       </div>
       <div className='flex flex-col gap-2 mr-10 items-center'>
-        <IconButton icon='heart' color='red' size='20' onClick={onClick} />
+        <IconButton
+          icon='heart'
+          color={itemData.isLike ? 'red' : 'white'}
+          size='20'
+          onClick={onClick}
+        />
         <span className='text-base text-gray-900 font-semibold'>
           {itemData.numberOfLikes}
         </span>

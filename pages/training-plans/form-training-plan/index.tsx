@@ -26,6 +26,7 @@ const Index = () => {
   const { loading, push } = useRedirect();
 
   const onSubmit = async (data: any) => {
+    console.log(data)
     await createTrainingPlan({
       variables: {
         data: {

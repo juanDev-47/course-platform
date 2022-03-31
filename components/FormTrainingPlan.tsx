@@ -44,6 +44,7 @@ const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
       setIsValidation(false);
       return;
     }
+    console.log(formData)
     onSubmit({ ...formData, selectCourses });
   };
 

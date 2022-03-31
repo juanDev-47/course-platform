@@ -8,7 +8,7 @@ const CourseNoteTypes = gql`
     course: Course
     note: String
     likes: [User]
-    likesUserId: [ID]
+    isLike: Boolean
     numberOfLikes: Int
     createdAt: Date
     updatedAt: Date

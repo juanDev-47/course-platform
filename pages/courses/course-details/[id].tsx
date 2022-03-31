@@ -6,7 +6,7 @@ import { ADD_LIKE, CREATE_COURSE_NOTE } from 'graphql/mutations/courseNote';
 import { GET_USER_COURSE } from 'graphql/queries/userCourse';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const CourseDetails = () => {
   const router = useRouter();
@@ -44,7 +44,7 @@ const CourseDetails = () => {
     });
   };
 
-  const onClickItem = async (id: string) => {
+  const onLike = async (id: string) => {
     await addLike({
       variables: {
         data: {
@@ -56,7 +56,7 @@ const CourseDetails = () => {
       },
     });
   };
-  if (loading || resCreate.loading) {
+  if (loading || resCreate.loading || resAddLike.loading) {
     return <Loading />;
   }
   return (
@@ -66,7 +66,7 @@ const CourseDetails = () => {
       title='Notes'
       comments={data.getUserCourse.course.CourseNotes}
       ItemComponent={noteItem}
-      onClickItem={onClickItem}
+      onClickItem={onLike}
     />
   );
 };

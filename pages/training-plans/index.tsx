@@ -79,13 +79,13 @@ const Index = () => {
           {
             title: 'Name',
             keyCol: 'col1',
-            customClass: 'col-span-2',
           },
           {
             title: 'Number of courses',
             keyCol: 'col2',
           },
         ]}
+        colsClass='grid-cols-3'
         data={dataR}
       />
     </div>

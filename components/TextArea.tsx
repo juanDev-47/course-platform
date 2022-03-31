@@ -31,6 +31,8 @@ const TextArea = ({
       value={value}
       onChange={onChange}
       required={isRequired}
+      id={name}
+      name={name}
     />
   </div>
 );
