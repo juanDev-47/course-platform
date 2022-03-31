@@ -43,8 +43,7 @@ const TrainingPlanDetails = () => {
           col1: item.course.name,
           col2: item.course.hours,
           col3: item.course.platform,
-          col4: item.course.link,
-          col5: item.finish ? 'Finished' : 'In processes',
+          col4: item.finish ? 'Finished' : 'In processes',
         }))
       );
     }
@@ -114,15 +113,11 @@ const TrainingPlanDetails = () => {
             keyCol: 'col3',
           },
           {
-            title: 'Link',
+            title: 'Status',
             keyCol: 'col4',
           },
-          {
-            title: 'Status',
-            keyCol: 'col5',
-          },
         ]}
-        colsClass='grid-cols-5'
+        colsClass='grid-cols-4'
         data={dataR}
       />
 

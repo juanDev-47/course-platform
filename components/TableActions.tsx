@@ -16,6 +16,10 @@ const TableActions = ({ id }: Props) => {
   const onEdit = () => {
     if (tableContext.onEdit) tableContext.onEdit(id);
   };
+
+  const onView = () => {
+    if (tableContext.onView) tableContext.onView(id);
+  };
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const closeDialog = () => {
     setOpenDeleteDialog(false);
@@ -32,6 +36,7 @@ const TableActions = ({ id }: Props) => {
           setOpenDeleteDialog(true);
         }}
       />
+      <IconButton size='20' onClick={onView} icon='eye' color='blue' />
       <Dialog open={openDeleteDialog} onClose={closeDialog}>
         <DeleteDialog onDelete={onDelete} closeDialog={closeDialog} />
       </Dialog>
