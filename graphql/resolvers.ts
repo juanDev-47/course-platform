@@ -5,13 +5,17 @@ import { UserTrainingPlanResolvers } from 'graphql/models/userTrainingPlan/resol
 import { CourseNoteResolvers } from 'graphql/models/courseNote/resolvers';
 import { UserCourseResolvers } from 'graphql/models/userCourse/resolvers';
 import { UserResolvers } from 'graphql/models/user/resolvers';
+import { ProfileResolvers } from 'graphql/models/profile/resolvers';
+import { RoleResolvers } from 'graphql/models/role/resolvers';
 
 export const resolvers = [
-  TrainingPlanResolvers,
+  CourseNoteResolvers,
   CourseResolvers,
   PlanCommentResolvers,
+  ProfileResolvers,
+  RoleResolvers,
+  TrainingPlanResolvers,
   UserTrainingPlanResolvers,
-  CourseNoteResolvers,
   UserCourseResolvers,
   UserResolvers,
 ];
