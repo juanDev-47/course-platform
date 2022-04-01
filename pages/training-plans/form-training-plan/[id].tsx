@@ -39,10 +39,10 @@ const FormTrainingPlanEdit = () => {
         },
         data: {
           name: {
-            set: data.name,
+            set: data.name || resQuery.data.getTrainingPlan.name,
           },
           description: {
-            set: data.description,
+            set: data.description || resQuery.data.getTrainingPlan.description,
           },
           Courses: data.selectCourses.map((course: any) => ({ id: course.id })),
         },

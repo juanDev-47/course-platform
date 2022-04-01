@@ -18,7 +18,7 @@ const CourseNoteResolvers = {
           },
         },
       }),
-    likesUserId: async (parent, args) => {
+    isLike: async (parent, args) => {
       const users = await prisma.user.findMany({
         where: {
           noteLikes: {
@@ -29,7 +29,7 @@ const CourseNoteResolvers = {
         },
       });
 
-      return users.map((user) => user.id);
+      return true;
     },
   },
   Query: {
