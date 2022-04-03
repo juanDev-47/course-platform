@@ -18,14 +18,16 @@ const CourseNoteResolvers = {
           },
         },
       }),
-    isLike: async (parent, args) => {
-      const users = await prisma.user.findMany({
+    isLike: async (parent, args, contex) => {
+      const users = await prisma.courseNote.findMany({
         where: {
-          noteLikes: {
-            some: {
-              id: parent.id,
-            },
-          },
+         likes: {
+           some: {
+             id: {
+               equals: contex.session.id
+             }
+           }
+         }
         },
       });
 

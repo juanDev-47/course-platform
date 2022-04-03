@@ -15,9 +15,9 @@ const PrivateLayout = ({ pageAuth, children }: any) => {
     return <Loading />;
   }
 
-  // if (!pageAuth) {
-  //   return <div>NO ACCESS </div>;
-  // }
+  if (!pageAuth) {
+    return <div>NO ACCESS </div>;
+  }
 
   return (
     <div>

@@ -6,7 +6,7 @@ import { ADD_LIKE, CREATE_COURSE_NOTE } from 'graphql/mutations/courseNote';
 import { GET_USER_COURSE } from 'graphql/queries/userCourse';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const CourseDetails = () => {
   const router = useRouter();

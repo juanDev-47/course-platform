@@ -5,7 +5,6 @@ const matchRoles = async (context: any) => {
   let url = context.resolvedUrl;
 
   const { id } = context.query;
-
   if (id) {
     url = url.replace(id, '[id]');
   }

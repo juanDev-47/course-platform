@@ -14,6 +14,7 @@ import { matchRoles } from 'utils/matchRoles';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
+  console.log(props)
   return {
     props: JSON.parse(JSON.stringify(props)),
   };
