@@ -65,6 +65,10 @@ const Index = () => {
     }
   };
 
+  const onClickItem = (id: string) => {
+    push(`/courses/course-details/admin/${id}`);
+  };
+
   const onEdit = (id: string) => {
     push(`/courses/form-course/${id}`);
   };
@@ -80,6 +84,7 @@ const Index = () => {
           textDelete: 'Delete',
           onDelete,
           onEdit,
+          onClickItem,
         }}
         data={dataForm}
         title='Courses'

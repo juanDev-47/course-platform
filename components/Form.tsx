@@ -4,9 +4,10 @@ import Button from 'components/Button';
 type Props = {
   title: string;
   children: JSX.Element;
+  editMode?: boolean;
   onCancel?: () => void;
-  textSubmit: string;
-  onSubmit: (e: any) => Promise<void>;
+  textSubmit?: string;
+  onSubmit?: (e: any) => Promise<void>;
   refForm?;
   onChange?;
 };
@@ -14,6 +15,7 @@ type Props = {
 const Form = ({
   title,
   children,
+  editMode = true,
   onCancel,
   textSubmit,
   onSubmit,
@@ -32,10 +34,12 @@ const Form = ({
 
     {children}
 
-    <div className='flex flex-row gap-3 mt-10'>
-      <Button isSubmit text={textSubmit || 'Save'} />
-      <Button isSubmit={false} text='Cancel' onClick={onCancel} />
-    </div>
+    {editMode && (
+      <div className='flex flex-row gap-3 mt-10'>
+        <Button isSubmit text={textSubmit || 'Save'} />
+        <Button isSubmit={false} text='Cancel' onClick={onCancel} />
+      </div>
+    )}
   </form>
 );
 

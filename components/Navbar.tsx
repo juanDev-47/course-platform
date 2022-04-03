@@ -1,51 +1,75 @@
 import React, { useState } from 'react';
 import { Transition } from '@headlessui/react';
 import Link from 'next/link';
-// import Image from 'next/image';
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
   return (
     <div>
       <nav className='border-solid border-b-2 border-b-blue-500'>
         <div className='max-w-7xl lg:mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='flex items-center justify-between h-16'>
             <div className='flex items-center w-full'>
-              <div className='flex-shrink-0'>
-                {/* <Link href='/' passHref> */}
-                {/* <Image
-                    className='h-8 w-8 rounded-full'
-                    src='https://drive.google.com/uc?export=view&id=0B6wwyazyzml-OGQ3VUo0Z2thdmc'
-                    alt='Workflow'
-                    layout='fill'
-                  /> */}
-                {/* </Link> */}
-              </div>
               <div className='flex-shrink-0 ml-3 text-blue-500 font-semibold'>
-                <span>Capacitation Management</span>
+                <Link href='/home' passHref>
+                  <span>Capacitation Management</span>
+                </Link>
               </div>
               <div className='hidden md:flex flex-1 justify-end'>
-                <div className='ml-10 flex items-baseline space-x-4'>
+                <div className='ml-10 flex space-x-4 items-center align-middle'>
                   <Link href='/courses' passHref>
-                    <span className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'>
-                      Courses
-                    </span>
-                  </Link>
-
-                  <Link href='/' passHref>
-                    <span className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'>
-                      Test2
-                    </span>
-                  </Link>
-
-                  <a href='/profile'>
                     <button
                       type='button'
-                      className='inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-green-500 text-white hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-offset-2 '
+                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
                     >
-                      Profile
+                      Courses
                     </button>
-                  </a>
+                  </Link>
+
+                  <Link href='/training-plans' passHref>
+                    <button
+                      type='button'
+                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
+                    >
+                      Training plans
+                    </button>
+                  </Link>
+
+                  <Link href='/users/cl1aph70q0399bsk5v95ybu64' passHref>
+                    <button
+                      type='button'
+                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
+                    >
+                      Test2
+                    </button>
+                  </Link>
+
+                  <Link href={`/training-plans/${session.user.name}`} passHref>
+                    <button
+                      type='button'
+                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
+                    >
+                      My training plans
+                    </button>
+                  </Link>
+
+                  <Link href='/profile' passHref>
+                    <button type='button' className='m-0'>
+                      <Image
+                        className='h-8 w-8 rounded-full'
+                        src={
+                          session.user.profile?.customImage ??
+                          session.user.image
+                        }
+                        alt='Workflow'
+                        width={40}
+                        height={40}
+                      />
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -106,30 +130,38 @@ const NavBar = () => {
           leaveTo='opacity-0 scale-95'
         >
           <div
-            className='md:hidden absolute w-full bg-white border-y-2 border-y-blue-500'
+            className='md:hidden absolute w-full border-y-2 border-y-blue-500 z-50 bg-gray-900'
             id='mobile-menu'
           >
             <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col '>
               <Link href='/' passHref>
                 <span className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'>
-                  Test
+                  Courses
                 </span>
               </Link>
 
-              <Link href='/' passHref>
+              <Link href='/users/cl1aph70q0399bsk5v95ybu64' passHref>
                 <span className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'>
                   Test2
                 </span>
               </Link>
 
-              <a href='/profile'>
-                <button
-                  type='button'
-                  className='inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium bg-green-500 text-white hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                >
-                  Profile
+              <Link href='/profile' passHref>
+                <button type='button' className='ml-3 flex justify-start'>
+                  <Image
+                    className='h-8 w-8 rounded-full'
+                    src={
+                      session.user.profile?.customImage ?? session.user.image
+                    }
+                    alt='Workflow'
+                    width={40}
+                    height={40}
+                  />
+                  <span className='border border-transparent text-blue-500 px-3 py-2 rounded-md text-sm font-medium'>
+                    Profile
+                  </span>
                 </button>
-              </a>
+              </Link>
             </div>
           </div>
         </Transition>

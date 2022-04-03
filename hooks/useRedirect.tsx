@@ -7,7 +7,6 @@ const useRedirect = () => {
 
   const push = async (url: string) => {
     setLoading(true);
-    console.log(url)
     await router.push(url);
     setLoading(false);
   };

@@ -6,6 +6,7 @@ const CourseNoteTypes = gql`
     userId: ID
     user: User
     course: Course
+    courseId: ID
     note: String
     likes: [User]
     isLike: Boolean
@@ -23,6 +24,7 @@ const CourseNoteTypes = gql`
   input likeInput {
     id: ID!
     userId: userId!
+    isLike: Boolean!
   }
 
   input userId {

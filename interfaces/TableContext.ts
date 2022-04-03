@@ -4,6 +4,5 @@ export type TableContextType = {
   question?: string;
   onDelete?: (id: string) => void;
   onEdit?: (id: string) => void;
-  onView?: (id: string) => void;
   onClickItem?: (id: string) => void;
 };
