@@ -22,7 +22,7 @@ const TableActions = ({ id }: Props) => {
   };
 
   return (
-    <div className='flex flex-row gap-12'>
+    <div className='flex flex-row gap-6 md:gap-12'>
       <button type='button' onClick={onEdit}>
         <i
           className={`fas fa-pen text-[20px] text-yellow-500 hover:text-yellow-700 cursor-pointer `}
