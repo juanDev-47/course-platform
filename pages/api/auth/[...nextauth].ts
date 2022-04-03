@@ -14,8 +14,17 @@ export default NextAuth({
         include: {
           user: {
             include: {
-              profile: true,
-              role: true,
+              profile: {
+                select: {
+                  customImage: true,
+                },
+              },
+              role: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
               accounts: {
                 select: {
                   providerAccountId: true,
