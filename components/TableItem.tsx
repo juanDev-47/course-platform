@@ -13,9 +13,10 @@ type Props = {
   }[];
   colsClass?: string;
   itemData: any;
+  extraActions?: boolean;
 };
 
-const TableItem = ({ itemData, tittles, colsClass }: Props) => {
+const TableItem = ({ itemData, tittles, colsClass, extraActions }: Props) => {
   const actionsContext = useTableContext();
   const onClickItem = () => {
     if (actionsContext.onClickItem) actionsContext.onClickItem(itemData.id);
@@ -35,9 +36,11 @@ const TableItem = ({ itemData, tittles, colsClass }: Props) => {
           {itemData[t.keyCol]}
         </span>
       ))}
-      <PrivateComponent roleList={['Admin']}>
-        <TableActions id={itemData.id} />
-      </PrivateComponent>
+      {extraActions && (
+        <PrivateComponent roleList={['Admin']}>
+          <TableActions id={itemData.id} />
+        </PrivateComponent>
+      )}
     </div>
   );
 };
