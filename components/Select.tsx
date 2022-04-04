@@ -7,12 +7,18 @@ type Props = {
     label: string;
   }[];
   onChange: (e: any) => void;
-  value: any,
+  value: any;
   title: string;
   disabled?: boolean;
 };
 
-const SelectForm = ({ options, onChange, title, value, disabled = false }: Props) => (
+const SelectForm = ({
+  options,
+  onChange,
+  title,
+  value,
+  disabled = false,
+}: Props) => (
   <div className='flex flex-col w-full px-3'>
     <span className='text-xs font-semibold px-1'>{title}</span>
     <Select

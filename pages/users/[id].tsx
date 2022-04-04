@@ -1,15 +1,21 @@
 import { useMutation, useQuery } from '@apollo/client';
+import Form from '@components/Form';
+import Input from '@components/Input';
+import Loading from '@components/Loading';
+import { GET_USER_ID } from 'graphql/queries/user';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { matchRoles } from 'utils/matchRoles';
+import Image from 'next/image';
+import { toast } from 'react-toastify';
+import { GET_EMPLOYEE } from 'graphql/queries/employees';
+import { TrainingPlan } from '@prisma/client';
+import { UPDATE_USER_TRAINING_PLANS } from 'graphql/mutations/userTrainingPlan';
 import Button from '@components/Button';
+import { Box, Modal } from '@mui/material';
 import SelectAddAndRemove from '@components/SelectAddAndRemove';
 import TrainingPlanItem from '@components/TrainingPlanItem';
-import { Box, Modal } from '@mui/material';
-import { TrainingPlan } from '@prisma/client';
-import { GET_EMPLOYEE } from 'graphql/queries/employees';
-import { UPDATE_USER_TRAINING_PLANS } from 'graphql/mutations/userTrainingPlan';
-import useRedirect from 'hooks/useRedirect';
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { matchRoles } from 'utils/matchRoles';
+import PrivateComponent from '@components/PrivateComponent';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -18,10 +24,16 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-const UserInfo = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { loading, router, push } = useRedirect();
-  const id = router.query ? router.query.id : '';
+const UserDetails = () => {
+  const router = useRouter();
+  const { id } = router.query as { id: string };
+  const { data: userData, loading } = useQuery(GET_USER_ID, {
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      getUserId: id,
+    },
+  });
+
   const [open, setOpen] = React.useState(false);
   const [updateEmployeePlans, resEmployeePlansUpdate] = useMutation(
     UPDATE_USER_TRAINING_PLANS
@@ -57,7 +69,6 @@ const UserInfo = () => {
   });
   const [availablePlans, setAvailablePlan] = useState<TrainingPlan[]>([]);
   const [selectedPlans, setSelectedPlans] = useState<TrainingPlan[]>([]);
-
   useEffect(() => {
     if (!employeeQuery.loading && employeeQuery.data) {
       setAvailablePlan(employeeQuery.data.getEmployee.availablePlans);
@@ -69,33 +80,124 @@ const UserInfo = () => {
     }
   }, [employeeQuery.loading]);
 
+  if (loading) return <Loading />;
+  if (!userData.getUser) {
+    toast.error('Error creating user');
+    return <Loading />;
+  }
   return (
     <div>
-      <Button isSubmit={false} text='Agregar plan' onClick={handleOpen} />
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='parent-modal-title'
-        aria-describedby='parent-modal-description'
-      >
-        <Box className='w-9/12 p-3 m-auto bg-white place-content-center my-1/4'>
-          <SelectAddAndRemove
-            ItemComponent={TrainingPlanItem}
-            listAvailable={availablePlans}
-            listSelect={selectedPlans}
-            setListAvailable={setAvailablePlan}
-            setListSelect={setSelectedPlans}
-            titleAvailable='avalaible plans'
-            titleSelect='assigned plans'
-          />
-          <div className='flex flex-row grid grid-cols-2 my-2'>
-            <Button isSubmit={false} text='Cancel' onClick={handleClose} />
-            <Button isSubmit={false} text='Save' onClick={handleSave} />
+      <div className='w-full flex flex-col items-center justify-center p-10'>
+        <Image
+          src={userData.getUser.profile.customImage ?? userData.getUser.image}
+          alt='User Details'
+          height={180}
+          width={180}
+          className='rounded-full'
+        />
+      </div>
+      <div className='flex justify-center'>
+        <Form title='User Details' editMode={false}>
+          <div>
+            <div className='flex flex-col sm:flex-row '>
+              <Input
+                type='text'
+                text='Name'
+                placeholder='Name'
+                name='name'
+                value={userData.getUser.name}
+                disabled
+              />
+              <Input
+                type='text'
+                text='Email'
+                placeholder='Email'
+                name='email'
+                value={userData.getUser.email}
+                disabled
+              />
+            </div>
+            <div className='flex flex-col sm:flex-row '>
+              <Input
+                type='text'
+                text='Position'
+                placeholder='Position'
+                name='position'
+                value={userData.getUser.profile.position}
+                disabled
+              />
+              <Input
+                type='text'
+                text='Role'
+                placeholder='Role'
+                name='role'
+                value={userData.getUser.role.name}
+                disabled
+              />
+            </div>
+            <div className='flex flex-col sm:flex-row '>
+              <Input
+                type='text'
+                text='Phone'
+                placeholder='Phone'
+                name='phone'
+                value={userData.getUser.profile.phone}
+                disabled
+              />
+              <Input
+                type='text'
+                text='address'
+                placeholder='Address'
+                name='address'
+                value={userData.getUser.profile.address}
+                disabled
+              />
+            </div>
           </div>
-        </Box>
-      </Modal>
+          <PrivateComponent roleList={['Admin']}>
+            <div className='mt-3'>
+              <Button
+                isSubmit={false}
+                text='Manage training plans'
+                onClick={handleOpen}
+              />
+            </div>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby='parent-modal-title'
+              aria-describedby='parent-modal-description'
+            >
+              <Box
+                className='w-9/12 p-3 m-auto bg-white place-content-center my-1/4 absolute rounded-lg top-1/2 left-1/2'
+                style={{
+                  transform: 'translate(-50%, -50%)',
+                }}
+              >
+                <SelectAddAndRemove
+                  ItemComponent={TrainingPlanItem}
+                  listAvailable={availablePlans}
+                  listSelect={selectedPlans}
+                  setListAvailable={setAvailablePlan}
+                  setListSelect={setSelectedPlans}
+                  titleAvailable='Available plans'
+                  titleSelect='Assigned plans'
+                />
+                <div className='flex flex-row space-x-2 grid grid-cols-2 my-2 mx-1'>
+                  <Button
+                    isSubmit={false}
+                    text='Cancel'
+                    onClick={handleClose}
+                  />
+                  <Button isSubmit={false} text='Save' onClick={handleSave} />
+                </div>
+              </Box>
+            </Modal>
+          </PrivateComponent>
+        </Form>
+      </div>
     </div>
   );
 };
 
-export default UserInfo;
+export default UserDetails;

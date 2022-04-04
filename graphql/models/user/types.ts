@@ -14,6 +14,8 @@ const UserTypes = gql`
     UserCourse: [UserCourse]
     createdAt: Date
     updatedAt: Date
+    profile: Profile
+    role: Role
   }
   type Employee {
     id: ID
@@ -36,6 +38,27 @@ const UserTypes = gql`
     getUser(id: ID!): User
     getEmployees: [Employee]
     getEmployee(id: ID!): EmployeePlans
+  }
+
+  type Mutation {
+    createUser(data: CreateUpdateInput!): User
+  }
+
+  input CreateUpdateInput {
+    name: String
+    email: String
+    roleId: String
+    auth0Id: String
+    image: String
+    profile: ProfileInput
+  }
+
+  input ProfileInput {
+    name: String
+    phone: String
+    address: String
+    position: String
+    customImage: String
   }
 `;
 
