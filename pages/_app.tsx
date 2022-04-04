@@ -13,6 +13,7 @@ import {
 } from '@apollo/client';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { WidgetLoader } from 'react-cloudinary-upload-widget';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -29,6 +30,7 @@ const MyApp = ({
 }: AppProps) => (
   <SessionProvider session={session}>
     <ApolloProvider client={client}>
+      <WidgetLoader />
       <Head>
         <title>{pageProps.name} | Capacitations management </title>
       </Head>

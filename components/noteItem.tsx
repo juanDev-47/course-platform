@@ -1,15 +1,14 @@
 import Image from 'next/image';
 import React from 'react';
-import IconButton from 'components/IconButton';
 
 type Props = {
   itemData: any;
-  onLike: (id: string) => void;
+  onClickItem: (id: string) => void;
 };
 
-const noteItem = ({ itemData, onLike }: Props) => {
+const noteItem = ({ itemData, onClickItem }: Props) => {
   const onClick = () => {
-    onLike(itemData.id);
+    onClickItem(itemData.id);
   };
 
   return (
@@ -31,12 +30,15 @@ const noteItem = ({ itemData, onLike }: Props) => {
         </span>
       </div>
       <div className='flex flex-col gap-2 mr-10 items-center'>
-        <IconButton
-          icon='heart'
-          color={itemData.isLike ? 'red' : 'white'}
-          size='20'
-          onClick={onClick}
-        />
+        {itemData.isLike ? (
+          <button type='button' onClick={onClick}>
+            <i className='fas fa-heart text-[30px] text-red-500 hover:text-red-700 cursor-pointer' />
+          </button>
+        ) : (
+          <button type='button' onClick={onClick}>
+            <i className='fas fa-heart text-[30px] text-gray-400 hover:text-gray-700 cursor-pointer' />
+          </button>
+        )}
         <span className='text-base text-gray-900 font-semibold'>
           {itemData.numberOfLikes}
         </span>

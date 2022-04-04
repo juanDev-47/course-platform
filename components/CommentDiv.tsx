@@ -7,8 +7,8 @@ type Props = {
   title: string;
   comments: any;
   ItemComponent: ({ itemData }: any) => JSX.Element;
-  imageUser: string;
-  onSend: (comment: string) => void;
+  imageUser?: string;
+  onSend?: (comment: string) => void;
   onClickItem?: (id: string) => void;
 };
 

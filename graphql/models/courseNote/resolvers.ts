@@ -18,18 +18,21 @@ const CourseNoteResolvers = {
           },
         },
       }),
-    isLike: async (parent, args) => {
-      const users = await prisma.user.findMany({
+    isLike: async (parent, args, contex) => {
+      const courseNote = await prisma.courseNote.findMany({
         where: {
-          noteLikes: {
+          id: parent.id,
+          likes: {
             some: {
-              id: parent.id,
+              id: {
+                equals: contex.session.userId,
+              },
             },
           },
         },
       });
 
-      return true;
+      return courseNote.length > 0;
     },
   },
   Query: {
@@ -54,8 +57,20 @@ const CourseNoteResolvers = {
           },
         },
       }),
-    addLike: async (parent, args) =>
-      await prisma.courseNote.update({
+    addLike: async (parent, args) => {
+      if (args.data.isLike) {
+        return await prisma.courseNote.update({
+          where: {
+            id: args.data.id,
+          },
+          data: {
+            likes: {
+              disconnect: args.data.userId,
+            },
+          },
+        });
+      }
+      return await prisma.courseNote.update({
         where: {
           id: args.data.id,
         },
@@ -64,7 +79,8 @@ const CourseNoteResolvers = {
             connect: args.data.userId,
           },
         },
-      }),
+      });
+    },
   },
 };
 

@@ -6,8 +6,10 @@ import { UserTrainingPlanTypes } from 'graphql/models/userTrainingPlan/types';
 import { CourseNoteTypes } from 'graphql/models/courseNote/types';
 import { UserCourseTypes } from 'graphql/models/userCourse/types';
 import { UserTypes } from 'graphql/models/user/types';
+import { ProfileTypes } from 'graphql/models/profile/types';
+import { RoleTypes } from 'graphql/models/role/types';
 
-const genericTypes = gql`
+const GenericTypes = gql`
   scalar Date
   scalar Decimal
 
@@ -29,12 +31,14 @@ const genericTypes = gql`
 `;
 
 export const types = [
-  genericTypes,
-  TrainingPlanTypes,
-  CourseTypes,
-  PlanCommentTypes,
-  UserTrainingPlanTypes,
   CourseNoteTypes,
+  CourseTypes,
+  GenericTypes,
+  PlanCommentTypes,
+  ProfileTypes,
+  RoleTypes,
+  TrainingPlanTypes,
   UserCourseTypes,
+  UserTrainingPlanTypes,
   UserTypes,
 ];

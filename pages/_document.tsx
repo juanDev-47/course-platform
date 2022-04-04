@@ -16,7 +16,7 @@ class MyDocument extends Document {
             crossOrigin='anonymous'
           />
         </Head>
-        <body style={{ background: '#111827' }}>
+        <body className='bg-gray-900'>
           <Main />
           <NextScript />
         </body>

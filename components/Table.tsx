@@ -39,7 +39,7 @@ const Table = ({
   <div className='md:px-5 pt-3 pb-12 bg-gray-100  rounded-3xl shadow-xl w-full'>
     <div className='flex flex-row items-center justify-between p-5 py-6 md:px-24'>
       <h2 className='text-gray-600 font-semibold'>{title}</h2>
-      <div className='w-[200px]'>
+      <div className='w-[150px] sm:w-[200px]'>
         <PrivateComponent roleList={['Admin']}>
           <Button
             isSubmit={false}

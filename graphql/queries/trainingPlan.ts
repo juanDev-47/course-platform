@@ -29,4 +29,18 @@ const GET_TRAININGPLAN_EDIT = gql`
   }
 `;
 
-export { GET_TRAININGPLAN_EDIT, GET_TRAININGPLANS };
+const GET_TRAINING_PLAN_COMMENTS = gql`
+  query Query($getTrainingPlanId: ID!) {
+    getTrainingPlan(id: $getTrainingPlanId) {
+      PlanComments {
+        comment
+        user {
+          name
+          image
+        }
+      }
+    }
+  }
+`;
+
+export { GET_TRAININGPLAN_EDIT, GET_TRAININGPLANS, GET_TRAINING_PLAN_COMMENTS };

@@ -9,7 +9,15 @@ import { ADD_LIKE, CREATE_COURSE_NOTE } from 'graphql/mutations/courseNote';
 import { GET_USER_COURSE } from 'graphql/queries/userCourse';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
+import { matchRoles } from 'utils/matchRoles';
+
+export async function getServerSideProps(context: any) {
+  const props = await matchRoles(context);
+  return {
+    props: JSON.parse(JSON.stringify(props)),
+  };
+}
 
 const CourseDetails = () => {
   const router = useRouter();
@@ -62,10 +70,14 @@ const CourseDetails = () => {
 
   const onClickItem = async (id: string) => {}
   const onLike = async (id: string) => {
+    const { isLike } = data.getUserCourse.course.CourseNotes.find(
+      (courseNote) => courseNote.id === id
+    );
     await addLike({
       variables: {
         data: {
           id,
+          isLike,
           userId: {
             id: session.user.id,
             },
@@ -125,14 +137,14 @@ const CourseDetails = () => {
       </DetailDiv>
 
 
-    <CommentDiv
-      onSend={onSend}
-      imageUser={session.user.image}
-      title='Notes'
-      comments={data.getUserCourse.course.CourseNotes}
-      ItemComponent={noteItem}
-      onClickItem={onLike}
-    />
+      <CommentDiv
+        onSend={onSend}
+        imageUser={session.user.image}
+        title='Notes'
+        comments={data.getUserCourse.course.CourseNotes}
+        ItemComponent={noteItem}
+        onClickItem={onLike}
+      />
     </div>
   );
 };

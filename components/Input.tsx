@@ -8,6 +8,7 @@ type Props = {
   value?: string;
   isRequired?: boolean;
   defaultValue?: string;
+  disabled?: boolean;
   onChange?: (e: any) => void;
 };
 
@@ -18,6 +19,7 @@ const input = ({
   type,
   value,
   isRequired,
+  disabled,
   onChange,
   defaultValue,
 }: Props) => (
@@ -35,6 +37,7 @@ const input = ({
       name={name}
       id={name}
       required={isRequired}
+      disabled={disabled || false}
     />
   </div>
 );

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import IconButton from 'components/IconButton';
 import { Dialog } from '@mui/material';
 import DeleteDialog from 'components/DeleteDialog';
 import { useTableContext } from 'context/TableContext';
@@ -17,26 +16,28 @@ const TableActions = ({ id }: Props) => {
     if (tableContext.onEdit) tableContext.onEdit(id);
   };
 
-  const onView = () => {
-    if (tableContext.onView) tableContext.onView(id);
-  };
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const closeDialog = () => {
     setOpenDeleteDialog(false);
   };
 
   return (
-    <div className='flex flex-row gap-12'>
-      <IconButton size='20' onClick={onEdit} icon='pen' color='yellow' />
-      <IconButton
-        size='20'
-        icon='trash'
-        color='red'
+    <div className='flex flex-row gap-6 md:gap-12'>
+      <button type='button' onClick={onEdit}>
+        <i
+          className={`fas fa-pen text-[20px] text-yellow-500 hover:text-yellow-700 cursor-pointer `}
+        />
+      </button>
+      <button
+        type='button'
         onClick={() => {
           setOpenDeleteDialog(true);
         }}
-      />
-      <IconButton size='20' onClick={onView} icon='eye' color='blue' />
+      >
+        <i
+          className={`fas fa-trash text-[20px] text-red-500 hover:text-red-700 cursor-pointer `}
+        />
+      </button>
       <Dialog open={openDeleteDialog} onClose={closeDialog}>
         <DeleteDialog onDelete={onDelete} closeDialog={closeDialog} />
       </Dialog>
