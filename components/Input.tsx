@@ -7,6 +7,7 @@ type Props = {
   type: string;
   value?: string;
   isRequired?: boolean;
+  disabled?: boolean;
   onChange?: (e: any) => void;
 };
 
@@ -17,6 +18,7 @@ const input = ({
   type,
   value,
   isRequired,
+  disabled,
   onChange,
 }: Props) => (
   <div className='flex flex-col w-full px-3'>
@@ -32,6 +34,7 @@ const input = ({
       name={name}
       id={name}
       required={isRequired}
+      disabled={disabled || false}
     />
   </div>
 );
