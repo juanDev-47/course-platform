@@ -29,12 +29,30 @@ const NavBar = () => {
                     </button>
                   </Link>
 
+                  <Link href='/training-plans' passHref>
+                    <button
+                      type='button'
+                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
+                    >
+                      Training plans
+                    </button>
+                  </Link>
+
                   <Link href='/users/cl1aph70q0399bsk5v95ybu64' passHref>
                     <button
                       type='button'
                       className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
                     >
                       Test2
+                    </button>
+                  </Link>
+
+                  <Link href={`/training-plans/${session.user.name}`} passHref>
+                    <button
+                      type='button'
+                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
+                    >
+                      My training plans
                     </button>
                   </Link>
 

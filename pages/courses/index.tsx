@@ -1,12 +1,13 @@
 import { useMutation, useQuery } from '@apollo/client';
 import Table from '@components/Table';
 import { GET_COURSES_FORMTRAINIGPLAN } from 'graphql/queries/course';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { matchRoles } from 'utils/matchRoles';
 import { Course } from 'interfaces/TrainingPlan';
 import { toast } from 'react-toastify';
 import { DELETE_COURSE } from 'graphql/mutations/courses';
+import useRedirect from 'hooks/useRedirect';
+import Loading from '@components/Loading';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -16,41 +17,38 @@ export async function getServerSideProps(context: any) {
 }
 
 const Index = () => {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const { loading, push } = useRedirect();
 
-  const [availableCourses, setAvailableCourses] = useState<Course[]>([]);
-  
   // query for bring the courses
-  const { data, loading } = useQuery(GET_COURSES_FORMTRAINIGPLAN, {
+  const resQuery = useQuery(GET_COURSES_FORMTRAINIGPLAN, {
     fetchPolicy: 'cache-and-network',
   });
 
   useEffect(() => {
-    if (data) {
-      setAvailableCourses(data.getCourses);
+    if (resQuery.data) {
+      setCourses(resQuery.data.getCourses);
     }
-  }, [data]);
+  }, [resQuery.data]);
 
-  // 
-  let dataForm = availableCourses.map(element => {
-    let item = {
+  const dataForm = courses.map((element) => {
+    const item = {
       id: element.id,
       col1: element.name,
       col2: element.hours,
-      col3: element.platform
-    }
-    return item
+      col3: element.platform,
+    };
+    return item;
   });
 
-  // instance of useRouter for send params throught paths
-  const router = useRouter();
   const onCreate = () => {
-    router.push('/courses/create-course');
-  }
-  
+    push('/courses/form-course');
+  };
+
   // deleting a course
   const [deleteCourse, resDelete] = useMutation(DELETE_COURSE, {
     refetchQueries: [GET_COURSES_FORMTRAINIGPLAN],
-  });  
+  });
 
   const onDelete = async (idCourse: string) => {
     await deleteCourse({
@@ -67,33 +65,49 @@ const Index = () => {
     }
   };
 
-  
+  const onClickItem = (id: string) => {
+    push(`/courses/course-details/admin/${id}`);
+  };
+
   const onEdit = (id: string) => {
-    router.push(`/courses/${id}`);
-  }
+    push(`/courses/form-course/${id}`);
+  };
+
+  if (resQuery.loading || loading || resDelete.loading) return <Loading />;
 
   return (
-    <Table tableContext={{title:'Delete Course',
-                          question:'Are you sure you want to delete this course?',
-                          textDelete: 'Delete',
-                          onDelete,
-                          onEdit
-                                                  
-  }}  data={dataForm} title='Courses' tittles={[
-      {
-        title: 'Name',
-        keyCol: 'col1',
-      },
-      {
-        title: 'Hours',
-        keyCol: 'col2',
-      },
-      {
-        title: 'Platform',
-        keyCol: 'col3',
-      }
-    ]} onClickCreate={onCreate} textButtonCreate='New course'/>
+    <div className='mx-1 sm:mx-5 lg:mx-16 my-10'>
+      <Table
+        tableContext={{
+          title: 'Delete Course',
+          question: 'Are you sure you want to delete this course?',
+          textDelete: 'Delete',
+          onDelete,
+          onEdit,
+          onClickItem,
+        }}
+        data={dataForm}
+        title='Courses'
+        tittles={[
+          {
+            title: 'Name',
+            keyCol: 'col1',
+          },
+          {
+            title: 'Hours',
+            keyCol: 'col2',
+          },
+          {
+            title: 'Platform',
+            keyCol: 'col3',
+          },
+        ]}
+        colsClass='grid-cols-4'
+        onClickCreate={onCreate}
+        textButtonCreate='New course'
+      />
+    </div>
   );
-}
+};
 
 export default Index;

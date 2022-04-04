@@ -56,6 +56,9 @@ const Index = () => {
     }
   }, [resQuery.data]);
 
+  const onClickItem = (id: string) => {
+    push(`/training-plans/training-plan-details/admin/${id}`);
+  };
   const onClickCreate = () => {
     push('/training-plans/form-training-plan/');
   };
@@ -71,6 +74,7 @@ const Index = () => {
           title: 'Delete training plan',
           onDelete,
           onEdit,
+          onClickItem,
         }}
         title='Training Plans'
         textButtonCreate='New training Plan'
@@ -79,13 +83,13 @@ const Index = () => {
           {
             title: 'Name',
             keyCol: 'col1',
-            customClass: 'col-span-2',
           },
           {
             title: 'Number of courses',
             keyCol: 'col2',
           },
         ]}
+        colsClass='grid-cols-3'
         data={dataR}
       />
     </div>
