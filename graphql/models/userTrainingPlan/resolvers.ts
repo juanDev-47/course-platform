@@ -58,6 +58,51 @@ const UserTrainingPlanResolvers = {
         },
       }),
   },
+  Mutation: {
+    updateUserTrainingPlans: async (parent, args) => {
+      const planIds = args.data.map((pu) => pu.trainingPlanId);
+      await prisma.userTrainingPlan.deleteMany({
+        where: { userId: args.user, trainingPlanId: { notIn: planIds } },
+      });
+      args.data.forEach(async (pu) => {
+        const newPU = await prisma.userTrainingPlan.upsert({
+          where: { userId_trainingPlanId: pu },
+          create: pu,
+          update: {},
+        });
+        await prisma.userTrainingPlan.update({
+          where: { id: newPU.id },
+          data: {
+            UserCourse: {
+              connectOrCreate: (
+                await prisma.course.findMany({
+                  where: {
+                    TrainingPlans: {
+                      some: {
+                        id: pu.trainingPlanId,
+                      },
+                    },
+                  },
+                })
+              ).map((c) => ({
+                where: {
+                  userId_courseId: {
+                    courseId: c.id,
+                    userId: args.user,
+                  },
+                },
+                create: {
+                  userId: args.user,
+                  courseId: c.id,
+                  finish: false,
+                },
+              })),
+            },
+          },
+        });
+      });
+    },
+  },
 };
 
 export { UserTrainingPlanResolvers };

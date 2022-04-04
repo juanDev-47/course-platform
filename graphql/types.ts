@@ -26,6 +26,9 @@ const genericTypes = gql`
   input BooleanEditField {
     set: Boolean
   }
+  input UserId {
+    id: ID!
+  }
 `;
 
 export const types = [

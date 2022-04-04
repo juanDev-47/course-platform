@@ -9,5 +9,25 @@ const GET_EMPLOYEES = gql`
     }
   }
 `;
-
-export { GET_EMPLOYEES };
+const GET_EMPLOYEE = gql`
+  query GetEmployee($getEmployeeId: ID!) {
+    getEmployee(id: $getEmployeeId) {
+      id
+      name
+      email
+      emailVerified
+      image
+      availablePlans {
+        name
+        id
+      }
+      UserTrainingPlan {
+        trainingPlan {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+export { GET_EMPLOYEES, GET_EMPLOYEE };

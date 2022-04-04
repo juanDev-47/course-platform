@@ -14,5 +14,4 @@ export const resolvers = [
   CourseNoteResolvers,
   UserCourseResolvers,
   UserResolvers,
-  
 ];
