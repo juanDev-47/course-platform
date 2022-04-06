@@ -10,10 +10,20 @@ const UserTrainingPlanTypes = gql`
     createdAt: Date
     updatedAt: Date
   }
+  input createUserTrainingPlans {
+    userId: ID!
+    trainingPlanId: ID!
+  }
   type Query {
     getUserTrainingPlans: [UserTrainingPlan]
     getUserTrainingPlan(id: ID!): UserTrainingPlan
     getUserTrainingPlansByUser(id: ID!): [UserTrainingPlan]
+  }
+  type Mutation {
+    updateUserTrainingPlans(
+      data: [createUserTrainingPlans]
+      user: ID!
+    ): [UserTrainingPlan]
   }
 `;
 
