@@ -24,7 +24,7 @@ const Index = () => {
 
   if (loading) return <Loading />;
   return (
-    <div>
+    <div className='mx-2 my-10 md:mx-16'>
       <Table
         tittles={[
           { title: 'Name', keyCol: 'name' },
@@ -32,7 +32,7 @@ const Index = () => {
         ]}
         data={data.getEmployees}
         colsClass='grid-cols-2'
-        title='Usuarios'
+        title='Employees'
         tableContext={{ onClickItem }}
       />
     </div>
