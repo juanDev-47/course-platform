@@ -11,6 +11,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { matchRoles } from 'utils/matchRoles';
+import { toast } from 'react-toastify';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -58,8 +59,14 @@ const CourseDetails = () => {
   // finished course method
   
   const finishedCourse = () => {
-    console.log('Hola desde el boton finish ');
-    console.log(data.getUserCourse.finish);
+    // generate modal for select upload certificate
+    if (data.getUserCourse.finish) {
+      toast.done      
+    } else {
+      console.log('Hola desde el boton finish ');
+      console.log(data.getUserCourse.finish);
+    }
+
     
   }
 
@@ -118,19 +125,22 @@ const CourseDetails = () => {
             />
           </div>
           <div className="flex flex-col sm:flex-row justify-around gap-5 w-full">
-            <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
-              <Button text={ data.getUserCourse.finish ? 'unfinished': 'finish course' } onClick={finishedCourse} />
+            <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-96 items-center'>
+              <Button text={ data.getUserCourse.finish ? 'unfinished': 'finish course' } onClick={finishedCourse} />            
+              {
+              data.getUserCourse.finish?
+                <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
+                  
+                  <span>status</span>
+                  <span>finished</span>
+                </div>
+                : 
+                <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
+                <span>status</span>
+                <span>In progress...</span>
+              </div>
+              }
             </div>
-            {data.getUserCourse.finish?
-              <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
-                <Button text='Upload certificate' onClick={upload} />
-              </div>: 
-              <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
-              <span>status</span>
-              <span>In progress...</span>
-            </div>
-            }
-            
           </div>
           
         </div>
