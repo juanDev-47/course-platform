@@ -12,15 +12,31 @@ const GET_COURSES_FORMTRAINIGPLAN = gql`
 `;
 
 const GET_COURSE_EDIT = gql`
-query GetCourse($getCourseId: ID!) {
-  getCourse(id: $getCourseId) {
-    id
-    name
-    hours
-    platform
-    link
+  query GetCourse($getCourseId: ID!) {
+    getCourse(id: $getCourseId) {
+      id
+      name
+      hours
+      platform
+      link
+    }
   }
-}
 `;
 
-export { GET_COURSES_FORMTRAINIGPLAN, GET_COURSE_EDIT };
+const GET_COURSE_NOTES = gql`
+  query getCourseNotes($getCourseId: ID!) {
+    getCourse(id: $getCourseId) {
+      CourseNotes {
+        id
+        user {
+          name
+          image
+        }
+        note
+        numberOfLikes
+      }
+    }
+  }
+`;
+
+export { GET_COURSES_FORMTRAINIGPLAN, GET_COURSE_EDIT, GET_COURSE_NOTES };

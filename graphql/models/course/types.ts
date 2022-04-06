@@ -48,12 +48,9 @@ const CourseTypes = gql`
   }
 
   type Mutation {
-    createCourse(data: CourseCreateInput):Course
+    createCourse(data: CourseCreateInput): Course
     deleteCourse(where: CourseFilterId!): Course
-    updateCourse(
-      where: CourseFilterId!
-      data: CourseUpdateInput!
-    ): Course
+    updateCourse(where: CourseFilterId!, data: CourseUpdateInput!): Course
   }
 `;
 

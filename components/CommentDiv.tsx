@@ -7,8 +7,9 @@ type Props = {
   title: string;
   comments: any;
   ItemComponent: ({ itemData }: any) => JSX.Element;
-  imageUser: string;
-  onSend: (comment: string) => void;
+  imageUser?: string;
+  onSend?: (comment: string) => void;
+  onClickItem?: (id: string) => void;
 };
 
 const CommentDiv = ({
@@ -16,6 +17,7 @@ const CommentDiv = ({
   comments,
   ItemComponent,
   imageUser,
+  onClickItem,
   onSend,
 }: Props) => {
   const [comment, setComment] = useState('');
@@ -27,7 +29,11 @@ const CommentDiv = ({
     <div className='px-5 pt-3 pb-12 bg-gray-100  rounded-3xl shadow-xl w-full'>
       <h2 className='text-gray-600 font-semibold p-6 px-24'>{title}</h2>
       {comments.map((itemData: any) => (
-        <ItemComponent key={itemData.id} itemData={itemData} />
+        <ItemComponent
+          key={itemData.id}
+          itemData={itemData}
+          onClickItem={onClickItem}
+        />
       ))}
       <PrivateComponent roleList={['Employee']}>
         <div className='flex flex-col my-1 rounded-lg border-2 px-3 py-2 border-b border-gray-400 bg-slate-200 text-sm gap-2 items-center'>

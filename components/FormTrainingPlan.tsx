@@ -7,6 +7,7 @@ import { Course } from 'interfaces/TrainingPlan';
 import CourseItem from 'components/CourseItem';
 import useRedirect from 'hooks/useRedirect';
 import Loading from 'components/Loading';
+import useFormData from 'hooks/useFormData';
 
 type Props = {
   dataForm: {
@@ -17,18 +18,17 @@ type Props = {
     name?: string;
     description?: string;
   };
-  onSubmit: (e: any) => Promise<void>;
+  onSubmit: (data: any) => Promise<void>;
 };
 
 const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
+  const { form, formData, updateFormData } = useFormData(null);
   const [availableCourses, setAvailableCourses] = useState<Course[]>(
     dataForm.availableCourses
   );
   const [selectCourses, setSelectCourses] = useState<Course[]>(
     dataForm.selectCourses || []
   );
-  const [name, setName] = useState(dataForm.name || '');
-  const [description, setDescription] = useState(dataForm.description || '');
   const { loading, push } = useRedirect();
   const [isValidation, setIsValidation] = useState(true);
 
@@ -44,7 +44,7 @@ const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
       setIsValidation(false);
       return;
     }
-    onSubmit({ name, description, selectCourses });
+    onSubmit({ ...formData, selectCourses });
   };
 
   if (loading) {
@@ -59,6 +59,8 @@ const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
       onCancel={() => {
         push('/training-plans');
       }}
+      refForm={form}
+      onChange={updateFormData}
     >
       <div className='flex flex-col w-full gap-4'>
         <Input
@@ -66,26 +68,20 @@ const FormTrainingPlan = ({ dataForm, onSubmit }: Props) => {
           text='Name'
           placeholder='Name'
           name='name'
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
+          defaultValue={dataForm.name || ''}
           isRequired
         />
         <TextArea
           text='description'
           placeholder='description'
-          value={description}
+          defaultValue={dataForm.description || ''}
           name='description'
-          onChange={(e) => {
-            setDescription(e.target.value);
-          }}
         />
         {isValidation ? (
           <></>
         ) : (
           <span className='text-red-800 text-center w-full'>
-            Select at least one course{' '}
+            Select at least one course
           </span>
         )}
         <SelectAddAndRemove
