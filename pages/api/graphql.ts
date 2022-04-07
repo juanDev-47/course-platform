@@ -1,3 +1,4 @@
+import { getSession } from 'next-auth/react';
 import 'reflect-metadata';
 import 'ts-tiny-invariant';
 import { ApolloServer } from 'apollo-server-micro';
@@ -20,6 +21,10 @@ const functionHandler = async (req: any, res: any) => {
     typeDefs: types,
     resolvers,
     introspection: true,
+    context: async () => {
+      const data: any = await getSession({ req });
+      return { session: data };
+    },
   });
 
   const startServer = apolloServer.start();

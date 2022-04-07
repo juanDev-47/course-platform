@@ -7,6 +7,7 @@ type Props = {
   type: string;
   value?: string;
   isRequired?: boolean;
+  defaultValue?: string;
   disabled?: boolean;
   onChange?: (e: any) => void;
 };
@@ -20,12 +21,14 @@ const input = ({
   isRequired,
   disabled,
   onChange,
+  defaultValue,
 }: Props) => (
   <div className='flex flex-col w-full px-3'>
     <label htmlFor={name} className='text-xs font-semibold px-1'>
       <span>{text}</span>
     </label>
     <input
+      defaultValue={defaultValue}
       type={type}
       className='w-full px-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500'
       placeholder={placeholder}

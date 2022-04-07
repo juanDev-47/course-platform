@@ -1,6 +1,14 @@
 import prisma from 'config/prisma';
 
 const CourseResolvers = {
+  Course: {
+    CourseNotes: async (parent, args) =>
+      await prisma.courseNote.findMany({
+        where: {
+          courseId: parent.id,
+        },
+      }),
+  },
   Query: {
     getCourses: async () => await prisma.course.findMany(),
     getCourse: async (parent: any, args: { id: any }) =>
@@ -13,26 +21,25 @@ const CourseResolvers = {
   Mutation: {
     createCourse: async (parent, args) => {
       const newCourse = await prisma.course.create({
-        data:{
-          ...args.data
-        }
+        data: {
+          ...args.data,
+        },
       });
       return newCourse;
     },
 
-    updateCourse: async (parent, args) => 
+    updateCourse: async (parent, args) =>
       await prisma.course.update({
         where: { ...args.where },
         data: {
           ...args.data,
         },
-      }), 
+      }),
 
     deleteCourse: async (parent, args) =>
       await prisma.course.delete({
         where: { ...args.where },
       }),
-
   },
 };
 

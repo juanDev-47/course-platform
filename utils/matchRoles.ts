@@ -17,7 +17,6 @@ const matchRoles = async (context: any) => {
   }
   const data: any = await getSession({ req: context.req });
   const userRole = data?.user?.role?.name;
-
   const page = await prisma.page.findUnique({
     where: {
       path: url,

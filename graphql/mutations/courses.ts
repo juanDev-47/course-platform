@@ -2,10 +2,10 @@ import { gql } from '@apollo/client';
 
 const CREATE_COURSE = gql`
   mutation CreateCourse($data: CourseCreateInput) {
-  createCourse(data: $data) {
-    id
+    createCourse(data: $data) {
+      id
+    }
   }
-}
 `;
 
 const DELETE_COURSE = gql`
@@ -23,6 +23,6 @@ const UPDATE_COURSE = gql`
       name
     }
   }
-`
+`;
 
 export { CREATE_COURSE, DELETE_COURSE, UPDATE_COURSE };
