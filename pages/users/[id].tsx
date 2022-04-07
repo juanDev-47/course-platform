@@ -1,13 +1,21 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import Form from '@components/Form';
 import Input from '@components/Input';
 import Loading from '@components/Loading';
 import { GET_USER_ID } from 'graphql/queries/user';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { matchRoles } from 'utils/matchRoles';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
+import { GET_EMPLOYEE } from 'graphql/queries/employees';
+import { TrainingPlan } from '@prisma/client';
+import { UPDATE_USER_TRAINING_PLANS } from 'graphql/mutations/userTrainingPlan';
+import Button from '@components/Button';
+import { Box, Modal } from '@mui/material';
+import SelectAddAndRemove from '@components/SelectAddAndRemove';
+import TrainingPlanItem from '@components/TrainingPlanItem';
+import PrivateComponent from '@components/PrivateComponent';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -25,6 +33,52 @@ const UserDetails = () => {
       getUserId: id,
     },
   });
+
+  const [open, setOpen] = React.useState(false);
+  const [updateEmployeePlans, resEmployeePlansUpdate] = useMutation(
+    UPDATE_USER_TRAINING_PLANS
+  );
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    employeeQuery.refetch();
+  };
+  const handleSave = async () => {
+    const data = selectedPlans.map((plan: TrainingPlan) => ({
+      trainingPlanId: plan.id,
+      userId: id,
+    }));
+    await updateEmployeePlans({
+      variables: {
+        user: id,
+        data,
+      },
+    });
+    if (resEmployeePlansUpdate.error) {
+      toast.error('Error assigning plan');
+    } else {
+      toast.success('plan assigned successfully');
+      handleClose();
+    }
+  };
+  let employeeQuery = useQuery(GET_EMPLOYEE, {
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      getEmployeeId: id,
+    },
+  });
+  const [availablePlans, setAvailablePlan] = useState<TrainingPlan[]>([]);
+  const [selectedPlans, setSelectedPlans] = useState<TrainingPlan[]>([]);
+  useEffect(() => {
+    if (!employeeQuery.loading && employeeQuery.data) {
+      setAvailablePlan(employeeQuery.data.getEmployee.availablePlans);
+      setSelectedPlans(
+        employeeQuery.data.getEmployee.UserTrainingPlan.map(
+          (ut) => ut.trainingPlan
+        )
+      );
+    }
+  }, [employeeQuery.loading]);
 
   if (loading) return <Loading />;
   if (!userData.getUser) {
@@ -100,6 +154,46 @@ const UserDetails = () => {
               />
             </div>
           </div>
+          <PrivateComponent roleList={['Admin']}>
+            <div className='mt-3'>
+              <Button
+                isSubmit={false}
+                text='Manage training plans'
+                onClick={handleOpen}
+              />
+            </div>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby='parent-modal-title'
+              aria-describedby='parent-modal-description'
+            >
+              <Box
+                className='w-9/12 p-3 m-auto bg-white place-content-center my-1/4 absolute rounded-lg top-1/2 left-1/2'
+                style={{
+                  transform: 'translate(-50%, -50%)',
+                }}
+              >
+                <SelectAddAndRemove
+                  ItemComponent={TrainingPlanItem}
+                  listAvailable={availablePlans}
+                  listSelect={selectedPlans}
+                  setListAvailable={setAvailablePlan}
+                  setListSelect={setSelectedPlans}
+                  titleAvailable='Available plans'
+                  titleSelect='Assigned plans'
+                />
+                <div className='flex flex-row space-x-2 grid grid-cols-2 my-2 mx-1'>
+                  <Button
+                    isSubmit={false}
+                    text='Cancel'
+                    onClick={handleClose}
+                  />
+                  <Button isSubmit={false} text='Save' onClick={handleSave} />
+                </div>
+              </Box>
+            </Modal>
+          </PrivateComponent>
         </Form>
       </div>
     </div>
