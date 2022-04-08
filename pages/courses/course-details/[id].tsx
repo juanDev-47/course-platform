@@ -114,7 +114,6 @@ const CourseDetails = () => {
     setShowModal(false);
   };
 
-  const onClickItem = async (id: string) => {};
   const onLike = async (id: string) => {
     const { isLike } = data.getUserCourse.course.CourseNotes.find(
       (courseNote) => courseNote.id === id
@@ -136,7 +135,8 @@ const CourseDetails = () => {
     loading ||
     resCreate.loading ||
     resAddLike.loading ||
-    resUpdateUserCourse.loading
+    resUpdateUserCourse.loading ||
+    resUploadCertificate.loading
   ) {
     return <Loading />;
   }
