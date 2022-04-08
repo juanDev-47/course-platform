@@ -15,6 +15,22 @@ const UserCourseTypes = gql`
     getUserCourses: [UserCourse]
     getUserCourse(id: ID!): UserCourse
   }
+
+  input inputUpdateState {
+    id: ID!
+    state: Boolean!
+  }
+
+  input inputUploadCertificate {
+    id: ID!
+    certificate: String!
+  }
+
+  type Mutation {
+    changeState(inputUpdateState: inputUpdateState): UserCourse
+    uploadCertificate(data: inputUploadCertificate): UserCourse
+  }
+
 `;
 
 export { UserCourseTypes };
