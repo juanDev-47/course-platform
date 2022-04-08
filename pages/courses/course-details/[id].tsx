@@ -161,17 +161,10 @@ const CourseDetails = () => {
                 text={finishState ? 'unfinished' : 'finish course'}
                 onClick={finishedCourse}
               />
-              {finishState ? (
                 <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
                   <span>status</span>
-                  <span>finished</span>
+                  <span>{finishState ? 'Finished': 'In progress'}</span>
                 </div>
-              ) : (
-                <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
-                  <span>status</span>
-                  <span>In progress...</span>
-                </div>
-              )}
             </div>
           </div>
 
