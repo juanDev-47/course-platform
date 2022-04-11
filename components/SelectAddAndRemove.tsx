@@ -55,12 +55,12 @@ const SelectAddAndRemove = ({
     );
   };
   return (
-    <div className='flex flex-row gap-5 w-full'>
+    <div className='md:flex md:flex-row gap-5 w-full'>
       <div className='flex flex-col w-full gap-3 items-center'>
-        <span className='font-semibold'>{titleSelect}</span>
+        <span className='font-semibold'>{titleAvailable}</span>
         <SelecAddAndRemList
-          itemList={listSelect}
-          onClick={removeItemSelect}
+          itemList={listAvailable}
+          onClick={addItemSelect}
           ItemComponent={ItemComponent}
         />
       </div>
@@ -69,10 +69,10 @@ const SelectAddAndRemove = ({
         <FontAwesomeIcon icon={faArrowRightArrowLeft} />
       </div>
       <div className='flex flex-col w-full gap-3 items-center'>
-        <span className='font-semibold'>{titleAvailable}</span>
+        <span className='font-semibold'>{titleSelect}</span>
         <SelecAddAndRemList
-          itemList={listAvailable}
-          onClick={addItemSelect}
+          itemList={listSelect}
+          onClick={removeItemSelect}
           ItemComponent={ItemComponent}
         />
       </div>
