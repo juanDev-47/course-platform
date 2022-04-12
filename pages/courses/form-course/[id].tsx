@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import FormCourse from '@components/FormCourse';
 import useRedirect from 'hooks/useRedirect';
 import Loading from '@components/Loading';
+import NotFoundComponent from '@components/NotFound';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -67,6 +68,7 @@ const FormCourseEdit = () => {
 
   if (resQuery.loading || loading || resUpdate.loading) return <Loading />;
 
+  if (!resQuery.data.getCourse) return <NotFoundComponent />;
   return (
     <FormCourse
       dataForm={{

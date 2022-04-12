@@ -17,6 +17,7 @@ import { UPDATE_STATE, UPLOAD_CERTIFICATE } from 'graphql/mutations/userCourse';
 import FileUpload from '@components/FileUpload';
 import { toast } from 'react-toastify';
 import { Dialog } from '@mui/material';
+import NotFoundComponent from '@components/NotFound';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -140,6 +141,9 @@ const CourseDetails = () => {
   ) {
     return <Loading />;
   }
+
+  if (!data.getUserCourse) return <NotFoundComponent />;
+
   return (
     <div className='mt-8 flex flex-col gap-5 mx-1 sm:mx-5 lg:mx-16 my-10 overflow-hidden'>
       <DetailDiv title={data.getUserCourse.course.name}>
@@ -161,10 +165,10 @@ const CourseDetails = () => {
                 text={finishState ? 'unfinished' : 'finish course'}
                 onClick={finishedCourse}
               />
-                <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
-                  <span>status</span>
-                  <span>{finishState ? 'Finished': 'In progress'}</span>
-                </div>
+              <div className='flex flex-col gap-3 rounded-lg border-2 px-3 py-5 border-b border-gray-200 bg-white text-base w-full items-center'>
+                <span>status</span>
+                <span>{finishState ? 'Finished' : 'In progress'}</span>
+              </div>
             </div>
           </div>
 

@@ -3,17 +3,25 @@ import React from 'react';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
-  return {
+  let response: any = {
     props: JSON.parse(JSON.stringify(props)),
   };
+
+  if (props.auth) {
+    response = {
+      ...response,
+      redirect: {
+        destination:
+          props.user?.role.name === 'Admin'
+            ? '/users'
+            : `/training-plans/${props.user?.name}`,
+        permanent: false,
+      },
+    };
+  }
+  return response;
 }
 
-const Home = () => (
-  <div>
-    <h1 className='text-3xl text-blue-300 font-bold underline'>
-      Hello world! ;
-    </h1>
-  </div>
-);
+const Home = () => <></>;
 
 export default Home;

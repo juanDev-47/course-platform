@@ -18,6 +18,7 @@ import TrainingPlanItem from '@components/TrainingPlanItem';
 import PrivateComponent from '@components/PrivateComponent';
 import { GET_USER_TRAINING_PLANS_BY_USER } from 'graphql/queries/userTrainingPlan';
 import Table from '@components/Table';
+import NotFoundComponent from '@components/NotFound';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -79,7 +80,11 @@ const UserDetails = () => {
   const [availablePlans, setAvailablePlan] = useState<TrainingPlan[]>([]);
   const [selectedPlans, setSelectedPlans] = useState<TrainingPlan[]>([]);
   useEffect(() => {
-    if (!employeeQuery.loading && employeeQuery.data) {
+    if (
+      !employeeQuery.loading &&
+      employeeQuery.data &&
+      employeeQuery.data.getEmployee
+    ) {
       setAvailablePlan(employeeQuery.data.getEmployee.availablePlans);
       setSelectedPlans(
         employeeQuery.data.getEmployee.UserTrainingPlan.map(
@@ -102,9 +107,11 @@ const UserDetails = () => {
   }, [userPlansQuery.loading]);
 
   if (loading) return <Loading />;
-  if (!userData.getUser) {
-    toast.error('Error creating user');
-    return <Loading />;
+  if (
+    !userData.getUser ||
+    (employeeQuery.data && !employeeQuery.data.getEmployee)
+  ) {
+    return <NotFoundComponent />;
   }
   return (
     <div>
@@ -120,101 +127,109 @@ const UserDetails = () => {
       <div className='flex justify-center'>
         <Form title='User Details' editMode={false}>
           <div>
-            <div className='flex flex-col sm:flex-row '>
-              <Input
-                type='text'
-                text='Name'
-                placeholder='Name'
-                name='name'
-                value={userData.getUser.name}
-                disabled
-              />
-              <Input
-                type='text'
-                text='Email'
-                placeholder='Email'
-                name='email'
-                value={userData.getUser.email}
-                disabled
-              />
-            </div>
-            <div className='flex flex-col sm:flex-row '>
-              <Input
-                type='text'
-                text='Position'
-                placeholder='Position'
-                name='position'
-                value={userData.getUser.profile.position}
-                disabled
-              />
-              <Input
-                type='text'
-                text='Role'
-                placeholder='Role'
-                name='role'
-                value={userData.getUser.role.name}
-                disabled
-              />
-            </div>
-            <div className='flex flex-col sm:flex-row '>
-              <Input
-                type='text'
-                text='Phone'
-                placeholder='Phone'
-                name='phone'
-                value={userData.getUser.profile.phone}
-                disabled
-              />
-              <Input
-                type='text'
-                text='address'
-                placeholder='Address'
-                name='address'
-                value={userData.getUser.profile.address}
-                disabled
-              />
-            </div>
-          </div>
-          <PrivateComponent roleList={['Admin']}>
-            <div className='mt-3'>
-              <Button
-                isSubmit={false}
-                text='Manage training plans'
-                onClick={handleOpen}
-              />
-            </div>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby='parent-modal-title'
-              aria-describedby='parent-modal-description'
-            >
-              <Box
-                className='w-9/12 p-3 m-auto bg-white place-content-center my-1/4 absolute rounded-lg top-1/2 left-1/2'
-                style={{
-                  transform: 'translate(-50%, -50%)',
-                }}
-              >
-                <SelectAddAndRemove
-                  ItemComponent={TrainingPlanItem}
-                  listAvailable={availablePlans}
-                  listSelect={selectedPlans}
-                  setListAvailable={setAvailablePlan}
-                  setListSelect={setSelectedPlans}
-                  titleAvailable='Available plans'
-                  titleSelect='Assigned plans'
+            <div>
+              <div className='flex flex-col sm:flex-row '>
+                <Input
+                  type='text'
+                  text='Name'
+                  placeholder='Name'
+                  name='name'
+                  value={userData.getUser.name}
+                  disabled
                 />
-                <div className='flex flex-row space-x-2 grid grid-cols-2 my-2 mx-1'>
+                <Input
+                  type='text'
+                  text='Email'
+                  placeholder='Email'
+                  name='email'
+                  value={userData.getUser.email}
+                  disabled
+                />
+              </div>
+              <div className='flex flex-col sm:flex-row '>
+                <Input
+                  type='text'
+                  text='Position'
+                  placeholder='Position'
+                  name='position'
+                  value={userData.getUser.profile.position}
+                  disabled
+                />
+                <Input
+                  type='text'
+                  text='Role'
+                  placeholder='Role'
+                  name='role'
+                  value={userData.getUser.role.name}
+                  disabled
+                />
+              </div>
+              <div className='flex flex-col sm:flex-row '>
+                <Input
+                  type='text'
+                  text='Phone'
+                  placeholder='Phone'
+                  name='phone'
+                  value={userData.getUser.profile.phone}
+                  disabled
+                />
+                <Input
+                  type='text'
+                  text='address'
+                  placeholder='Address'
+                  name='address'
+                  value={userData.getUser.profile.address}
+                  disabled
+                />
+              </div>
+            </div>
+            <PrivateComponent roleList={['Admin']}>
+              <div>
+                <div className='mt-3'>
                   <Button
                     isSubmit={false}
-                    text='Cancel'
-                    onClick={handleClose}
+                    text='Manage training plans'
+                    onClick={handleOpen}
                   />
-                  <Button isSubmit={false} text='Save' onClick={handleSave} />
                 </div>
-              </Box>
-            </Modal>
-          </PrivateComponent>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby='parent-modal-title'
+                  aria-describedby='parent-modal-description'
+                >
+                  <Box
+                    className='w-9/12 p-3 m-auto bg-white place-content-center my-1/4 absolute rounded-lg top-1/2 left-1/2'
+                    style={{
+                      transform: 'translate(-50%, -50%)',
+                    }}
+                  >
+                    <SelectAddAndRemove
+                      ItemComponent={TrainingPlanItem}
+                      listAvailable={availablePlans}
+                      listSelect={selectedPlans}
+                      setListAvailable={setAvailablePlan}
+                      setListSelect={setSelectedPlans}
+                      titleAvailable='Available plans'
+                      titleSelect='Assigned plans'
+                    />
+                    <div className='flex flex-row space-x-2 grid grid-cols-2 my-2 mx-1'>
+                      <Button
+                        isSubmit={false}
+                        text='Cancel'
+                        onClick={handleClose}
+                      />
+                      <Button
+                        isSubmit={false}
+                        text='Save'
+                        onClick={handleSave}
+                      />
+                    </div>
+                  </Box>
+                </Modal>
+              </div>
+            </PrivateComponent>
+          </div>
         </Form>
       </div>
       {!userPlansQuery.loading && (

@@ -6,7 +6,7 @@ export const TableContext = createContext<TableContextType>({
   textDelete: '',
   question: '',
   onDelete: () => {},
-  onEdit: () => {},
+  onViewNotes: () => {},
   onClickItem: () => {},
 });
 

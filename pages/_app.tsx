@@ -14,6 +14,7 @@ import {
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { WidgetLoader } from 'react-cloudinary-upload-widget';
+import { User } from 'interfaces';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -24,10 +25,25 @@ const client = new ApolloClient({
   ]),
 });
 
+declare module 'next-auth' {
+  interface Session {
+    user: User;
+    userId: string;
+  }
+}
+
+type CustomAppProps = AppProps & {
+  pageProps: {
+    session: {
+      user: User;
+    };
+  };
+};
+
 const MyApp = ({
   Component,
   pageProps: { session, ...pageProps },
-}: AppProps) => (
+}: CustomAppProps) => (
   <SessionProvider session={session}>
     <ApolloProvider client={client}>
       <WidgetLoader />
@@ -46,7 +62,7 @@ const MyApp = ({
         pauseOnHover
       />
 
-      <PrivateLayout pageAuth={pageProps.auth}>
+      <PrivateLayout pageAuth={pageProps.auth} className='h-screen'>
         <Component {...pageProps} />
       </PrivateLayout>
     </ApolloProvider>

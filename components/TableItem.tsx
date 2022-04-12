@@ -13,7 +13,7 @@ type Props = {
   }[];
   colsClass?: string;
   itemData: any;
-  extraActions?: boolean;
+  extraActions?: boolean | ((id: string) => void);
 };
 
 const TableItem = ({ itemData, tittles, colsClass, extraActions }: Props) => {

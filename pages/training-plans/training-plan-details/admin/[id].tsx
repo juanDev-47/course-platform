@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import CommentDiv from '@components/CommentDiv';
 import CommentItem from '@components/CommentItem';
 import Loading from '@components/Loading';
+import NotFoundComponent from '@components/NotFound';
 import { GET_TRAINING_PLAN_COMMENTS } from 'graphql/queries/trainingPlan';
 import useRedirect from 'hooks/useRedirect';
 import React from 'react';
@@ -28,6 +29,9 @@ const TrainingPlanComments = () => {
   if (loading) {
     return <Loading />;
   }
+
+  if (!data.getTrainingPlan) return <NotFoundComponent />;
+
   return (
     <div className='mt-8 flex flex-col gap-5 mx-1 sm:mx-5 lg:mx-16 my-10 overflow-hidden pointer-events-none'>
       <CommentDiv

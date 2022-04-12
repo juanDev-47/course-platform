@@ -54,7 +54,7 @@ const Table = ({
           {t.title}
         </span>
       ))}
-      {tableContext && (tableContext.onDelete || tableContext.onEdit) && (
+      {tableContext && (tableContext.onDelete || tableContext.onViewNotes) && (
         <PrivateComponent roleList={['Admin']}>
           <span className=''>Actions</span>
         </PrivateComponent>
@@ -67,7 +67,7 @@ const Table = ({
           tittles={tittles}
           colsClass={colsClass}
           itemData={d}
-          extraActions={tableContext?.onDelete || tableContext?.onEdit}
+          extraActions={tableContext?.onDelete || tableContext?.onViewNotes}
         />
       ))}
     </TableContext.Provider>

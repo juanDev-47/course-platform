@@ -33,6 +33,7 @@ const Index = () => {
         data={data.getEmployees}
         colsClass='grid-cols-2'
         title='Employees'
+        textButtonCreate='Create User'
         tableContext={{ onClickItem }}
       />
     </div>

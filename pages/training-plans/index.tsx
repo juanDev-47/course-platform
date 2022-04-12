@@ -39,8 +39,8 @@ const Index = () => {
     }
   };
 
-  const onEdit = (id: string) => {
-    push(`/training-plans/form-training-plan/${id}`);
+  const onViewNotes = (id: string) => {
+    push(`/training-plans/training-plan-details/admin/${id}`);
   };
 
   const [dataR, setDataR] = useState([{}]);
@@ -57,7 +57,7 @@ const Index = () => {
   }, [resQuery.data]);
 
   const onClickItem = (id: string) => {
-    push(`/training-plans/training-plan-details/admin/${id}`);
+    push(`/training-plans/form-training-plan/${id}`);
   };
   const onClickCreate = () => {
     push('/training-plans/form-training-plan/');
@@ -73,7 +73,7 @@ const Index = () => {
           textDelete: 'Delete',
           title: 'Delete training plan',
           onDelete,
-          onEdit,
+          onViewNotes,
           onClickItem,
         }}
         title='Training Plans'

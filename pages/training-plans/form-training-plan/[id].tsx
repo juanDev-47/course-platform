@@ -10,6 +10,7 @@ import {
 import FormTrainingPlan from '@components/FormTrainingPlan';
 import { matchRoles } from 'utils/matchRoles';
 import useRedirect from 'hooks/useRedirect';
+import NotFoundComponent from '@components/NotFound';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -57,6 +58,8 @@ const FormTrainingPlanEdit = () => {
   };
 
   if (resQuery.loading || loading || resUpdate.loading) return <Loading />;
+
+  if (!resQuery.data.getTrainingPlan) return <NotFoundComponent />;
 
   return (
     <FormTrainingPlan

@@ -4,6 +4,7 @@ import CommentItem from '@components/CommentItem';
 import DetailDiv from '@components/DetailDiv';
 import DetailSpan from '@components/DetailSpan';
 import Loading from '@components/Loading';
+import NotFoundComponent from '@components/NotFound';
 import Table from '@components/Table';
 import { CREATE_PLAN_COMMENT } from 'graphql/mutations/planComment';
 import { GET_USER_TRAINING_PLAN_ID } from 'graphql/queries/userTrainingPlan';
@@ -36,7 +37,7 @@ const TrainingPlanDetails = () => {
   const { data: session }: any = useSession();
   const [dataR, setDataR] = useState([{}]);
   useEffect(() => {
-    if (resQuery.data) {
+    if (resQuery.data && resQuery.data.getUserTrainingPlan) {
       setDataR(
         resQuery.data.getUserTrainingPlan.UserCourse.map((item: any) => ({
           id: item.id,
@@ -71,6 +72,7 @@ const TrainingPlanDetails = () => {
 
   if (resQuery.loading || resCreate.loading || loading) return <Loading />;
 
+  if (!resQuery.data.getUserTrainingPlan) return <NotFoundComponent />;
   return (
     <div className='mt-8 flex flex-col gap-5 mx-1 sm:mx-5 lg:mx-16 my-10 overflow-hidden'>
       <DetailDiv title={resQuery.data.getUserTrainingPlan.trainingPlan.name}>

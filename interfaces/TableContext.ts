@@ -3,6 +3,6 @@ export type TableContextType = {
   textDelete?: string;
   question?: string;
   onDelete?: (id: string) => void;
-  onEdit?: (id: string) => void;
+  onViewNotes?: (id: string) => void;
   onClickItem?: (id: string) => void;
 };

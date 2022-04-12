@@ -2,11 +2,25 @@ import React, { useState } from 'react';
 import { Transition } from '@headlessui/react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import { NavigationBtn } from 'utils/navigationBtn';
+import useRedirect from 'hooks/useRedirect';
 
 const NavBar = () => {
+  const { push } = useRedirect();
   const [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession();
+  const navBts =
+    session.user.role?.name === 'Admin'
+      ? NavigationBtn.ADMIN_NAV_BTNS
+      : NavigationBtn.USER_NAV_BTNS;
+
+  const dynamicUrls = {
+    userName: session.user.name,
+  };
+
+  const getDynamicUrl = (key: string): string => dynamicUrls[key];
+
   return (
     <div>
       <nav className='border-solid border-b-2 border-b-blue-500'>
@@ -14,78 +28,52 @@ const NavBar = () => {
           <div className='flex items-center justify-between h-16'>
             <div className='flex items-center w-full'>
               <div className='flex-shrink-0 ml-3 text-blue-500 font-semibold'>
-                <Link href='/home' passHref>
+                <Link href='/' passHref>
                   <span>Capacitation Management</span>
                 </Link>
               </div>
               <div className='hidden md:flex flex-1 justify-end'>
                 <div className='ml-10 flex space-x-4 items-center align-middle'>
-                  <Link href='/courses' passHref>
+                  {navBts.map((btn) => (
                     <button
+                      key={btn.label}
+                      onClick={() =>
+                        push(
+                          btn.isDynamic
+                            ? `${btn.url}/${getDynamicUrl(btn.dynamicUrlKey)}`
+                            : btn.url
+                        )
+                      }
                       type='button'
                       className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
                     >
-                      Courses
+                      {btn.label}
                     </button>
-                  </Link>
+                  ))}
 
-                  <Link href='/training-plans' passHref>
-                    <button
-                      type='button'
-                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
-                    >
-                      Training plans
-                    </button>
-                  </Link>
+                  <button
+                    type='button'
+                    className='m-0'
+                    onClick={() => push('/profile')}
+                  >
+                    <Image
+                      className='h-8 w-8 rounded-full'
+                      src={
+                        session.user.profile?.customImage ?? session.user.image
+                      }
+                      alt='Workflow'
+                      width={40}
+                      height={40}
+                    />
+                  </button>
 
-                  <Link href='/users/cl1aph70q0399bsk5v95ybu64' passHref>
-                    <button
-                      type='button'
-                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
-                    >
-                      Test2
-                    </button>
-                  </Link>
-
-                  <Link href={`/training-plans/${session.user.name}`} passHref>
-                    <button
-                      type='button'
-                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
-                    >
-                      My training plans
-                    </button>
-                  </Link>
-                  <Link href='/top-employee-training/' passHref>
-                    <button
-                      type='button'
-                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
-                    >
-                      Top employees
-                    </button>
-                  </Link>
-
-                  <Link href='/users/' passHref>
-                    <button
-                      type='button'
-                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
-                      >
-                      Users
-                    </button>
-                  </Link>
-                  <Link href='/profile' passHref>
-                    <button type='button' className='m-0'>
-                      <Image
-                        className='h-8 w-8 rounded-full'
-                        src={
-                          session.user.profile?.customImage ??
-                          session.user.image
-                        }
-                        alt='Workflow'
-                        width={40}
-                        height={40}
-                      />
-                    </button>
-                  </Link>
+                  <button
+                    type='button'
+                    className='text-white px-3 py-2 rounded-md text-sm font-medium bg-red-500 hover:bg-red-200 hover:text-red-500'
+                    onClick={() => signOut({})}
+                  >
+                    Logout
+                  </button>
                 </div>
               </div>
             </div>
@@ -150,34 +138,47 @@ const NavBar = () => {
             id='mobile-menu'
           >
             <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col '>
-              <Link href='/' passHref>
-                <span className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'>
-                  Courses
-                </span>
-              </Link>
-
-              <Link href='/users/cl1aph70q0399bsk5v95ybu64' passHref>
-                <span className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'>
-                  Test2
-                </span>
-              </Link>
-
-              <Link href='/profile' passHref>
-                <button type='button' className='ml-3 flex justify-start'>
-                  <Image
-                    className='h-8 w-8 rounded-full'
-                    src={
-                      session.user.profile?.customImage ?? session.user.image
-                    }
-                    alt='Workflow'
-                    width={40}
-                    height={40}
-                  />
-                  <span className='border border-transparent text-blue-500 px-3 py-2 rounded-md text-sm font-medium'>
-                    Profile
-                  </span>
+              {navBts.map((btn) => (
+                <button
+                  key={btn.label}
+                  type='button'
+                  className='border justify-start flex border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
+                  onClick={() =>
+                    push(
+                      btn.isDynamic
+                        ? `${btn.url}/${getDynamicUrl(btn.dynamicUrlKey)}`
+                        : btn.url
+                    )
+                  }
+                >
+                  {btn.label}
                 </button>
-              </Link>
+              ))}
+
+              <button
+                type='button'
+                className='ml-3 flex justify-start'
+                onClick={() => push('/profile')}
+              >
+                <Image
+                  className='h-8 w-8 rounded-full'
+                  src={session.user.profile?.customImage ?? session.user.image}
+                  alt='Workflow'
+                  width={40}
+                  height={40}
+                />
+                <span className='border border-transparent text-blue-500 px-3 py-2 rounded-md text-sm font-medium'>
+                  Profile
+                </span>
+              </button>
+
+              <button
+                type='button'
+                className='text-white justify-start flex px-3 py-2 rounded-md text-sm font-medium bg-red-500 hover:bg-red-200 hover:text-red-500'
+                onClick={() => signOut({})}
+              >
+                Logout
+              </button>
             </div>
           </div>
         </Transition>

@@ -66,11 +66,11 @@ const Index = () => {
   };
 
   const onClickItem = (id: string) => {
-    push(`/courses/course-details/admin/${id}`);
+    push(`/courses/form-course/${id}`);
   };
 
-  const onEdit = (id: string) => {
-    push(`/courses/form-course/${id}`);
+  const onViewNotes = (id: string) => {
+    push(`/courses/course-details/admin/${id}`);
   };
 
   if (resQuery.loading || loading || resDelete.loading) return <Loading />;
@@ -83,7 +83,7 @@ const Index = () => {
           question: 'Are you sure you want to delete this course?',
           textDelete: 'Delete',
           onDelete,
-          onEdit,
+          onViewNotes,
           onClickItem,
         }}
         data={dataForm}
