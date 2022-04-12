@@ -27,27 +27,22 @@ const Table = ({
   title,
   textButtonCreate = '',
   onClickCreate,
-  tableContext = {
-    onDelete: () => {},
-    onEdit: () => {},
-    question: '',
-    textDelete: '',
-    title: '',
-    onClickItem: () => {},
-  },
+  tableContext = null,
 }: Props) => (
   <div className='md:px-5 pt-3 pb-12 bg-gray-100  rounded-3xl shadow-xl w-full'>
     <div className='flex flex-row items-center justify-between p-5 py-6 md:px-24'>
       <h2 className='text-gray-600 font-semibold'>{title}</h2>
-      <div className='w-[150px] sm:w-[200px]'>
-        <PrivateComponent roleList={['Admin']}>
-          <Button
-            isSubmit={false}
-            text={textButtonCreate}
-            onClick={onClickCreate}
-          />
-        </PrivateComponent>
-      </div>
+      {onClickCreate && (
+        <div className='w-[200px]'>
+          <PrivateComponent roleList={['Admin']}>
+            <Button
+              isSubmit={false}
+              text={textButtonCreate}
+              onClick={onClickCreate}
+            />
+          </PrivateComponent>
+        </div>
+      )}
     </div>
     <div
       className={` grid ${
@@ -59,9 +54,11 @@ const Table = ({
           {t.title}
         </span>
       ))}
-      <PrivateComponent roleList={['Admin']}>
-        <span className=''>Actions</span>
-      </PrivateComponent>
+      {tableContext && (tableContext.onDelete || tableContext.onEdit) && (
+        <PrivateComponent roleList={['Admin']}>
+          <span className=''>Actions</span>
+        </PrivateComponent>
+      )}
     </div>
     <TableContext.Provider value={tableContext}>
       {data.map((d) => (
@@ -70,6 +67,7 @@ const Table = ({
           tittles={tittles}
           colsClass={colsClass}
           itemData={d}
+          extraActions={tableContext?.onDelete || tableContext?.onEdit}
         />
       ))}
     </TableContext.Provider>
