@@ -14,10 +14,15 @@ const UserTrainingPlanTypes = gql`
     userId: ID!
     trainingPlanId: ID!
   }
+  type TrainingChartData {
+    x: String
+    y: Int
+  }
   type Query {
     getUserTrainingPlans: [UserTrainingPlan]
     getUserTrainingPlan(id: ID!): UserTrainingPlan
     getUserTrainingPlansByUser(id: ID!): [UserTrainingPlan]
+    getTrainingChartData: [TrainingChartData]
   }
   type Mutation {
     updateUserTrainingPlans(

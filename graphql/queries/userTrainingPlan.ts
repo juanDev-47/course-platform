@@ -44,4 +44,17 @@ const GET_USER_TRAINING_PLAN_ID = gql`
   }
 `;
 
-export { GET_USER_TRAINING_PLANS_BY_USER, GET_USER_TRAINING_PLAN_ID };
+const GET_TRAINING_CHART_DATA = gql`
+  query GetTrainingChartData {
+    getTrainingChartData {
+      x
+      y
+    }
+  }
+`;
+
+export {
+  GET_USER_TRAINING_PLANS_BY_USER,
+  GET_USER_TRAINING_PLAN_ID,
+  GET_TRAINING_CHART_DATA,
+};

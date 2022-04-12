@@ -57,6 +57,16 @@ const UserTrainingPlanResolvers = {
           trainingPlan: true,
         },
       }),
+    getTrainingChartData: async (parent, args) => {
+      const today = new Date();
+      const monthAgo = new Date();
+      monthAgo.setMonth(today.getMonth() - 1);
+      monthAgo.setHours(0, 0, 0, 0);
+      const plans: [] =
+        await prisma.$queryRaw`SELECT u."name" as x, count(uc.finish) as y  FROM public."User" u join "UserCourse" uc ON u.id =uc."userId" and uc.finish =true and uc."updatedAt" >= ${monthAgo}
+        and uc."updatedAt"< ${today} group by u.id order by y desc`;
+      return plans.slice(0, 3);
+    },
   },
   Mutation: {
     updateUserTrainingPlans: async (parent, args) => {
