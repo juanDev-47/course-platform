@@ -55,7 +55,14 @@ const NavBar = () => {
                       My training plans
                     </button>
                   </Link>
-
+                  <Link href='/users/' passHref>
+                    <button
+                      type='button'
+                      className='border border-transparent hover:border-blue-500 text-blue-500 px-3 py-2 rounded-md text-sm font-medium'
+                    >
+                      Users
+                    </button>
+                  </Link>
                   <Link href='/profile' passHref>
                     <button type='button' className='m-0'>
                       <Image

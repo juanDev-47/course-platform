@@ -5,7 +5,7 @@ type Props = {
 };
 
 const SelecAddAndRemList = ({ itemList, onClick, ItemComponent }: Props) => (
-  <div className='flex flex-col h-[400px] w-full gap-1 py-5 px-3 overflow-scroll border-2 border-indigo-500'>
+  <div className='max-h-[30vh] md:max-h-full overflow-y-scroll flex flex-col md:h-[400px] w-full gap-1 py-5 px-3 overflow-scroll border-2 border-indigo-500'>
     {itemList.map((item: any, index: number) => (
       <ItemComponent
         key={item.id}

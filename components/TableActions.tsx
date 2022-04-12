@@ -9,10 +9,12 @@ type Props = {
 
 const TableActions = ({ id }: Props) => {
   const tableContext = useTableContext();
-  const onDelete = async () => {
+  const onDelete = async (e) => {
+    e.stopPropagation();
     if (tableContext.onDelete) tableContext.onDelete(id);
   };
-  const onEdit = () => {
+  const onEdit = (e) => {
+    e.stopPropagation();
     if (tableContext.onEdit) tableContext.onEdit(id);
   };
 

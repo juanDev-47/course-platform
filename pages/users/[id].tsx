@@ -16,6 +16,8 @@ import { Box, Modal } from '@mui/material';
 import SelectAddAndRemove from '@components/SelectAddAndRemove';
 import TrainingPlanItem from '@components/TrainingPlanItem';
 import PrivateComponent from '@components/PrivateComponent';
+import { GET_USER_TRAINING_PLANS_BY_USER } from 'graphql/queries/userTrainingPlan';
+import Table from '@components/Table';
 
 export async function getServerSideProps(context: any) {
   const props = await matchRoles(context);
@@ -67,6 +69,13 @@ const UserDetails = () => {
       getEmployeeId: id,
     },
   });
+  const userPlansQuery = useQuery(GET_USER_TRAINING_PLANS_BY_USER, {
+    fetchPolicy: 'cache-and-network',
+    variables: {
+      getUserTrainingPlansByUserId: id,
+    },
+  });
+  const [dataPlans, setDataPlans] = useState([{}]);
   const [availablePlans, setAvailablePlan] = useState<TrainingPlan[]>([]);
   const [selectedPlans, setSelectedPlans] = useState<TrainingPlan[]>([]);
   useEffect(() => {
@@ -79,6 +88,18 @@ const UserDetails = () => {
       );
     }
   }, [employeeQuery.loading]);
+  useEffect(() => {
+    if (!userPlansQuery.loading) {
+      setDataPlans(
+        userPlansQuery.data.getUserTrainingPlansByUser.map((item: any) => ({
+          id: item.id,
+          col1: item.trainingPlan.name,
+          col2: item.trainingPlan.numberOfCourses,
+          col3: `${item.progress}%`,
+        }))
+      );
+    }
+  }, [userPlansQuery.loading]);
 
   if (loading) return <Loading />;
   if (!userData.getUser) {
@@ -196,6 +217,30 @@ const UserDetails = () => {
           </PrivateComponent>
         </Form>
       </div>
+      {!userPlansQuery.loading && (
+        <div className='w-full flex flex-col items-center justify-center p-10'>
+          <Table
+            title='Training Plans'
+            colsClass='grid-cols-4'
+            tittles={[
+              {
+                title: 'Name',
+                keyCol: 'col1',
+                customClass: 'col-span-2',
+              },
+              {
+                title: 'Number of courses',
+                keyCol: 'col2',
+              },
+              {
+                title: 'Progress',
+                keyCol: 'col3',
+              },
+            ]}
+            data={dataPlans}
+          />
+        </div>
+      )}
     </div>
   );
 };
