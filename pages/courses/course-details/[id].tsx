@@ -4,7 +4,7 @@ import CommentDiv from '@components/CommentDiv';
 import DetailDiv from '@components/DetailDiv';
 import DetailSpan from '@components/DetailSpan';
 import Loading from '@components/Loading';
-import noteItem from '@components/noteItem';
+import NoteItem from '@components/NoteItem';
 import { ADD_LIKE, CREATE_COURSE_NOTE } from 'graphql/mutations/courseNote';
 import { GET_USER_COURSE } from 'graphql/queries/userCourse';
 import { useSession } from 'next-auth/react';
@@ -191,7 +191,7 @@ const CourseDetails = () => {
         imageUser={session.user.image}
         title='Notes'
         comments={data.getUserCourse.course.CourseNotes}
-        ItemComponent={noteItem}
+        ItemComponent={NoteItem}
         onClickItem={onLike}
       />
     </div>

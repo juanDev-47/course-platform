@@ -6,7 +6,7 @@ type Props = {
   onClickItem: (id: string) => void;
 };
 
-const noteItem = ({ itemData, onClickItem }: Props) => {
+const NoteItem = ({ itemData, onClickItem }: Props) => {
   const onClick = () => {
     onClickItem(itemData.id);
   };
@@ -47,4 +47,4 @@ const noteItem = ({ itemData, onClickItem }: Props) => {
   );
 };
 
-export default noteItem;
+export default NoteItem;

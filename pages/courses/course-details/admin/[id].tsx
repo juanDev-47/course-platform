@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import CommentDiv from '@components/CommentDiv';
 import Loading from '@components/Loading';
-import noteItem from '@components/noteItem';
+import NoteItem from '@components/NoteItem';
 import NotFoundComponent from '@components/NotFound';
 import { GET_COURSE_NOTES } from 'graphql/queries/course';
 import { useRouter } from 'next/router';
@@ -35,7 +35,7 @@ const NotesCourse = () => {
       <CommentDiv
         title='Notes'
         comments={data.getCourse.CourseNotes}
-        ItemComponent={noteItem}
+        ItemComponent={NoteItem}
       />
     </div>
   );
