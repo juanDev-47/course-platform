@@ -4,7 +4,7 @@ import { useTableContext } from 'context/TableContext';
 
 type Props = {
   onDelete: (e?) => void;
-  closeDialog: () => void;
+  closeDialog: (e?) => void;
 };
 
 const DeleteDialog = ({ onDelete, closeDialog }: Props) => {

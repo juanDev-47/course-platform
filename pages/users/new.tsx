@@ -175,7 +175,6 @@ const NewUser = ({ token }: Props) => {
                   value: roleOpt.id,
                   label: roleOpt.name,
                 }))}
-                value={role}
                 title='Select Role'
                 onChange={(e) => {
                   setRole(e);

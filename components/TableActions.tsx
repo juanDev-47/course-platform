@@ -21,8 +21,9 @@ const TableActions = ({ id }: Props) => {
   };
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const closeDialog = () => {
-    setOpenDeleteDialog(false);
+  const changeDialog = (e) => {
+    setOpenDeleteDialog(!openDeleteDialog);
+    e.stopPropagation();
   };
 
   return (
@@ -33,18 +34,13 @@ const TableActions = ({ id }: Props) => {
           className='text-[20px] text-yellow-500 hover:text-yellow-700 cursor-pointer'
         />
       </button>
-      <button
-        type='button'
-        onClick={() => {
-          setOpenDeleteDialog(true);
-        }}
-      >
+      <button type='button' onClick={changeDialog}>
         <i
           className={`fas fa-trash text-[20px] text-red-500 hover:text-red-700 cursor-pointer `}
         />
       </button>
-      <Dialog open={openDeleteDialog} onClose={closeDialog}>
-        <DeleteDialog onDelete={onDelete} closeDialog={closeDialog} />
+      <Dialog open={openDeleteDialog} onClose={changeDialog}>
+        <DeleteDialog onDelete={onDelete} closeDialog={changeDialog} />
       </Dialog>
     </div>
   );
