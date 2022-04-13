@@ -51,17 +51,21 @@ const Index = () => {
   });
 
   const onDelete = async (idCourse: string) => {
-    await deleteCourse({
-      variables: {
-        where: {
-          id: idCourse,
+    try {
+      await deleteCourse({
+        variables: {
+          where: {
+            id: idCourse,
+          },
         },
-      },
-    });
-    if (resDelete.error) {
-      toast.error('Error');
-    } else {
-      toast.success('Course deleted successfully');
+      });
+      if (resDelete.error) {
+        toast.error('Error');
+      } else {
+        toast.success('Course deleted successfully');
+      }
+    } catch (error) {
+      toast.error('Unable to delete course')
     }
   };
 

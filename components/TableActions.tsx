@@ -22,7 +22,7 @@ const TableActions = ({ id }: Props) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const changeDialog = (e) => {
     setOpenDeleteDialog(!openDeleteDialog);
-    if(e) e.stopPropagation();
+    if (e) e.stopPropagation();
   };
 
   return (

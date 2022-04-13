@@ -2,7 +2,7 @@ import React from 'react';
 
 interface ButtonInterface {
   isSubmit?: boolean;
-  onClick?: () => void;
+  onClick?: (e?) => void;
   text: string;
 }
 

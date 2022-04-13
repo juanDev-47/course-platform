@@ -25,19 +25,24 @@ const Index = () => {
   });
 
   const onDelete = async (idTrainingPlan: string) => {
-    await deleteTrainingPlan({
-      variables: {
-        where: {
-          id: idTrainingPlan,
-        },
-      },
-    });
-    if (resDelete.error) {
-      toast.error('Error');
-    } else {
-      toast.success('Training plan deleted successfully');
+    try {
+      await deleteTrainingPlan({
+          variables: {
+            where: {
+              id: idTrainingPlan,
+            },
+          },
+        });
+        if (resDelete.error) {
+          toast.error('Error');
+        } else {
+          toast.success('Training plan deleted successfully');
+        }
+      
+    } catch (error) {
+      toast.error('Unable to delete plan');
+    };
     }
-  };
 
   const onViewNotes = (id: string) => {
     push(`/training-plans/training-plan-details/admin/${id}`);
