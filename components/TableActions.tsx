@@ -11,8 +11,7 @@ type Props = {
 
 const TableActions = ({ id }: Props) => {
   const tableContext = useTableContext();
-  const onDelete = async (e) => {
-    e.stopPropagation();
+  const onDelete = async () => {
     if (tableContext.onDelete) tableContext.onDelete(id);
   };
   const onViewNotes = (e) => {
@@ -23,7 +22,7 @@ const TableActions = ({ id }: Props) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const changeDialog = (e) => {
     setOpenDeleteDialog(!openDeleteDialog);
-    e.stopPropagation();
+    if(e) e.stopPropagation();
   };
 
   return (

@@ -9,11 +9,13 @@ type Props = {
 
 const DeleteDialog = ({ onDelete, closeDialog }: Props) => {
   const tableContext = useTableContext();
-  const cancel = () => {
+  const cancel = (e) => {
+    e.stopPropagation();
     closeDialog();
   };
 
-  const deleteFunction = async () => {
+  const deleteFunction = async (e) => {
+    e.stopPropagation();
     onDelete();
     closeDialog();
   };
