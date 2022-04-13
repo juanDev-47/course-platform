@@ -3,7 +3,7 @@ import Button from 'components/Button';
 import { useTableContext } from 'context/TableContext';
 
 type Props = {
-  onDelete: () => void;
+  onDelete: (e?) => void;
   closeDialog: () => void;
 };
 
