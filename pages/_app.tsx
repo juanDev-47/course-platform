@@ -20,7 +20,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: from([
     new HttpLink({
-      uri: 'http://localhost:3000/api/graphql',
+      uri: 'https://course-platform-red.vercel.app/api/graphql',
     }),
   ]),
 });
