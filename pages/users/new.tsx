@@ -12,6 +12,7 @@ import Loading from '@components/Loading';
 import SelectForm from '@components/Select';
 import { GET_ROLES } from 'graphql/queries/roles';
 import { Role } from 'interfaces';
+import useRedirect from 'hooks/useRedirect';
 
 export async function getServerSideProps(context: any) {
   const options: AxiosRequestConfig = {
@@ -58,6 +59,7 @@ const NewUser = ({ token }: Props) => {
 
   const [createUser, resCreate] = useMutation(CREATE_USER);
   const resRoles = useQuery(GET_ROLES);
+  const { push } = useRedirect();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -132,7 +134,12 @@ const NewUser = ({ token }: Props) => {
         </div>
       )}
       <div className='flex justify-center'>
-        <Form title='Create User' onSubmit={onSubmit} textSubmit='Save'>
+        <Form
+          title='Create User'
+          onSubmit={onSubmit}
+          onCancel={() => push('/users')}
+          textSubmit='Save'
+        >
           <div>
             <div className='flex flex-col sm:flex-row '>
               <Input

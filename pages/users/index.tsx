@@ -35,6 +35,7 @@ const Index = () => {
         title='Employees'
         textButtonCreate='Create User'
         tableContext={{ onClickItem }}
+        onClickCreate={() => push('/users/new')}
       />
     </div>
   );
