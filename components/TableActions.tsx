@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Dialog } from '@mui/material';
 import DeleteDialog from 'components/DeleteDialog';
 import { useTableContext } from 'context/TableContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNoteSticky } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   id: string;
@@ -28,10 +26,7 @@ const TableActions = ({ id }: Props) => {
   return (
     <div className='flex flex-row gap-6 md:gap-12'>
       <button type='button' onClick={onViewNotes}>
-        <FontAwesomeIcon
-          icon={faNoteSticky}
-          className='text-[20px] text-yellow-500 hover:text-yellow-700 cursor-pointer'
-        />
+        <i className={`fas fa-sticky-note text-[20px] text-yellow-500 hover:text-yellow-700 cursor-pointer `}></i>
       </button>
       <button type='button' onClick={changeDialog}>
         <i
