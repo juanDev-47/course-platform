@@ -65,7 +65,7 @@ const Index = () => {
         toast.success('Course deleted successfully');
       }
     } catch (error) {
-      toast.error('Unable to delete course')
+      toast.error('Unable to delete course');
     }
   };
 
